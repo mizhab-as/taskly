@@ -1,0 +1,8 @@
+# No external dependencies required.
+# This project only uses Python's standard library:
+#   - json          (persistent storage)
+#   - tkinter        (GUI, ships with standard CPython installs)
+#   - dataclasses    (Task model)
+#   - uuid, datetime (ids and timestamps)
+#
+# Python 3.9+ recommended.

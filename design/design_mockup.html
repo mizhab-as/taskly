@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tudy — To-Do App Design Layout</title>
+<style>
+  :root{
+    --yellow:#FFCB3D;
+    --yellow-dark:#F5B400;
+    --cream:#FFF7E0;
+    --white:#FFFFFF;
+    --ink:#2B2B3C;
+    --gray:#8B8B96;
+    --teal:#17C3B2;
+    --line:#EFEFF3;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Segoe UI', Roboto, Arial, sans-serif;
+    background:var(--cream);
+    padding:48px 24px;
+  }
+  h1{
+    text-align:center;
+    color:var(--ink);
+    font-size:22px;
+    margin-bottom:6px;
+  }
+  p.sub{
+    text-align:center;
+    color:var(--gray);
+    margin-top:0;
+    margin-bottom:40px;
+    font-size:14px;
+  }
+  .row{
+    display:flex;
+    justify-content:center;
+    gap:32px;
+    flex-wrap:wrap;
+  }
+  .phone{
+    width:260px;
+    height:540px;
+    background:var(--white);
+    border-radius:36px;
+    box-shadow:0 24px 60px rgba(0,0,0,0.15);
+    overflow:hidden;
+    position:relative;
+    border:8px solid var(--ink);
+  }
+  .screen{ width:100%; height:100%; overflow:hidden; position:relative;}
+
+  /* ---------- Screen 1 : Onboarding ---------- */
+  .onboard{ background:var(--white); display:flex; flex-direction:column; align-items:center; text-align:center; padding-top:60px;}
+  .onboard .blob{
+    width:180px;height:180px;border-radius:50%;
+    background:var(--yellow);
+    display:flex;align-items:center;justify-content:center;
+    font-size:56px;
+  }
+  .onboard h2{ font-size:19px; color:var(--ink); margin:26px 18px 8px;}
+  .onboard p{ font-size:12px; color:var(--gray); margin:0 26px 22px; line-height:1.5;}
+  .cta{
+    background:var(--teal); color:var(--white); border:none;
+    padding:12px 40px; border-radius:24px; font-size:13px; font-weight:600;
+  }
+
+  /* ---------- Screen 2 : Dashboard ---------- */
+  .dash{ background:var(--white); }
+  .dash-header{
+    background:var(--yellow);
+    padding:22px 18px 40px;
+    border-bottom-left-radius:28px;
+    border-bottom-right-radius:28px;
+  }
+  .dash-header .menu{ font-size:18px; color:var(--ink); }
+  .greet{ display:flex; justify-content:space-between; align-items:center; margin-top:14px;}
+  .greet h3{ margin:0; font-size:17px; color:var(--ink);}
+  .greet p{ margin:2px 0 0; font-size:11px; color:#6B5A12;}
+  .avatar{ width:34px;height:34px;border-radius:50%; background:var(--white); display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--ink); font-weight:700;}
+  .list{ padding:14px 16px; display:flex; flex-direction:column; gap:10px; margin-top:-22px;}
+  .cat-card{
+    background:var(--white);
+    border-radius:16px;
+    box-shadow:0 6px 14px rgba(0,0,0,0.06);
+    padding:12px 14px;
+    display:flex; align-items:center; gap:12px;
+  }
+  .cat-card .ic{ font-size:18px; }
+  .cat-card .txt b{ display:block; font-size:12.5px; color:var(--ink);}
+  .cat-card .txt span{ font-size:10px; color:var(--gray);}
+
+  /* ---------- Screen 3 : Category detail ---------- */
+  .detail{ background:var(--white); }
+  .detail-header{
+    background:var(--yellow);
+    padding:20px 18px 46px;
+    border-bottom-left-radius:28px;
+    border-bottom-right-radius:28px;
+  }
+  .detail-header .top-row{ display:flex; justify-content:space-between; font-size:16px; color:var(--ink);}
+  .detail-header .who{ display:flex; align-items:center; gap:8px; margin-top:16px;}
+  .detail-header .who .avatar{ width:28px;height:28px; font-size:12px;}
+  .detail-header .count{ font-size:10.5px; color:#6B5A12; margin:0;}
+  .detail-header h3{ margin:2px 0 0; font-size:20px; color:var(--ink);}
+  .task-list{ padding:16px 18px; margin-top:-24px; background:var(--white); border-radius:20px;}
+  .task-row{
+    display:flex; align-items:center; gap:10px;
+    padding:9px 0; border-bottom:1px solid var(--line); font-size:12px; color:var(--ink);
+  }
+  .task-row .box{ width:15px;height:15px;border:1.5px solid #C9C9D2; border-radius:4px; flex-shrink:0;}
+  .task-row.done{ color:var(--gray); text-decoration:line-through;}
+  .task-row.done .box{ background:var(--teal); border-color:var(--teal);}
+  .fab{
+    position:absolute; right:16px; bottom:16px;
+    width:46px;height:46px;border-radius:50%;
+    background:var(--teal); color:var(--white);
+    display:flex;align-items:center;justify-content:center;font-size:22px; font-weight:700;
+    box-shadow:0 10px 20px rgba(23,195,178,0.4);
+  }
+
+  .caption{ text-align:center; color:var(--ink); font-size:12px; margin-top:14px; font-weight:600;}
+
+  .legend{
+    max-width:640px; margin:56px auto 0; background:var(--white);
+    border-radius:20px; padding:26px 30px; box-shadow:0 12px 30px rgba(0,0,0,0.06);
+  }
+  .legend h4{ margin-top:0; color:var(--ink); font-size:15px;}
+  .swatches{ display:flex; gap:14px; flex-wrap:wrap; margin:14px 0 20px;}
+  .swatch{ text-align:center; font-size:10px; color:var(--gray);}
+  .swatch .chip{ width:44px; height:44px; border-radius:10px; margin-bottom:6px;}
+  .legend ul{ margin:0; padding-left:18px; color:var(--gray); font-size:12.5px; line-height:1.7;}
+</style>
+</head>
+<body>
+
+  <h1>Tudy — Advanced To-Do App</h1>
+  <p class="sub">Design layout regenerated in the style of the reference mockup, mapped to the actual app screens</p>
+
+  <div class="row">
+
+    <!-- Screen 1: Onboarding -->
+    <div class="phone">
+      <div class="screen onboard">
+        <div style="height:64px"></div>
+        <div class="blob">🛍️📱</div>
+        <h2>Get Organized Your Life</h2>
+        <p>Tudy is a simple and effective to-do list and task manager app which helps you manage your time.</p>
+        <button class="cta">Get Started</button>
+      </div>
+    </div>
+
+    <!-- Screen 2: Dashboard -->
+    <div class="phone">
+      <div class="screen dash">
+        <div class="dash-header">
+          <div class="menu">☰</div>
+          <div class="greet">
+            <div>
+              <h3>Hello Ender</h3>
+              <p>Today you have 4 tasks</p>
+            </div>
+            <div class="avatar">E</div>
+          </div>
+        </div>
+        <div class="list">
+          <div class="cat-card"><span class="ic">☀️</span><div class="txt"><b>Today</b><span>4 Tasks</span></div></div>
+          <div class="cat-card"><span class="ic">🗓️</span><div class="txt"><b>Planned</b><span>2 Tasks</span></div></div>
+          <div class="cat-card"><span class="ic">🙂</span><div class="txt"><b>Personal</b><span>6 Tasks</span></div></div>
+          <div class="cat-card"><span class="ic">💼</span><div class="txt"><b>Work</b><span>5 Tasks</span></div></div>
+          <div class="cat-card"><span class="ic">🛍️</span><div class="txt"><b>Shopping</b><span>8 Tasks</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 3: Category detail -->
+    <div class="phone">
+      <div class="screen detail">
+        <div class="detail-header">
+          <div class="top-row"><span>←</span><span>⋮</span></div>
+          <div class="who">
+            <div class="avatar">🙂</div>
+            <div>
+              <p class="count">8 Tasks</p>
+              <h3>Personal</h3>
+            </div>
+          </div>
+        </div>
+        <div class="task-list">
+          <div class="task-row done"><div class="box"></div>Go to Market</div>
+          <div class="task-row"><div class="box"></div>Meet friends</div>
+          <div class="task-row"><div class="box"></div>Change your picture</div>
+          <div class="task-row"><div class="box"></div>Buy theatre ticket</div>
+          <div class="task-row"><div class="box"></div>Go to gym</div>
+          <div class="task-row"><div class="box"></div>Add your portfolio</div>
+          <div class="task-row"><div class="box"></div>Send project files</div>
+          <div class="task-row"><div class="box"></div>Pay bills</div>
+        </div>
+        <div class="fab">+</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <h4>Design tokens used across the app &amp; mockup</h4>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:#FFCB3D"></div>Yellow<br>#FFCB3D</div>
+      <div class="swatch"><div class="chip" style="background:#FFF7E0"></div>Cream<br>#FFF7E0</div>
+      <div class="swatch"><div class="chip" style="background:#17C3B2"></div>Teal<br>#17C3B2</div>
+      <div class="swatch"><div class="chip" style="background:#2B2B3C"></div>Ink<br>#2B2B3C</div>
+      <div class="swatch"><div class="chip" style="background:#8B8B96"></div>Gray<br>#8B8B96</div>
+    </div>
+    <ul>
+      <li><b>Type:</b> Segoe UI / system sans, bold headings, regular body copy, small uppercase-free captions.</li>
+      <li><b>Shape language:</b> large rounded corners (16–28px), soft drop shadows, circular avatars &amp; FAB.</li>
+      <li><b>Structure:</b> yellow header block curves into a white card list — carried over 1:1 into the live Tkinter GUI (app/gui.py).</li>
+      <li><b>Signature element:</b> the teal circular "+" floating action button, the single accent color against an otherwise warm-neutral palette.</li>
+    </ul>
+  </div>
+
+</body>
+</html>

@@ -865,6 +865,10 @@ class TasklyApp(ctk.CTk):
                        activebackground=ACCENT, activeforeground="white",
                        font=("Segoe UI", 10))
         menu.add_command(label="Clear Completed", command=self._clear_completed)
+        menu.add_command(label="Clear All Tasks", command=self._clear_all_tasks)
+        if self.active_cat and "smart" not in self.active_cat and self.active_cat["label"] not in ("Personal", "Work", "Shopping"):
+            menu.add_separator()
+            menu.add_command(label="Delete List", command=lambda: self._confirm_del_cat(self.active_cat))
         x = self.winfo_rootx() + self.winfo_width() - 160
         y = self.winfo_rooty() + 120
         menu.post(x, y)
@@ -876,6 +880,15 @@ class TasklyApp(ctk.CTk):
         for t in [t for t in tasks if t.completed]:
             self.manager.delete_task(t.id)
         self._show_cat_detail(self.active_cat)
+
+    def _clear_all_tasks(self):
+        if not self.active_cat:
+            return
+        ConfirmModal(self, message=f"Clear all tasks in '{self.active_cat['label']}'?",
+                     on_confirm=lambda: (
+                         [self.manager.delete_task(t.id) for t in self.manager.list_by_category(self.active_cat["label"])],
+                         self._show_cat_detail(self.active_cat)
+                     ))
 
     # ─── Task CRUD ───────────────────────────────────────────────────────────
     def _toggle_task(self, task_id):

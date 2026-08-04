@@ -296,7 +296,25 @@
 
   /* ---------- List Detail ---------- */
   .list-header{
-    display:flex;align-items:center;gap:18px;margin-bottom:22px;
+    display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:22px;flex-wrap:wrap;
+  }
+  .btn-delete-list{
+    background:var(--coral-tint);color:var(--coral);
+    font-weight:700;font-size:13px;padding:9px 16px;border-radius:14px;
+    display:flex;align-items:center;gap:6px;transition:all .15s ease;
+  }
+  .btn-delete-list:hover{
+    background:var(--coral);color:white;transform:scale(1.03);
+    box-shadow:var(--shadow-soft);
+  }
+  .btn-clear-list{
+    background:var(--white);color:var(--ink-soft);
+    font-weight:700;font-size:13px;padding:9px 16px;border-radius:14px;
+    display:flex;align-items:center;gap:6px;transition:all .15s ease;
+    box-shadow:var(--shadow-soft);
+  }
+  .btn-clear-list:hover{
+    background:var(--coral-tint);color:var(--coral);
   }
   .back-btn{
     display:flex;align-items:center;gap:6px;font-weight:700;font-size:14px;color:var(--ink-soft);
@@ -831,6 +849,17 @@ function deleteList(id){
   );
 }
 
+function clearListTasks(id){
+  showConfirm(
+    "Clear All Tasks",
+    `Are you sure you want to clear all tasks in "${DATA.lists[id].name}"?`,
+    ()=>{
+      DATA.tasks = DATA.tasks.filter(t=>t.list!==id);
+      save(); render();
+    }
+  );
+}
+
 /* ─── Task CRUD ───────────────────────────────────────────── */
 function openAddTaskModal(){
   $("#taskModalTitle").textContent="Add New Task";
@@ -1013,10 +1042,23 @@ function renderListView(container){
   container.appendChild(back);
 
   const header = el("div","list-header",`
-    <div class="blob" style="background:${meta.bg}">${meta.emoji}</div>
-    <div>
-      <h2>${esc(meta.name)}</h2>
-      <p class="sub">${pending} pending · ${listTasks.length} total</p>
+    <div style="display:flex;align-items:center;gap:18px;">
+      <div class="blob" style="background:${meta.bg}">${meta.emoji}</div>
+      <div>
+        <h2>${esc(meta.name)}</h2>
+        <p class="sub">${pending} pending · ${listTasks.length} total</p>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;margin-left:auto;">
+      ${meta.custom ? `
+        <button class="btn-delete-list" onclick="deleteList('${state.list}')" title="Delete this list">
+          🗑️ Delete List
+        </button>
+      ` : `
+        <button class="btn-clear-list" onclick="clearListTasks('${state.list}')" title="Clear all tasks in list">
+          🧹 Clear Tasks
+        </button>
+      `}
     </div>
   `);
   container.appendChild(header);

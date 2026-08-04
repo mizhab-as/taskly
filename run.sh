@@ -1,15 +1,12 @@
 #!/usr/bin/env bash
-# Launcher script for Taskly To-Do List Application
+# Taskly — run script for macOS/Linux
+# Auto-installs dependencies and launches the app
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
-if command -v python3 &>/dev/null; then
-    python3 main.py "$@"
-elif command -v python &>/dev/null; then
-    python main.py "$@"
-else
-    echo "Error: Python was not found on your system."
-    echo "Please install Python 3.9 or higher."
-    exit 1
-fi
+echo "→ Installing dependencies..."
+pip3 install -r requirements.txt -q
+
+echo "→ Launching Taskly..."
+python3 main.py "$@"

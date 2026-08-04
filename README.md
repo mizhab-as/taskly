@@ -20,22 +20,22 @@
 <table>
   <tr>
     <td align="center">
-      <img src="screenshots/01_dashboard.png" width="300" alt="Dashboard">
+      <img src="screenshots/01_dashboard.png" width="380" alt="Dashboard View">
       <br><sub><b>Dashboard</b> — Smart lists & stats overview</sub>
     </td>
     <td align="center">
-      <img src="screenshots/02_dashboard_tasks.png" width="300" alt="Task List">
+      <img src="screenshots/02_personal_list_view.png" width="380" alt="List View">
       <br><sub><b>Task List</b> — Priority-sorted task cards</sub>
     </td>
   </tr>
   <tr>
     <td align="center">
-      <img src="screenshots/03_task_completed.png" width="300" alt="Task Completed">
-      <br><sub><b>Completion</b> — Animated checkbox & strikethrough</sub>
+      <img src="screenshots/03_add_task_modal.png" width="380" alt="Add Task Modal">
+      <br><sub><b>New Task Modal</b> — Priority pills & due date</sub>
     </td>
     <td align="center">
-      <img src="screenshots/04_add_task_modal.png" width="300" alt="Add Task Modal">
-      <br><sub><b>New Task Modal</b> — Priority pills & quick date presets</sub>
+      <img src="screenshots/04_create_list_modal.png" width="380" alt="Create List Modal">
+      <br><sub><b>Create List Modal</b> — Custom emoji icon picker</sub>
     </td>
   </tr>
 </table>

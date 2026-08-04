@@ -163,8 +163,61 @@
     background:linear-gradient(160deg, var(--lilac) 0%, var(--pink) 130%);
     display:flex;align-items:center;justify-content:center;
     box-shadow:var(--shadow-soft);flex-shrink:0;overflow:hidden;
+    cursor:pointer;transition:transform .2s ease, box-shadow .2s ease;
   }
-  .avatar svg{width:100%;height:100%;display:block;}
+  .avatar:hover{transform:scale(1.08);box-shadow:var(--shadow-pop);}
+
+  /* ---------- Profile Popover Dropdown ---------- */
+  .profile-popover{
+    position:absolute;top:74px;right:36px;width:310px;
+    background:var(--white);border-radius:var(--radius-lg);
+    padding:20px;box-shadow:var(--shadow-pop);
+    z-index:100;display:none;flex-direction:column;gap:14px;
+    animation:popIn .22s cubic-bezier(.2,.9,.3,1) both;
+    border:1px solid rgba(43,36,64,0.06);
+  }
+  .profile-popover.open{display:flex;}
+  @keyframes popIn{from{opacity:0;transform:translateY(-8px) scale(.95);}to{opacity:1;transform:none;}}
+
+  .profile-header{display:flex;align-items:center;gap:12px;}
+  .avatar-lg{
+    width:48px;height:48px;border-radius:50%;
+    background:linear-gradient(160deg, var(--lilac) 0%, var(--pink) 130%);
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;overflow:hidden;box-shadow:var(--shadow-soft);
+  }
+  .avatar-lg svg{width:100%;height:100%;display:block;}
+  .profile-info h4{margin:0;font-size:15.5px;display:flex;align-items:center;gap:6px;}
+  .pro-badge{
+    font-size:9px;font-weight:800;background:var(--amber-tint);color:#8A6415;
+    padding:2px 6px;border-radius:8px;letter-spacing:.04em;
+  }
+  .profile-info p{margin:2px 0 0;font-size:12px;color:var(--ink-soft);font-weight:500;}
+
+  .profile-stats{
+    display:flex;align-items:center;justify-content:space-around;
+    background:var(--cream);border-radius:16px;padding:10px 12px;
+  }
+  .p-stat{display:flex;flex-direction:column;align-items:center;}
+  .p-stat-val{font-size:13px;font-weight:700;color:var(--ink);}
+  .p-stat-lbl{font-size:10.5px;color:var(--ink-soft);font-weight:600;}
+  .p-stat-divider{width:1px;height:24px;background:var(--cream-deep);}
+
+  .profile-menu{display:flex;flex-direction:column;gap:2px;}
+  .profile-item{
+    display:flex;align-items:center;gap:10px;padding:10px 12px;
+    border-radius:12px;font-size:13.5px;font-weight:600;color:var(--ink-soft);
+    transition:background .15s, color .15s;width:100%;text-align:left;
+  }
+  .profile-item:hover{background:var(--cream);color:var(--ink);}
+  .profile-item.danger:hover{background:var(--coral-tint);color:var(--coral);}
+  .profile-item .p-ic{font-size:15px;}
+  .profile-item .p-tag{margin-left:auto;font-size:10.5px;background:var(--teal-tint);color:var(--teal-deep);padding:2px 8px;border-radius:10px;font-weight:700;}
+  .p-divider{height:1px;background:var(--cream-deep);margin:4px 0;}
+
+  .shortcut-row{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--cream);border-radius:12px;margin-bottom:8px;}
+  .shortcut-row .s-lbl{font-size:13px;font-weight:600;color:var(--ink);}
+  .shortcut-row kbd{background:var(--white);box-shadow:0 2px 4px rgba(43,36,64,.1);padding:4px 8px;border-radius:6px;font-family:inherit;font-weight:700;font-size:12px;color:var(--teal-deep);}
 
   .content{padding:8px 36px 60px;max-width:1080px;width:100%;margin:0 auto;}
 
@@ -453,7 +506,7 @@
           <input type="text" id="searchInput" placeholder="Search tasks...">
         </div>
         <div class="spacer"></div>
-        <div class="avatar" title="Ender">
+        <div class="avatar" id="avatarBtn" title="Ender Profile">
           <svg viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">
             <circle cx="21" cy="17" r="8.5" fill="#FFE8CF"/>
             <path d="M8 41c0-9.4 7.7-15.5 13-15.5S34 31.6 34 41Z" fill="#FFE8CF"/>
@@ -462,6 +515,54 @@
             <circle cx="24.4" cy="17.5" r="1.3" fill="#4A3B63"/>
             <path d="M18.3 21.3c.9.7 2.6.7 3.4 0" stroke="#C77B4F" stroke-width="1.2" stroke-linecap="round" fill="none"/>
           </svg>
+        </div>
+
+        <!-- Profile Popover Dropdown -->
+        <div class="profile-popover" id="profilePopover">
+          <div class="profile-header">
+            <div class="avatar-lg">
+              <svg viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="21" cy="17" r="8.5" fill="#FFE8CF"/>
+                <path d="M8 41c0-9.4 7.7-15.5 13-15.5S34 31.6 34 41Z" fill="#FFE8CF"/>
+                <path d="M13 15c0-6 4-9.5 8-9.5s8 3.5 8 9.5c0 1-3 2.5-8 2.5s-8-1.5-8-2.5Z" fill="#4A3B63"/>
+                <circle cx="17.6" cy="17.5" r="1.3" fill="#4A3B63"/>
+                <circle cx="24.4" cy="17.5" r="1.3" fill="#4A3B63"/>
+                <path d="M18.3 21.3c.9.7 2.6.7 3.4 0" stroke="#C77B4F" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+              </svg>
+            </div>
+            <div class="profile-info">
+              <h4 id="popoverName">Ender <span class="pro-badge">PRO</span></h4>
+              <p id="popoverEmail">ender@taskly.app</p>
+            </div>
+          </div>
+
+          <div class="profile-stats">
+            <div class="p-stat">
+              <span class="p-stat-val">🔥 5 Days</span>
+              <span class="p-stat-lbl">Streak</span>
+            </div>
+            <div class="p-stat-divider"></div>
+            <div class="p-stat">
+              <span class="p-stat-val" id="popoverCompletion">⚡ 85%</span>
+              <span class="p-stat-lbl">Focus Score</span>
+            </div>
+          </div>
+
+          <div class="profile-menu">
+            <button class="profile-item" onclick="openAccountModal()">
+              <span class="p-ic">👤</span> Account Settings
+            </button>
+            <button class="profile-item" onclick="openShortcutsModal()">
+              <span class="p-ic">⌨️</span> Keyboard Shortcuts
+            </button>
+            <button class="profile-item" onclick="toggleThemeNotice()">
+              <span class="p-ic">🎨</span> Theme Preset <span class="p-tag">Cream Pastel</span>
+            </button>
+            <div class="p-divider"></div>
+            <button class="profile-item danger" onclick="confirmSignOut()">
+              <span class="p-ic">🚪</span> Sign Out
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -543,6 +644,60 @@
     <div class="modal-actions">
       <button class="btn-ghost" onclick="closeModal('confirmModal')">Cancel</button>
       <button class="btn-danger" id="confirmYesBtn">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Account Settings Modal ─── -->
+<div class="modal-overlay" id="accountModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('accountModal')">✕</button>
+    <h2>Account Settings 👤</h2>
+    <p class="sub">Update your profile info.</p>
+
+    <div class="field-group">
+      <div class="field-label">Display Name</div>
+      <input class="field-input" id="accountNameInput" value="Ender" maxlength="32">
+    </div>
+
+    <div class="field-group">
+      <div class="field-label">Email Address</div>
+      <input class="field-input" id="accountEmailInput" value="ender@taskly.app" maxlength="48">
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="closeModal('accountModal')">Cancel</button>
+      <button class="btn-primary" onclick="saveAccountSettings()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Keyboard Shortcuts Modal ─── -->
+<div class="modal-overlay" id="shortcutsModal">
+  <div class="modal" style="max-width:400px;">
+    <button class="modal-close" onclick="closeModal('shortcutsModal')">✕</button>
+    <h2>Keyboard Shortcuts ⌨️</h2>
+    <p class="sub">Speed up your workflow.</p>
+
+    <div class="shortcut-row">
+      <span class="s-lbl">Add New Task</span>
+      <kbd>N</kbd>
+    </div>
+    <div class="shortcut-row">
+      <span class="s-lbl">Focus Search Bar</span>
+      <kbd>/</kbd>
+    </div>
+    <div class="shortcut-row">
+      <span class="s-lbl">Return to Dashboard / Clear</span>
+      <kbd>Esc</kbd>
+    </div>
+    <div class="shortcut-row">
+      <span class="s-lbl">Submit Modal / Form</span>
+      <kbd>Enter</kbd>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-primary" style="width:100%;" onclick="closeModal('shortcutsModal')">Got it!</button>
     </div>
   </div>
 </div>
@@ -771,7 +926,7 @@ function renderDashboard(container){
 
   const hero = el("div","hero",`
     <div class="hero-text">
-      <h1>${greeting()}, Ender 👋</h1>
+      <h1>${greeting()}, ${esc(DATA.user?.name || "Ender")} 👋</h1>
       <p>${pending===0 ? "Nothing due today — enjoy the calm! 🎉" : `You have <strong>${pending}</strong> task${pending!==1?"s":""} waiting.`}</p>
     </div>
     <div class="hero-emoji">
@@ -1043,6 +1198,62 @@ document.addEventListener("keydown", e=>{
   }
   if(e.key==="Escape"&&state.view==="list"){ state.view="dashboard"; render(); }
 });
+
+/* ─── Profile Popover & Account Handlers ─────────────────── */
+const avatarBtn = $("#avatarBtn");
+const profilePopover = $("#profilePopover");
+
+function toggleProfilePopover(e){
+  e.stopPropagation();
+  profilePopover.classList.toggle("open");
+}
+
+if(avatarBtn && profilePopover){
+  avatarBtn.onclick = toggleProfilePopover;
+
+  document.addEventListener("click", e=>{
+    if(!profilePopover.contains(e.target) && !avatarBtn.contains(e.target)){
+      profilePopover.classList.remove("open");
+    }
+  });
+}
+
+function openAccountModal(){
+  profilePopover.classList.remove("open");
+  $("#accountNameInput").value = DATA.user?.name || "Ender";
+  $("#accountEmailInput").value = DATA.user?.email || "ender@taskly.app";
+  openModal("accountModal");
+}
+
+function saveAccountSettings(){
+  const name = $("#accountNameInput").value.trim() || "Ender";
+  const email = $("#accountEmailInput").value.trim() || "ender@taskly.app";
+  DATA.user = { name, email };
+  save();
+  closeModal("accountModal");
+  const popName = $("#popoverName");
+  if(popName) popName.innerHTML = `${esc(name)} <span class="pro-badge">PRO</span>`;
+  const popEmail = $("#popoverEmail");
+  if(popEmail) popEmail.textContent = email;
+  render();
+}
+
+function openShortcutsModal(){
+  profilePopover.classList.remove("open");
+  openModal("shortcutsModal");
+}
+
+function toggleThemeNotice(){
+  profilePopover.classList.remove("open");
+  alert("✨ You are currently using the signature Cream Pastel theme!");
+}
+
+function confirmSignOut(){
+  profilePopover.classList.remove("open");
+  showConfirm("Sign Out", "Are you sure you want to sign out of Taskly?", ()=>{
+    alert("👋 Signed out successfully! Demo session reloaded.");
+  });
+}
 
 /* ─── Close modals on backdrop click ─────────────────────── */
 document.querySelectorAll(".modal-overlay").forEach(ov=>{

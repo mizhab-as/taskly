@@ -59,13 +59,12 @@
   .bg-decor span.b1{width:340px;height:340px;top:-120px;right:-90px;background:radial-gradient(circle at 35% 30%, var(--pink-tint), var(--lilac-tint) 70%);}
   .bg-decor span.b2{width:260px;height:260px;bottom:-100px;left:-80px;background:radial-gradient(circle at 40% 35%, var(--teal-tint), var(--sky-tint) 75%);}
   .bg-decor span.b3{width:180px;height:180px;bottom:14%;right:6%;background:radial-gradient(circle at 40% 35%, var(--amber-tint), var(--cream-deep) 75%);opacity:.45;}
-  .bg-decor span.b4{width:130px;height:130px;top:38%;left:2%;background:radial-gradient(circle at 40% 35%, var(--sky-tint), var(--white) 75%);opacity:.35;display:none;}
   #app{position:relative;z-index:1;}
 
   button{font-family:inherit;cursor:pointer;border:none;background:none;}
-  input{font-family:inherit;}
+  input,select{font-family:inherit;}
 
-  /* ---------- Blob badge shapes (signature element) ---------- */
+  /* ---------- Blob badge shapes ---------- */
   .blob{
     border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%;
     display:flex;align-items:center;justify-content:center;
@@ -80,7 +79,7 @@
   /* ---------- App shell ---------- */
   #app{display:flex;min-height:100vh;}
 
-  /* Sidebar (desktop) / Drawer (mobile) */
+  /* Sidebar */
   .sidebar{
     width:264px;flex-shrink:0;
     background:var(--white);
@@ -122,6 +121,9 @@
   .nav-item.active{background:var(--teal-tint);color:var(--teal-deep);}
   .nav-item .count{margin-left:auto;font-size:12px;font-weight:700;background:var(--cream-deep);color:var(--ink-soft);padding:2px 8px;border-radius:20px;}
   .nav-item.active .count{background:var(--teal);color:white;}
+  .nav-item .del-list{margin-left:auto;opacity:0;font-size:13px;color:var(--ink-faint);padding:2px 5px;border-radius:6px;transition:opacity .15s,color .15s;}
+  .nav-item:hover .del-list{opacity:1;}
+  .nav-item .del-list:hover{color:var(--coral);}
 
   .sidebar-footer{margin-top:auto;background:var(--amber-tint);border-radius:var(--radius-md);padding:16px;position:relative;overflow:hidden;}
   .sidebar-footer::after{
@@ -129,17 +131,21 @@
     background:rgba(255,255,255,.55);border-radius:58% 42% 37% 63% / 55% 60% 40% 45%;
   }
   .sidebar-footer p{margin:0 0 10px;font-size:13px;font-weight:600;color:#8A6415;line-height:1.4;position:relative;z-index:1;}
-  .sidebar-footer button{background:var(--amber);color:#4A3200;font-weight:700;font-size:13px;padding:8px 14px;border-radius:12px;position:relative;z-index:1;}
+  .sidebar-footer button{background:var(--amber);color:#4A3200;font-weight:700;font-size:13px;padding:8px 14px;border-radius:12px;position:relative;z-index:1;transition:transform .15s;}
+  .sidebar-footer button:hover{transform:scale(1.04);}
 
   .drawer-close, .hamburger{display:none;}
 
   /* Main column */
   .main{flex:1;min-width:0;display:flex;flex-direction:column;}
   .topbar{
-    display:flex;align-items:center;gap:16px;
-    padding:20px 36px;position:sticky;top:0;
+    position:sticky;top:0;
     background:rgba(251,243,230,.85);backdrop-filter:blur(10px);
-    z-index:10;
+    z-index:10;padding:20px 0;
+  }
+  .topbar-inner{
+    display:flex;align-items:center;gap:16px;
+    padding:0 36px;max-width:1080px;width:100%;margin:0 auto;
   }
   .search{
     flex:1;max-width:420px;display:flex;align-items:center;gap:10px;
@@ -204,6 +210,13 @@
     background:var(--coral-tint);color:var(--coral);font-weight:800;font-size:12px;
     width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;
   }
+  .list-card .del-card{
+    position:absolute;top:12px;right:12px;opacity:0;width:26px;height:26px;
+    border-radius:8px;background:var(--coral-tint);color:var(--coral);
+    font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;
+    transition:opacity .2s;z-index:2;
+  }
+  .list-card:hover .del-card{opacity:1;}
   .new-list-card{
     border:2px dashed var(--ink-faint);border-radius:var(--radius-md);
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
@@ -239,8 +252,9 @@
   .list-header .sub{margin:2px 0 0;color:var(--ink-soft);font-size:13.5px;font-weight:600;}
 
   .tabs{display:flex;gap:6px;background:var(--white);padding:5px;border-radius:16px;box-shadow:var(--shadow-soft);width:fit-content;margin-bottom:20px;}
-  .tab{padding:9px 20px;border-radius:12px;font-weight:700;font-size:13.5px;color:var(--ink-soft);}
+  .tab{padding:9px 20px;border-radius:12px;font-weight:700;font-size:13.5px;color:var(--ink-soft);transition:background .2s,color .2s;}
   .tab.active{background:var(--teal);color:white;}
+  .tab:hover:not(.active){background:var(--cream);}
 
   .task-list{display:flex;flex-direction:column;gap:12px;}
   .task-row{
@@ -268,6 +282,8 @@
   .pill.High{background:var(--coral-tint);color:var(--coral);}
   .pill.Medium{background:var(--amber-tint);color:#8A6415;}
   .pill.Low{background:var(--teal-tint);color:var(--teal-deep);}
+  .task-due{font-size:11.5px;color:var(--ink-faint);font-weight:500;margin-left:6px;}
+  .task-due.overdue{color:var(--coral);font-weight:700;}
 
   .task-actions{display:flex;align-items:center;gap:6px;}
   .icon-btn{
@@ -275,6 +291,7 @@
     color:var(--ink-faint);transition:all .2s ease;font-size:14px;
   }
   .icon-btn:hover{background:var(--coral-tint);color:var(--coral);}
+  .icon-btn.edit-btn:hover{background:var(--teal-tint);color:var(--teal-deep);}
 
   .empty-state{
     text-align:center;padding:60px 20px;color:var(--ink-soft);
@@ -287,10 +304,14 @@
   .add-row{
     background:var(--white);border-radius:var(--radius-md);padding:12px 14px;
     display:flex;gap:10px;align-items:center;box-shadow:var(--shadow-soft);margin-bottom:16px;
+    border:2px solid transparent;transition:border-color .2s;
   }
+  .add-row:focus-within{border-color:var(--teal);}
   .add-row input{flex:1;border:none;outline:none;font-size:14.5px;padding:8px 4px;background:none;color:var(--ink);}
   .add-row select{border:none;outline:none;background:var(--cream);border-radius:10px;padding:8px 10px;font-weight:700;font-size:12.5px;color:var(--ink-soft);}
-  .add-row button.submit{background:var(--teal);color:white;font-weight:700;font-size:13.5px;padding:9px 18px;border-radius:12px;flex-shrink:0;}
+  .add-row input.due-input{flex:0 0 130px;font-size:13px;color:var(--ink-soft);}
+  .add-row button.submit{background:var(--teal);color:white;font-weight:700;font-size:13.5px;padding:9px 18px;border-radius:12px;flex-shrink:0;transition:transform .15s,background .15s;}
+  .add-row button.submit:hover{background:var(--teal-deep);transform:scale(1.03);}
 
   .fab{
     position:fixed;bottom:28px;right:28px;width:58px;height:58px;border-radius:50%;
@@ -299,9 +320,63 @@
   }
   .fab:hover{transform:scale(1.08) rotate(90deg);}
 
-  /* ---------- Responsive: tablet & mobile ---------- */
-  .overlay{display:none;}
+  /* ---------- Modal ---------- */
+  .modal-overlay{
+    display:none;position:fixed;inset:0;z-index:100;
+    background:rgba(43,36,64,.45);backdrop-filter:blur(4px);
+    align-items:center;justify-content:center;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal{
+    background:var(--white);border-radius:var(--radius-lg);
+    padding:36px;width:100%;max-width:440px;
+    box-shadow:var(--shadow-pop);
+    position:relative;animation:modalIn .25s cubic-bezier(.2,.9,.3,1) both;
+  }
+  @keyframes modalIn{from{opacity:0;transform:scale(.93) translateY(8px);}to{opacity:1;transform:none;}}
+  .modal h2{margin:0 0 6px;font-size:22px;}
+  .modal .sub{margin:0 0 24px;color:var(--ink-soft);font-size:14px;}
+  .modal-close{
+    position:absolute;top:18px;right:18px;width:34px;height:34px;
+    border-radius:50%;background:var(--cream);
+    font-size:16px;display:flex;align-items:center;justify-content:center;
+    color:var(--ink-soft);transition:background .15s;
+  }
+  .modal-close:hover{background:var(--coral-tint);color:var(--coral);}
+  .field-group{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+  .field-label{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);}
+  .field-input{
+    border:2px solid var(--cream-deep);border-radius:14px;
+    padding:12px 14px;font-size:14.5px;color:var(--ink);
+    outline:none;transition:border-color .2s;width:100%;
+    background:var(--cream);
+  }
+  .field-input:focus{border-color:var(--teal);}
+  .prio-pills{display:flex;gap:8px;}
+  .prio-pill{
+    flex:1;padding:10px;border-radius:12px;border:2px solid transparent;
+    font-weight:700;font-size:13px;transition:all .2s;
+  }
+  .prio-pill[data-p="High"]{background:var(--coral-tint);color:var(--coral);}
+  .prio-pill[data-p="Medium"]{background:var(--amber-tint);color:#8A6415;}
+  .prio-pill[data-p="Low"]{background:var(--teal-tint);color:var(--teal-deep);}
+  .prio-pill.selected[data-p="High"]{border-color:var(--coral);}
+  .prio-pill.selected[data-p="Medium"]{border-color:var(--amber);}
+  .prio-pill.selected[data-p="Low"]{border-color:var(--teal-deep);}
+  .modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:24px;}
+  .btn-ghost{background:var(--cream);color:var(--ink-soft);font-weight:700;font-size:14px;padding:12px 20px;border-radius:14px;transition:background .15s;}
+  .btn-ghost:hover{background:var(--cream-deep);}
+  .btn-primary{background:var(--teal);color:white;font-weight:700;font-size:14px;padding:12px 22px;border-radius:14px;transition:background .15s,transform .15s;}
+  .btn-primary:hover{background:var(--teal-deep);transform:scale(1.02);}
+  .btn-danger{background:var(--coral-tint);color:var(--coral);font-weight:700;font-size:14px;padding:12px 22px;border-radius:14px;transition:background .15s;}
+  .btn-danger:hover{background:var(--coral);color:white;}
 
+  /* Search results */
+  .search-results-title{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 14px;}
+  .search-highlight{background:var(--amber-tint);border-radius:3px;padding:0 2px;}
+
+  /* Responsive */
+  .overlay{display:none;}
   @media (max-width: 900px){
     .sidebar{
       position:fixed;top:0;left:0;bottom:0;transform:translateX(-100%);
@@ -313,31 +388,25 @@
       display:flex;width:40px;height:40px;border-radius:12px;background:var(--white);
       box-shadow:var(--shadow-soft);align-items:center;justify-content:center;font-size:16px;flex-shrink:0;
     }
-    .overlay{
-      display:none;position:fixed;inset:0;background:rgba(43,36,64,.35);z-index:15;
-    }
+    .overlay{display:none;position:fixed;inset:0;background:rgba(43,36,64,.35);z-index:15;}
     .overlay.show{display:block;}
-    .topbar{padding:16px 18px;}
+    .topbar{padding:12px 0;}
+    .topbar-inner{padding:0 18px;}
     .content{padding:4px 18px 90px;}
     .hero{padding:24px 20px;flex-direction:column;align-items:flex-start;gap:14px;}
-    .hero-emoji{align-self:center;}
-    .hero-emoji svg{width:120px;height:96px;}
-    .bg-decor span.b1{width:220px;height:220px;top:-90px;right:-70px;}
-    .bg-decor span.b2{width:170px;height:170px;}
     .overview-card{flex-direction:column;align-items:stretch;gap:18px;}
     .overview-divider{display:none;}
     .lists-grid{grid-template-columns:1fr 1fr;gap:12px;}
     .search{max-width:none;}
     .fab{bottom:20px;right:20px;width:52px;height:52px;font-size:22px;}
+    .add-row .due-input{display:none;}
   }
-
   @media (max-width: 520px){
     .lists-grid{grid-template-columns:1fr;}
-    .brand span{font-size:19px;}
     .hero-text h1{font-size:22px;}
     .task-row{padding:14px;gap:10px;}
-    .task-actions .icon-btn:first-child{display:none;}
     .list-header h2{font-size:20px;}
+    .modal{padding:24px;margin:16px;}
   }
 </style>
 </head>
@@ -347,7 +416,6 @@
   <span class="b1"></span>
   <span class="b2"></span>
   <span class="b3"></span>
-  <span class="b4"></span>
 </div>
 
 <div id="app">
@@ -368,28 +436,30 @@
     </div>
 
     <div class="sidebar-footer">
-      <p>You're 33% through your week. Keep the streak going! 🔥</p>
+      <p id="footerMotivation">Keep the streak going! 🔥</p>
       <button id="addListBtn">+ New list</button>
     </div>
   </aside>
 
   <div class="main">
     <div class="topbar">
-      <button class="hamburger" id="hamburger">☰</button>
-      <div class="search">
-        <span>🔍</span>
-        <input type="text" placeholder="Search tasks...">
-      </div>
-      <div class="spacer"></div>
-      <div class="avatar" title="Ender">
-        <svg viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="21" cy="17" r="8.5" fill="#FFE8CF"/>
-          <path d="M8 41c0-9.4 7.7-15.5 13-15.5S34 31.6 34 41Z" fill="#FFE8CF"/>
-          <path d="M13 15c0-6 4-9.5 8-9.5s8 3.5 8 9.5c0 1-3 2.5-8 2.5s-8-1.5-8-2.5Z" fill="#4A3B63"/>
-          <circle cx="17.6" cy="17.5" r="1.3" fill="#4A3B63"/>
-          <circle cx="24.4" cy="17.5" r="1.3" fill="#4A3B63"/>
-          <path d="M18.3 21.3c.9.7 2.6.7 3.4 0" stroke="#C77B4F" stroke-width="1.2" stroke-linecap="round" fill="none"/>
-        </svg>
+      <div class="topbar-inner">
+        <button class="hamburger" id="hamburger">☰</button>
+        <div class="search">
+          <span>🔍</span>
+          <input type="text" id="searchInput" placeholder="Search tasks...">
+        </div>
+        <div class="spacer"></div>
+        <div class="avatar" title="Ender">
+          <svg viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="21" cy="17" r="8.5" fill="#FFE8CF"/>
+            <path d="M8 41c0-9.4 7.7-15.5 13-15.5S34 31.6 34 41Z" fill="#FFE8CF"/>
+            <path d="M13 15c0-6 4-9.5 8-9.5s8 3.5 8 9.5c0 1-3 2.5-8 2.5s-8-1.5-8-2.5Z" fill="#4A3B63"/>
+            <circle cx="17.6" cy="17.5" r="1.3" fill="#4A3B63"/>
+            <circle cx="24.4" cy="17.5" r="1.3" fill="#4A3B63"/>
+            <path d="M18.3 21.3c.9.7 2.6.7 3.4 0" stroke="#C77B4F" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
       </div>
     </div>
 
@@ -401,63 +471,305 @@
   <button class="fab" id="fab">+</button>
 </div>
 
+<!-- ─── New List Modal ─── -->
+<div class="modal-overlay" id="newListModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('newListModal')">✕</button>
+    <h2>Create New List ✨</h2>
+    <p class="sub">Give your list a name and choose an icon.</p>
+
+    <div class="field-group">
+      <div class="field-label">List Name</div>
+      <input class="field-input" id="newListName" placeholder="e.g. Health, Finance, Travel…" maxlength="32">
+    </div>
+
+    <div class="field-group">
+      <div class="field-label">Pick an Icon</div>
+      <div id="emojiPicker" style="display:flex;flex-wrap:wrap;gap:8px;">
+        <!-- injected -->
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="closeModal('newListModal')">Cancel</button>
+      <button class="btn-primary" onclick="createList()">Create List</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── New / Edit Task Modal ─── -->
+<div class="modal-overlay" id="taskModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('taskModal')">✕</button>
+    <h2 id="taskModalTitle">Add New Task</h2>
+    <p class="sub" id="taskModalSub">Fill in the details below.</p>
+
+    <div class="field-group">
+      <div class="field-label">Task Title</div>
+      <input class="field-input" id="modalTaskTitle" placeholder="What needs to be done?" maxlength="120">
+    </div>
+
+    <div class="field-group">
+      <div class="field-label">Priority</div>
+      <div class="prio-pills">
+        <button class="prio-pill" data-p="Low" onclick="selectPrio(this)">🟢 Low</button>
+        <button class="prio-pill selected" data-p="Medium" onclick="selectPrio(this)">🟡 Medium</button>
+        <button class="prio-pill" data-p="High" onclick="selectPrio(this)">🔴 High</button>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <div class="field-label">Due Date <span style="font-weight:400;text-transform:none;letter-spacing:0;">(optional)</span></div>
+      <input class="field-input" id="modalTaskDue" type="date">
+    </div>
+
+    <input type="hidden" id="editingTaskId">
+
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="closeModal('taskModal')">Cancel</button>
+      <button class="btn-primary" onclick="saveTaskFromModal()">Save Task</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Confirm Delete Modal ─── -->
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal" style="max-width:380px;">
+    <h2 id="confirmTitle">Delete?</h2>
+    <p class="sub" id="confirmMsg">This action cannot be undone.</p>
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="closeModal('confirmModal')">Cancel</button>
+      <button class="btn-danger" id="confirmYesBtn">Delete</button>
+    </div>
+  </div>
+</div>
+
 <script>
-/* ---------------- Data model ---------------- */
-const LIST_META = {
-  today:    { name:"Today",    emoji:"☀️", bg:"var(--amber-tint)" },
-  planned:  { name:"Planned",  emoji:"📅", bg:"var(--sky-tint)" },
-  personal: { name:"Personal", emoji:"🙂", bg:"var(--lilac-tint)" },
-  work:     { name:"Work",     emoji:"💼", bg:"var(--cream-deep)" },
-  shopping: { name:"Shopping", emoji:"🛍️", bg:"var(--pink-tint)" },
+/* ═══════════════════════════════════════════════════════════
+   TASKLY — Full Featured JS App  (localStorage persistence)
+═══════════════════════════════════════════════════════════ */
+
+const EMOJI_OPTIONS = ["📝","🎯","💡","🏃","❤️","🎵","📚","🌍","🍕","⚽","🎮","💰","🏠","✈️","🌱","💪","🎨","🛒","🧘","🔧"];
+
+const DEFAULT_LISTS = {
+  today:    { name:"Today",    emoji:"☀️", bg:"var(--amber-tint)", custom:false },
+  planned:  { name:"Planned",  emoji:"📅", bg:"var(--sky-tint)",   custom:false },
+  personal: { name:"Personal", emoji:"🙂", bg:"var(--lilac-tint)", custom:false },
+  work:     { name:"Work",     emoji:"💼", bg:"var(--cream-deep)", custom:false },
+  shopping: { name:"Shopping", emoji:"🛍️", bg:"var(--pink-tint)",  custom:false },
 };
 
-let tasks = [
-  { id:1, list:"personal", title:"Go to gym",        priority:"High",   done:false },
-  { id:2, list:"personal", title:"Meet friends",      priority:"Medium", done:false },
-  { id:3, list:"personal", title:"Buy theatre ticket",priority:"Medium", done:false },
-  { id:4, list:"personal", title:"Go to Market",      priority:"Low",    done:true  },
-  { id:5, list:"personal", title:"Change your picture",priority:"Low",   done:true  },
-  { id:6, list:"personal", title:"Watch Westworld",   priority:"Low",    done:true  },
-  { id:7, list:"work",     title:"Send project files",priority:"High",  done:false },
-  { id:8, list:"work",     title:"Pay bills",         priority:"Medium", done:false },
-  { id:9, list:"shopping", title:"Add your portfolio",priority:"Low",    done:false },
-];
-let nextId = 10;
+const BG_PALETTE = ["var(--teal-tint)","var(--lilac-tint)","var(--sky-tint)","var(--pink-tint)","var(--amber-tint)","var(--coral-tint)"];
 
-let state = { view:"dashboard", list:"personal", tab:"All" };
+/* ─── Persistence ─────────────────────────────────────────── */
+function load(){
+  const raw = localStorage.getItem("taskly_v2");
+  if(raw) return JSON.parse(raw);
+  return {
+    lists: {...DEFAULT_LISTS},
+    tasks: [
+      { id:1,  list:"personal", title:"Go to gym",           priority:"High",   done:false, due:"" },
+      { id:2,  list:"personal", title:"Meet friends",         priority:"Medium", done:false, due:"" },
+      { id:3,  list:"personal", title:"Buy theatre ticket",   priority:"Medium", done:false, due:"" },
+      { id:4,  list:"personal", title:"Go to Market",         priority:"Low",    done:true,  due:"" },
+      { id:5,  list:"work",     title:"Send project files",   priority:"High",   done:false, due:"" },
+      { id:6,  list:"work",     title:"Pay bills",            priority:"Medium", done:false, due:"" },
+      { id:7,  list:"shopping", title:"Oat milk & eggs",      priority:"Low",    done:false, due:"" },
+      { id:8,  list:"shopping", title:"New headphones",       priority:"Low",    done:true,  due:"" },
+    ],
+    nextId: 9,
+  };
+}
+function save(){ localStorage.setItem("taskly_v2", JSON.stringify(DATA)); }
 
-/* ---------------- Helpers ---------------- */
-const $ = sel => document.querySelector(sel);
+let DATA = load();
+let state = { view:"dashboard", list:"personal", tab:"All", search:"" };
+let _selectedPrio = "Medium";
+let _selectedEmoji = "📝";
+
+/* ─── Helpers ─────────────────────────────────────────────── */
+const $ = s => document.querySelector(s);
 const el = (tag, cls, html) => { const e=document.createElement(tag); if(cls) e.className=cls; if(html!==undefined) e.innerHTML=html; return e; };
+const esc = s => s.replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]);
 
-function tasksFor(listId){ return tasks.filter(t=>t.list===listId); }
+function tasksFor(listId){ 
+  if(listId==="today"){
+    const t = new Date().toISOString().slice(0,10);
+    return DATA.tasks.filter(x=>x.due===t);
+  }
+  if(listId==="planned"){
+    return DATA.tasks.filter(x=>x.due && x.due!=="");
+  }
+  return DATA.tasks.filter(x=>x.list===listId); 
+}
 function pendingCount(listId){ return tasksFor(listId).filter(t=>!t.done).length; }
 
-/* ---------------- Sidebar nav ---------------- */
-function renderNav(){
-  const nav = $("#navLists");
-  nav.innerHTML = "";
-  Object.keys(LIST_META).forEach(id=>{
-    const meta = LIST_META[id];
-    const count = tasksFor(id).length;
-    const btn = el("button", "nav-item" + (state.list===id && state.view==="list" ? " active":""));
-    btn.innerHTML = `<span class="ic" style="background:${meta.bg}">${meta.emoji}</span> ${meta.name} ${count?`<span class="count">${count}</span>`:""}`;
-    btn.onclick = ()=>{ state.view="list"; state.list=id; state.tab="All"; closeDrawer(); render(); };
-    nav.appendChild(btn);
+function greeting(){
+  const h = new Date().getHours();
+  if(h<12) return "Good morning";
+  if(h<17) return "Good afternoon";
+  return "Good evening";
+}
+
+function motivationText(){
+  const total = DATA.tasks.length;
+  const done = DATA.tasks.filter(t=>t.done).length;
+  const pct = total ? Math.round(done/total*100) : 0;
+  if(pct===100) return "All done! You crushed it today. 🎉";
+  if(pct>=60) return `${pct}% done — almost there! 💪`;
+  if(pct>=30) return `${pct}% complete. Keep the streak! 🔥`;
+  return "Let's get started — one task at a time. ✨";
+}
+
+function isOverdue(due){ return due && due < new Date().toISOString().slice(0,10); }
+
+/* ─── Modals ──────────────────────────────────────────────── */
+function openModal(id){ document.getElementById(id).classList.add("open"); }
+function closeModal(id){ document.getElementById(id).classList.remove("open"); }
+
+/* ─── New List ────────────────────────────────────────────── */
+function openNewListModal(){
+  $("#newListName").value = "";
+  _selectedEmoji = "📝";
+  const picker = $("#emojiPicker");
+  picker.innerHTML = "";
+  EMOJI_OPTIONS.forEach(e=>{
+    const btn = document.createElement("button");
+    btn.textContent = e;
+    btn.style.cssText="font-size:22px;width:40px;height:40px;border-radius:10px;background:var(--cream);border:2px solid transparent;transition:all .15s;cursor:pointer;";
+    if(e===_selectedEmoji) btn.style.borderColor="var(--teal)";
+    btn.onclick = ()=>{
+      _selectedEmoji = e;
+      picker.querySelectorAll("button").forEach(b=>b.style.borderColor="transparent");
+      btn.style.borderColor="var(--teal)";
+    };
+    picker.appendChild(btn);
+  });
+  openModal("newListModal");
+  setTimeout(()=>$("#newListName").focus(),80);
+}
+
+function createList(){
+  const name = $("#newListName").value.trim();
+  if(!name) return;
+  const id = "custom_"+Date.now();
+  const bgIdx = Object.keys(DATA.lists).filter(k=>DATA.lists[k].custom).length % BG_PALETTE.length;
+  DATA.lists[id] = { name, emoji:_selectedEmoji, bg:BG_PALETTE[bgIdx], custom:true };
+  save();
+  closeModal("newListModal");
+  render();
+}
+
+function deleteList(id){
+  showConfirm(
+    "Delete List",
+    `Delete "${DATA.lists[id].name}" and all its tasks?`,
+    ()=>{
+      DATA.tasks = DATA.tasks.filter(t=>t.list!==id);
+      delete DATA.lists[id];
+      if(state.list===id){ state.view="dashboard"; }
+      save(); render();
+    }
+  );
+}
+
+/* ─── Task CRUD ───────────────────────────────────────────── */
+function openAddTaskModal(){
+  $("#taskModalTitle").textContent="Add New Task";
+  $("#taskModalSub").textContent="Fill in the details below.";
+  $("#modalTaskTitle").value="";
+  $("#modalTaskDue").value="";
+  $("#editingTaskId").value="";
+  _selectedPrio="Medium";
+  document.querySelectorAll(".prio-pill").forEach(p=>p.classList.toggle("selected", p.dataset.p==="Medium"));
+  openModal("taskModal");
+  setTimeout(()=>$("#modalTaskTitle").focus(),80);
+}
+
+function openEditModal(id){
+  const t = DATA.tasks.find(x=>x.id==id);
+  if(!t) return;
+  $("#taskModalTitle").textContent="Edit Task";
+  $("#taskModalSub").textContent="Update task details.";
+  $("#modalTaskTitle").value=t.title;
+  $("#modalTaskDue").value=t.due||"";
+  $("#editingTaskId").value=id;
+  _selectedPrio=t.priority;
+  document.querySelectorAll(".prio-pill").forEach(p=>p.classList.toggle("selected", p.dataset.p===t.priority));
+  openModal("taskModal");
+  setTimeout(()=>$("#modalTaskTitle").focus(),80);
+}
+
+function selectPrio(btn){
+  _selectedPrio = btn.dataset.p;
+  document.querySelectorAll(".prio-pill").forEach(p=>p.classList.toggle("selected", p===btn));
+}
+
+function saveTaskFromModal(){
+  const title = $("#modalTaskTitle").value.trim();
+  if(!title) return;
+  const due = $("#modalTaskDue").value;
+  const editId = $("#editingTaskId").value;
+
+  if(editId){
+    const t = DATA.tasks.find(x=>x.id==editId);
+    if(t){ t.title=title; t.priority=_selectedPrio; t.due=due; }
+  } else {
+    DATA.tasks.push({ id:DATA.nextId++, list:state.list, title, priority:_selectedPrio, done:false, due });
+  }
+  save();
+  closeModal("taskModal");
+  render();
+}
+
+function toggleTask(id){
+  const t = DATA.tasks.find(x=>x.id==id);
+  if(t){ t.done=!t.done; save(); render(); }
+}
+
+function deleteTask(id){
+  showConfirm("Delete Task","Are you sure you want to delete this task?",()=>{
+    DATA.tasks = DATA.tasks.filter(x=>x.id!=id);
+    save(); render();
   });
 }
 
-/* ---------------- Dashboard view ---------------- */
+/* ─── Confirm helper ─────────────────────────────────────── */
+function showConfirm(title, msg, onYes){
+  $("#confirmTitle").textContent=title;
+  $("#confirmMsg").textContent=msg;
+  const btn = $("#confirmYesBtn");
+  btn.onclick = ()=>{ onYes(); closeModal("confirmModal"); };
+  openModal("confirmModal");
+}
+
+/* ─── Sidebar nav ─────────────────────────────────────────── */
+function renderNav(){
+  const nav = $("#navLists");
+  nav.innerHTML = '<div class="nav-label">My Lists</div>';
+  Object.keys(DATA.lists).forEach(id=>{
+    const meta = DATA.lists[id];
+    const count = tasksFor(id).length;
+    const isActive = state.list===id && state.view==="list";
+    const btn = el("button", "nav-item"+(isActive?" active":""));
+    btn.innerHTML = `<span class="ic" style="background:${meta.bg}">${meta.emoji}</span> ${esc(meta.name)} ${count?`<span class="count">${count}</span>`:""}${meta.custom?`<button class="del-list" title="Delete list" onclick="event.stopPropagation();deleteList('${id}')">✕</button>`:""}`;
+    btn.onclick = ()=>{ state.view="list"; state.list=id; state.tab="All"; closeDrawer(); render(); };
+    nav.appendChild(btn);
+  });
+  $("#footerMotivation").textContent = motivationText();
+}
+
+/* ─── Dashboard ───────────────────────────────────────────── */
 function renderDashboard(container){
-  const total = tasks.length;
-  const done = tasks.filter(t=>t.done).length;
+  const total = DATA.tasks.length;
+  const done  = DATA.tasks.filter(t=>t.done).length;
   const pending = total-done;
   const pct = total ? Math.round(done/total*100) : 0;
 
   const hero = el("div","hero",`
     <div class="hero-text">
-      <h1>Good evening, Ender 👋</h1>
-      <p>${pending===0 ? "Nothing due today — enjoy the calm! 🎉" : `You have ${pending} tasks waiting for you.`}</p>
+      <h1>${greeting()}, Ender 👋</h1>
+      <p>${pending===0 ? "Nothing due today — enjoy the calm! 🎉" : `You have <strong>${pending}</strong> task${pending!==1?"s":""} waiting.`}</p>
     </div>
     <div class="hero-emoji">
       <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
@@ -467,7 +779,7 @@ function renderDashboard(container){
         <path d="M30 74 q14 -12 28 0" stroke="var(--sky)" stroke-width="5" stroke-linecap="round" fill="none" opacity=".45"/>
         <rect x="58" y="86" width="58" height="42" rx="8" fill="var(--white)" stroke="var(--cream-deep)" stroke-width="2"/>
         <rect x="68" y="96" width="26" height="5" rx="2.5" fill="var(--teal-tint)"/>
-        <rect x="68" y="96" width="20" height="5" rx="2.5" fill="var(--teal)"/>
+        <rect x="68" y="96" width="${Math.round(20*(pct/100)+6)}" height="5" rx="2.5" fill="var(--teal)"/>
         <rect x="68" y="107" width="26" height="5" rx="2.5" fill="var(--coral-tint)"/>
         <rect x="68" y="107" width="12" height="5" rx="2.5" fill="var(--coral)"/>
         <rect x="68" y="118" width="26" height="5" rx="2.5" fill="var(--amber-tint)"/>
@@ -484,38 +796,42 @@ function renderDashboard(container){
 
   container.appendChild(el("div","section-title","My Lists"));
   const grid = el("div","lists-grid");
-  Object.keys(LIST_META).forEach(id=>{
-    const meta = LIST_META[id];
+
+  Object.keys(DATA.lists).forEach(id=>{
+    const meta = DATA.lists[id];
     const count = tasksFor(id).length;
     const pend = pendingCount(id);
     const card = el("button","list-card");
     card.innerHTML = `
+      ${meta.custom?`<button class="del-card" title="Delete list" onclick="event.stopPropagation();deleteList('${id}')">✕</button>`:""}
       <div style="display:flex;justify-content:space-between;align-items:flex-start;">
         <div class="blob" style="background:${meta.bg}">${meta.emoji}</div>
         ${pend?`<div class="badge">${pend}</div>`:""}
       </div>
-      <h3>${meta.name}</h3>
+      <h3>${esc(meta.name)}</h3>
       <div class="meta"><span>${count} task${count!==1?"s":""}</span></div>
     `;
     card.onclick = ()=>{ state.view="list"; state.list=id; state.tab="All"; render(); };
     grid.appendChild(card);
   });
+
   const newCard = el("button","new-list-card",`<div class="plus-ic">+</div> Create new list`);
-  newCard.onclick = ()=>alert("Naming a new list would go here ✨");
+  newCard.onclick = openNewListModal;
   grid.appendChild(newCard);
   container.appendChild(grid);
 
   container.appendChild(el("div","section-title","Overview"));
-  const ring = pct;
+  const circumference = 2*Math.PI*36;
   const overview = el("div","overview-card",`
     <div class="ring-wrap">
       <svg width="86" height="86" viewBox="0 0 86 86">
         <circle cx="43" cy="43" r="36" fill="none" stroke="var(--cream-deep)" stroke-width="10"/>
         <circle cx="43" cy="43" r="36" fill="none" stroke="var(--teal)" stroke-width="10"
-          stroke-linecap="round" stroke-dasharray="${2*Math.PI*36}"
-          stroke-dashoffset="${2*Math.PI*36*(1-ring/100)}"
-          transform="rotate(-90 43 43)"/>
-        <text x="43" y="49" text-anchor="middle" font-family="Baloo 2" font-weight="700" font-size="18" fill="var(--ink)">${ring}%</text>
+          stroke-linecap="round" stroke-dasharray="${circumference}"
+          stroke-dashoffset="${circumference*(1-pct/100)}"
+          transform="rotate(-90 43 43)"
+          style="transition:stroke-dashoffset .6s ease"/>
+        <text x="43" y="49" text-anchor="middle" font-family="Baloo 2" font-weight="700" font-size="18" fill="var(--ink)">${pct}%</text>
       </svg>
     </div>
     <div class="stat"><span class="num">${total}</span><span class="lbl">Total</span></div>
@@ -527,9 +843,10 @@ function renderDashboard(container){
   container.appendChild(overview);
 }
 
-/* ---------------- List detail view ---------------- */
+/* ─── List detail ─────────────────────────────────────────── */
 function renderListView(container){
-  const meta = LIST_META[state.list];
+  const meta = DATA.lists[state.list];
+  if(!meta){ state.view="dashboard"; render(); return; }
   const listTasks = tasksFor(state.list);
   const pending = listTasks.filter(t=>!t.done).length;
 
@@ -540,19 +857,20 @@ function renderListView(container){
   const header = el("div","list-header",`
     <div class="blob" style="background:${meta.bg}">${meta.emoji}</div>
     <div>
-      <h2>${meta.name}</h2>
-      <p class="sub">${pending} pending</p>
+      <h2>${esc(meta.name)}</h2>
+      <p class="sub">${pending} pending · ${listTasks.length} total</p>
     </div>
   `);
   container.appendChild(header);
 
-  const addRow = el("div","add-row",`
-    <input type="text" id="newTaskInput" placeholder="Add a new task...">
-    <select id="newTaskPriority">
-      <option>Low</option><option>Medium</option><option>High</option>
-    </select>
+  // Add task row
+  const addRow = el("div","add-row");
+  addRow.innerHTML=`
+    <input type="text" id="newTaskInput" placeholder="Add a task and press Enter…">
+    <input type="date" id="newTaskDue" class="due-input" title="Due date">
+    <select id="newTaskPriority"><option>Low</option><option selected>Medium</option><option>High</option></select>
     <button class="submit" id="addTaskBtn">Add</button>
-  `);
+  `;
   container.appendChild(addRow);
 
   const tabs = el("div","tabs");
@@ -564,8 +882,16 @@ function renderListView(container){
   container.appendChild(tabs);
 
   let filtered = listTasks;
-  if(state.tab==="Active") filtered = listTasks.filter(t=>!t.done);
+  if(state.tab==="Active")    filtered = listTasks.filter(t=>!t.done);
   if(state.tab==="Completed") filtered = listTasks.filter(t=>t.done);
+
+  // Sort: pending first → priority → due
+  const prioOrder={High:0,Medium:1,Low:2};
+  filtered.sort((a,b)=>{
+    if(a.done!==b.done) return a.done?1:-1;
+    if(prioOrder[a.priority]!==prioOrder[b.priority]) return prioOrder[a.priority]-prioOrder[b.priority];
+    return (a.due||"9999")>(b.due||"9999")?1:-1;
+  });
 
   const taskList = el("div","task-list");
   if(filtered.length===0){
@@ -577,23 +903,23 @@ function renderListView(container){
           <path d="M40 60h40l-2 9H42Z" fill="var(--coral-tint)"/>
           <path d="M60 60c0-22-18-24-18-24s-2 18 18 24Z" fill="var(--teal)"/>
           <path d="M60 60c0-26 20-28 20-28s3 20-20 28Z" fill="var(--teal-deep)"/>
-          <path d="M60 60c0-16-13-19-13-19s-2 14 13 19Z" fill="var(--teal-tint)"/>
         </svg>
       </div>
-      <p>Nothing here yet. Add a task to get started.</p>
+      <p>Nothing here yet. Add your first task!</p>
     `));
   } else {
     filtered.forEach(t=>{
       const row = el("div",`task-row priority-${t.priority}${t.done?" done":""}`);
+      const dueLabel = t.due ? `<span class="task-due${isOverdue(t.due)&&!t.done?" overdue":""}">📅 ${t.due}</span>` : "";
       row.innerHTML = `
-        <button class="checkbox ${t.done?"checked":""}" data-id="${t.id}">${t.done?"✓":""}</button>
+        <button class="checkbox ${t.done?"checked":""}" data-id="${t.id}" aria-label="Toggle task">${t.done?"✓":""}</button>
         <div class="task-body">
-          <p class="task-title">${t.title}</p>
-          <span class="pill ${t.priority}">${t.priority}</span>
+          <p class="task-title">${esc(t.title)}</p>
+          <span class="pill ${t.priority}">${t.priority}</span>${dueLabel}
         </div>
         <div class="task-actions">
-          <button class="icon-btn">↗</button>
-          <button class="icon-btn del" data-id="${t.id}">✕</button>
+          <button class="icon-btn edit-btn" data-id="${t.id}" title="Edit">✏</button>
+          <button class="icon-btn del-btn" data-id="${t.id}" title="Delete">✕</button>
         </div>
       `;
       taskList.appendChild(row);
@@ -601,21 +927,15 @@ function renderListView(container){
   }
   container.appendChild(taskList);
 
-  // events
-  $("#addTaskBtn").onclick = addTask;
-  $("#newTaskInput").onkeydown = e=>{ if(e.key==="Enter") addTask(); };
+  // Wire events
   container.querySelectorAll(".checkbox").forEach(cb=>{
-    cb.onclick = ()=>{
-      const t = tasks.find(x=>x.id==cb.dataset.id);
-      t.done = !t.done;
-      render();
-    };
+    cb.onclick = ()=>toggleTask(+cb.dataset.id);
   });
-  container.querySelectorAll(".del").forEach(btn=>{
-    btn.onclick = ()=>{
-      tasks = tasks.filter(x=>x.id!=btn.dataset.id);
-      render();
-    };
+  container.querySelectorAll(".del-btn").forEach(btn=>{
+    btn.onclick = ()=>deleteTask(+btn.dataset.id);
+  });
+  container.querySelectorAll(".edit-btn").forEach(btn=>{
+    btn.onclick = ()=>openEditModal(+btn.dataset.id);
   });
 
   function addTask(){
@@ -623,34 +943,110 @@ function renderListView(container){
     const val = input.value.trim();
     if(!val) return;
     const priority = $("#newTaskPriority").value;
-    tasks.push({ id:nextId++, list:state.list, title:val, priority, done:false });
+    const due = $("#newTaskDue").value;
+    DATA.tasks.push({ id:DATA.nextId++, list:state.list, title:val, priority, done:false, due });
+    save();
     render();
   }
+  $("#addTaskBtn").onclick = addTask;
+  $("#newTaskInput").onkeydown = e=>{ if(e.key==="Enter") addTask(); };
 }
 
-/* ---------------- Render root ---------------- */
+/* ─── Search view ─────────────────────────────────────────── */
+function renderSearchView(container, query){
+  const q = query.toLowerCase();
+  const results = DATA.tasks.filter(t=>t.title.toLowerCase().includes(q));
+
+  container.appendChild(el("div","search-results-title",`Search results for "${esc(query)}" · ${results.length} found`));
+
+  if(results.length===0){
+    container.appendChild(el("div","empty-state","<p>No tasks match that search.</p>"));
+    return;
+  }
+
+  const taskList = el("div","task-list");
+  results.forEach(t=>{
+    const meta = DATA.lists[t.list];
+    const row = el("div",`task-row priority-${t.priority}${t.done?" done":""}`);
+    const hi = esc(t.title).replace(new RegExp(`(${esc(q)})`,"gi"),'<mark class="search-highlight">$1</mark>');
+    row.innerHTML=`
+      <button class="checkbox ${t.done?"checked":""}" data-id="${t.id}">${t.done?"✓":""}</button>
+      <div class="task-body">
+        <p class="task-title">${hi}</p>
+        <span class="pill ${t.priority}">${t.priority}</span>
+        ${meta?`<span style="font-size:11px;color:var(--ink-faint);margin-left:6px;">${meta.emoji} ${esc(meta.name)}</span>`:""}
+      </div>
+      <div class="task-actions">
+        <button class="icon-btn edit-btn" data-id="${t.id}" title="Edit">✏</button>
+        <button class="icon-btn del-btn" data-id="${t.id}" title="Delete">✕</button>
+      </div>
+    `;
+    taskList.appendChild(row);
+  });
+  container.appendChild(taskList);
+
+  container.querySelectorAll(".checkbox").forEach(cb=>cb.onclick=()=>toggleTask(+cb.dataset.id));
+  container.querySelectorAll(".del-btn").forEach(b=>b.onclick=()=>deleteTask(+b.dataset.id));
+  container.querySelectorAll(".edit-btn").forEach(b=>b.onclick=()=>openEditModal(+b.dataset.id));
+}
+
+/* ─── Root render ─────────────────────────────────────────── */
 function render(){
   renderNav();
   const content = $("#content");
   content.innerHTML = "";
-  if(state.view==="dashboard") renderDashboard(content);
-  else renderListView(content);
+  const q = state.search.trim();
+  if(q){
+    renderSearchView(content, q);
+  } else if(state.view==="dashboard"){
+    renderDashboard(content);
+  } else {
+    renderListView(content);
+  }
 }
 
-/* ---------------- Drawer (mobile) ---------------- */
+/* ─── Drawer (mobile) ─────────────────────────────────────── */
 function openDrawer(){ $("#sidebar").classList.add("open"); $("#overlay").classList.add("show"); }
 function closeDrawer(){ $("#sidebar").classList.remove("open"); $("#overlay").classList.remove("show"); }
 $("#hamburger").onclick = openDrawer;
 $("#drawerClose").onclick = closeDrawer;
 $("#overlay").onclick = closeDrawer;
 
-$("#addListBtn").onclick = ()=>alert("Naming a new list would go here ✨");
+/* ─── Search ──────────────────────────────────────────────── */
+const searchInput = $("#searchInput");
+searchInput.oninput = ()=>{
+  state.search = searchInput.value;
+  render();
+};
+searchInput.onkeydown = e=>{ if(e.key==="Escape"){ state.search=""; searchInput.value=""; render(); } };
+
+/* ─── FAB ────────────────────────────────────────────────── */
 $("#fab").onclick = ()=>{
-  if(state.view==="dashboard"){ state.view="list"; state.list="personal"; render(); }
-  const input = document.getElementById("newTaskInput");
-  if(input) input.focus();
+  if(state.view==="dashboard"){ state.view="list"; state.list="personal"; state.tab="All"; render(); }
+  openAddTaskModal();
 };
 
+/* ─── Add list btn ────────────────────────────────────────── */
+$("#addListBtn").onclick = openNewListModal;
+
+/* ─── Keyboard shortcuts ──────────────────────────────────── */
+document.addEventListener("keydown", e=>{
+  if(document.querySelector(".modal-overlay.open")) return;
+  if(e.key==="n"&&!["INPUT","SELECT","TEXTAREA"].includes(document.activeElement.tagName)){
+    if(state.view==="list") openAddTaskModal();
+  }
+  if(e.key==="/"&&!["INPUT","SELECT","TEXTAREA"].includes(document.activeElement.tagName)){
+    e.preventDefault(); searchInput.focus();
+  }
+  if(e.key==="Escape"&&state.view==="list"){ state.view="dashboard"; render(); }
+});
+
+/* ─── Close modals on backdrop click ─────────────────────── */
+document.querySelectorAll(".modal-overlay").forEach(ov=>{
+  ov.onclick = e=>{ if(e.target===ov) ov.classList.remove("open"); };
+});
+
+/* ─── Boot ────────────────────────────────────────────────── */
 render();
 </script>
 </body>

@@ -1,4 +1,4 @@
-# Tudy — Advanced To-Do List Manager (Python)
+# Taskly — Advanced To-Do List Manager (Python)
 
 An advanced, GUI-based evolution of the original CLI To-Do List project brief.
 It fulfils every original requirement (add / view / complete / delete / JSON

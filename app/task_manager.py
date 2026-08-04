@@ -1,7 +1,7 @@
 """
 task_manager.py
 ---------------
-Core business logic for the Tudy (To-Do) application.
+Core business logic for the Taskly (To-Do) application.
 
 Responsibilities:
     * Load / save tasks from a JSON file (persistent storage)

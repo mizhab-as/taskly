@@ -1,5 +1,5 @@
 @echo off
-REM Launcher script for Tudy To-Do List Application on Windows
+REM Launcher script for Taskly To-Do List Application on Windows
 
 cd /d "%~dp0"
 

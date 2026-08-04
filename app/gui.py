@@ -1,7 +1,7 @@
 """
 gui.py
 ------
-Premium dark-mode Tkinter GUI for Tudy — Advanced Task Manager.
+Premium dark-mode Tkinter GUI for Taskly — Advanced Task Manager.
 
 Design language:
     * Deep navy/charcoal dark mode with vivid accent colors
@@ -474,10 +474,10 @@ class TaskModal(DarkModal):
 
 class AboutModal(DarkModal):
     def __init__(self, parent):
-        super().__init__(parent, title="✦  About Tudy", width=360, height=280)
+        super().__init__(parent, title="✦  About Taskly", width=360, height=280)
         tk.Label(self.body, text="🚀", font=("Segoe UI Emoji", 38),
                  bg=SURFACE).pack(pady=(0, 8))
-        tk.Label(self.body, text="Tudy  ·  Advanced Task Manager",
+        tk.Label(self.body, text="Taskly  ·  Advanced Task Manager",
                  font=("Segoe UI", 13, "bold"), fg=TEXT, bg=SURFACE).pack()
         tk.Label(self.body, text="v3.0  Dark Edition  —  Python Standard Library",
                  font=("Segoe UI", 9), fg=TEXT_MUTED, bg=SURFACE).pack(pady=(4, 14))
@@ -499,7 +499,7 @@ class TodoApp(tk.Tk):
 
     def __init__(self, user_name: str = "Ender"):
         super().__init__()
-        self.title("Tudy  —  Task Manager")
+        self.title("Taskly  —  Task Manager")
         self.geometry("430x750")
         self.minsize(390, 600)
         self.configure(bg=BG)
@@ -576,7 +576,7 @@ class TodoApp(tk.Tk):
                  justify="center").pack(pady=(24, 8))
 
         tk.Label(root,
-                 text="Tudy is your personal productivity hub.\n"
+                 text="Taskly is your personal productivity hub.\n"
                       "Tasks, priorities, smart lists — all in one place.",
                  font=("Segoe UI", 10), fg=TEXT_MUTED, bg=BG,
                  justify="center", wraplength=300).pack(padx=30, pady=(0, 36))
@@ -614,7 +614,7 @@ class TodoApp(tk.Tk):
         menu.bind("<Leave>", lambda e: menu.config(fg=TEXT_MUTED))
 
         # App name
-        tk.Label(top, text="Tudy", font=("Segoe UI", 14, "bold"),
+        tk.Label(top, text="Taskly", font=("Segoe UI", 14, "bold"),
                  fg=TEXT, bg=SURFACE2).pack(side="left", padx=12)
 
         # Avatar pill

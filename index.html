@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tudy — Premium Task Manager</title>
+  <title>Taskly — Premium Task Manager</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -265,7 +265,7 @@
 <div class="app-viewport">
   <div class="header">
     <div class="header-top">
-      <div class="brand-title">Tudy</div>
+      <div class="brand-title">Taskly</div>
       <div class="avatar">E</div>
     </div>
     <div class="sub-text" id="header-subtitle">Loading tasks...</div>
@@ -310,7 +310,7 @@
 </div>
 
 <script>
-  let tasks = JSON.parse(localStorage.getItem('tudy_tasks') || '[]');
+  let tasks = JSON.parse(localStorage.getItem('taskly_tasks') || '[]');
 
   if (tasks.length === 0) {
     tasks = [
@@ -322,7 +322,7 @@
   }
 
   function save() {
-    localStorage.setItem('tudy_tasks', JSON.stringify(tasks));
+    localStorage.setItem('taskly_tasks', JSON.stringify(tasks));
   }
 
   function renderTasks() {

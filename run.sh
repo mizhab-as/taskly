@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Launcher script for Tudy To-Do List Application
+# Launcher script for Taskly To-Do List Application
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"

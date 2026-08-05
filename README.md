@@ -21,21 +21,37 @@
   <tr>
     <td align="center">
       <img src="screenshots/01_dashboard.png" width="380" alt="Dashboard View">
-      <br><sub><b>Dashboard</b> — Smart lists & stats overview</sub>
+      <br><sub><b>1. Dashboard Overview</b> — Smart lists & focus progress ring</sub>
     </td>
     <td align="center">
-      <img src="screenshots/02_personal_list_view.png" width="380" alt="List View">
-      <br><sub><b>Task List</b> — Priority-sorted task cards</sub>
+      <img src="screenshots/02_list_detail.png" width="380" alt="List View">
+      <br><sub><b>2. List View</b> — Task cards, priority pills & list delete option</sub>
     </td>
   </tr>
   <tr>
     <td align="center">
-      <img src="screenshots/03_add_task_modal.png" width="380" alt="Add Task Modal">
-      <br><sub><b>New Task Modal</b> — Priority pills & due date</sub>
+      <img src="screenshots/03_live_search.png" width="380" alt="Live Search">
+      <br><sub><b>3. Live Search</b> — Instant search filtering with term highlighting</sub>
     </td>
     <td align="center">
-      <img src="screenshots/04_create_list_modal.png" width="380" alt="Create List Modal">
-      <br><sub><b>Create List Modal</b> — Custom emoji icon picker</sub>
+      <img src="screenshots/04_add_task_modal.png" width="380" alt="Add Task Modal">
+      <br><sub><b>4. New Task Modal</b> — Priority selection pills & due date</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="screenshots/05_create_list_modal.png" width="380" alt="Create List Modal">
+      <br><sub><b>5. Custom List Modal</b> — List creation with emoji icon picker</sub>
+    </td>
+    <td align="center">
+      <img src="screenshots/06_profile_popover.png" width="380" alt="Profile Popover">
+      <br><sub><b>6. Profile Popover</b> — Streak counter, focus score & account menu</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" colspan="2">
+      <img src="screenshots/07_keyboard_shortcuts.png" width="480" alt="Keyboard Shortcuts">
+      <br><sub><b>7. Keyboard Shortcuts Cheat Sheet</b> — Productivity hotkeys (`N`, `/`, `Esc`)</sub>
     </td>
   </tr>
 </table>

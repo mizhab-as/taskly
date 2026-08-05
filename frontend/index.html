@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taskly — Get Organized Your Life</title>
+  <meta name="description" content="Taskly — A beautiful, fast task manager with lists, priorities, due dates, and a premium cream pastel design.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ─── Ambient Background Decoration ─────────────────────── -->
+<div class="bg-decor" aria-hidden="true">
+  <span class="b1"></span>
+  <span class="b2"></span>
+  <span class="b3"></span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     APP SHELL
+═══════════════════════════════════════════════════════════ -->
+<div id="app">
+  <!-- Mobile overlay backdrop -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- ─── Sidebar Navigation ──────────────────────────────── -->
+  <aside class="sidebar" id="sidebar">
+    <!-- Brand / Logo -->
+    <div style="display:flex;align-items:center;">
+      <div class="brand">
+        <div class="blob mark">T</div>
+        <span>Taskly</span>
+      </div>
+      <button class="drawer-close" id="drawerClose">✕</button>
+    </div>
+
+    <!-- My Lists — injected by renderNav() -->
+    <div class="nav-group" id="navLists">
+      <div class="nav-label">My Lists</div>
+    </div>
+
+    <!-- Sidebar footer: motivation + new list button -->
+    <div class="sidebar-footer">
+      <p id="footerMotivation">Keep the streak going! 🔥</p>
+      <button id="addListBtn">+ New list</button>
+    </div>
+  </aside>
+
+  <!-- ─── Main Column ─────────────────────────────────────── -->
+  <div class="main">
+
+    <!-- ─── Topbar ──────────────────────────────────────── -->
+    <div class="topbar">
+      <div class="topbar-inner">
+        <!-- Mobile hamburger -->
+        <button class="hamburger" id="hamburger">☰</button>
+
+        <!-- Search bar -->
+        <div class="search">
+          <span>🔍</span>
+          <input type="text" id="searchInput" placeholder="Search tasks…" aria-label="Search tasks">
+        </div>
+
+        <div class="spacer"></div>
+
+        <!-- Avatar / Profile trigger -->
+        <div class="avatar" id="avatarBtn" title="Ender Profile" role="button" tabindex="0" aria-haspopup="true">
+          <svg viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="21" cy="17" r="8.5" fill="#FFE8CF"/>
+            <path d="M8 41c0-9.4 7.7-15.5 13-15.5S34 31.6 34 41Z" fill="#FFE8CF"/>
+            <path d="M13 15c0-6 4-9.5 8-9.5s8 3.5 8 9.5c0 1-3 2.5-8 2.5s-8-1.5-8-2.5Z" fill="#4A3B63"/>
+            <circle cx="17.6" cy="17.5" r="1.3" fill="#4A3B63"/>
+            <circle cx="24.4" cy="17.5" r="1.3" fill="#4A3B63"/>
+            <path d="M18.3 21.3c.9.7 2.6.7 3.4 0" stroke="#C77B4F" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+
+        <!-- ─── Profile Popover Dropdown ────────────────── -->
+        <div class="profile-popover" id="profilePopover" role="menu" aria-label="Profile menu">
+          <!-- User info header -->
+          <div class="profile-header">
+            <div class="avatar-lg" aria-hidden="true">
+              <svg viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="21" cy="17" r="8.5" fill="#FFE8CF"/>
+                <path d="M8 41c0-9.4 7.7-15.5 13-15.5S34 31.6 34 41Z" fill="#FFE8CF"/>
+                <path d="M13 15c0-6 4-9.5 8-9.5s8 3.5 8 9.5c0 1-3 2.5-8 2.5s-8-1.5-8-2.5Z" fill="#4A3B63"/>
+                <circle cx="17.6" cy="17.5" r="1.3" fill="#4A3B63"/>
+                <circle cx="24.4" cy="17.5" r="1.3" fill="#4A3B63"/>
+                <path d="M18.3 21.3c.9.7 2.6.7 3.4 0" stroke="#C77B4F" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+              </svg>
+            </div>
+            <div class="profile-info">
+              <h4 id="popoverName">Ender <span class="pro-badge">PRO</span></h4>
+              <p id="popoverEmail">ender@taskly.app</p>
+            </div>
+          </div>
+
+          <!-- Stats: streak & focus score -->
+          <div class="profile-stats">
+            <div class="p-stat">
+              <span class="p-stat-val">🔥 5 Days</span>
+              <span class="p-stat-lbl">Streak</span>
+            </div>
+            <div class="p-stat-divider"></div>
+            <div class="p-stat">
+              <span class="p-stat-val" id="popoverCompletion">⚡ 85%</span>
+              <span class="p-stat-lbl">Focus Score</span>
+            </div>
+          </div>
+
+          <!-- Menu items -->
+          <div class="profile-menu">
+            <button class="profile-item" onclick="openAccountModal()" id="btn-account-settings">
+              <span class="p-ic">👤</span> Account Settings
+            </button>
+            <button class="profile-item" onclick="openShortcutsModal()" id="btn-keyboard-shortcuts">
+              <span class="p-ic">⌨️</span> Keyboard Shortcuts
+            </button>
+            <button class="profile-item" onclick="toggleThemeNotice()" id="btn-theme-preset">
+              <span class="p-ic">🎨</span> Theme Preset <span class="p-tag">Cream Pastel</span>
+            </button>
+            <div class="p-divider"></div>
+            <button class="profile-item danger" onclick="confirmSignOut()" id="btn-sign-out">
+              <span class="p-ic">🚪</span> Sign Out
+            </button>
+          </div>
+        </div>
+        <!-- /Profile Popover -->
+
+      </div>
+    </div>
+    <!-- /Topbar -->
+
+    <!-- ─── Main Content — injected by render() ─────────── -->
+    <div class="content" id="content">
+      <!-- Dashboard or List Detail view rendered here -->
+    </div>
+
+  </div>
+  <!-- /Main Column -->
+
+  <!-- ─── Floating Action Button ───────────────────────────── -->
+  <button class="fab" id="fab" title="Add task or go to a list" aria-label="Add task">+</button>
+
+</div>
+<!-- /App Shell -->
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     MODALS
+═══════════════════════════════════════════════════════════ -->
+
+<!-- ─── New List Modal ───────────────────────────────────── -->
+<div class="modal-overlay" id="newListModal" role="dialog" aria-modal="true" aria-labelledby="newListModalTitle">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('newListModal')" aria-label="Close">✕</button>
+    <h2 id="newListModalTitle">Create New List ✨</h2>
+    <p class="sub">Give your list a name and choose an icon.</p>
+
+    <div class="field-group">
+      <div class="field-label">List Name</div>
+      <input class="field-input" id="newListName" placeholder="e.g. Health, Finance, Travel…" maxlength="32" aria-label="List name">
+    </div>
+
+    <div class="field-group">
+      <div class="field-label">Pick an Icon</div>
+      <div id="emojiPicker" style="display:flex;flex-wrap:wrap;gap:8px;" role="group" aria-label="Emoji picker">
+        <!-- Emoji buttons injected by openNewListModal() -->
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="closeModal('newListModal')">Cancel</button>
+      <button class="btn-primary" onclick="createList()" id="btn-create-list">Create List</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Add / Edit Task Modal ────────────────────────────── -->
+<div class="modal-overlay" id="taskModal" role="dialog" aria-modal="true" aria-labelledby="taskModalTitle">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('taskModal')" aria-label="Close">✕</button>
+    <h2 id="taskModalTitle">Add New Task</h2>
+    <p class="sub" id="taskModalSub">Fill in the details below.</p>
+
+    <div class="field-group">
+      <div class="field-label">Task Title</div>
+      <input class="field-input" id="modalTaskTitle" placeholder="What needs to be done?" maxlength="120" aria-label="Task title">
+    </div>
+
+    <div class="field-group">
+      <div class="field-label">Priority</div>
+      <div class="prio-pills" role="group" aria-label="Task priority">
+        <button class="prio-pill" data-p="Low"    onclick="selectPrio(this)" id="prio-low">🟢 Low</button>
+        <button class="prio-pill selected" data-p="Medium" onclick="selectPrio(this)" id="prio-medium">🟡 Medium</button>
+        <button class="prio-pill" data-p="High"   onclick="selectPrio(this)" id="prio-high">🔴 High</button>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <div class="field-label">Due Date <span style="font-weight:400;text-transform:none;letter-spacing:0;">(optional)</span></div>
+      <input class="field-input" id="modalTaskDue" type="date" aria-label="Due date">
+    </div>
+
+    <!-- Hidden: stores ID when editing an existing task -->
+    <input type="hidden" id="editingTaskId">
+
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="closeModal('taskModal')">Cancel</button>
+      <button class="btn-primary" onclick="saveTaskFromModal()" id="btn-save-task">Save Task</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Confirm Delete Modal ─────────────────────────────── -->
+<div class="modal-overlay" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+  <div class="modal" style="max-width:380px;">
+    <h2 id="confirmTitle">Delete?</h2>
+    <p class="sub" id="confirmMsg">This action cannot be undone.</p>
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="closeModal('confirmModal')">Cancel</button>
+      <button class="btn-danger" id="confirmYesBtn">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Account Settings Modal ───────────────────────────── -->
+<div class="modal-overlay" id="accountModal" role="dialog" aria-modal="true" aria-labelledby="accountModalTitle">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('accountModal')" aria-label="Close">✕</button>
+    <h2 id="accountModalTitle">Account Settings 👤</h2>
+    <p class="sub">Update your profile info.</p>
+
+    <div class="field-group">
+      <div class="field-label">Display Name</div>
+      <input class="field-input" id="accountNameInput" value="Ender" maxlength="32" aria-label="Display name">
+    </div>
+
+    <div class="field-group">
+      <div class="field-label">Email Address</div>
+      <input class="field-input" id="accountEmailInput" value="ender@taskly.app" maxlength="48" aria-label="Email address">
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="closeModal('accountModal')">Cancel</button>
+      <button class="btn-primary" onclick="saveAccountSettings()" id="btn-save-account">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Keyboard Shortcuts Modal ─────────────────────────── -->
+<div class="modal-overlay" id="shortcutsModal" role="dialog" aria-modal="true" aria-labelledby="shortcutsModalTitle">
+  <div class="modal" style="max-width:400px;">
+    <button class="modal-close" onclick="closeModal('shortcutsModal')" aria-label="Close">✕</button>
+    <h2 id="shortcutsModalTitle">Keyboard Shortcuts ⌨️</h2>
+    <p class="sub">Speed up your workflow.</p>
+
+    <div class="shortcut-row">
+      <span class="s-lbl">Add New Task</span>
+      <kbd>N</kbd>
+    </div>
+    <div class="shortcut-row">
+      <span class="s-lbl">Focus Search Bar</span>
+      <kbd>/</kbd>
+    </div>
+    <div class="shortcut-row">
+      <span class="s-lbl">Return to Dashboard / Clear</span>
+      <kbd>Esc</kbd>
+    </div>
+    <div class="shortcut-row">
+      <span class="s-lbl">Submit Modal / Form</span>
+      <kbd>Enter</kbd>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-primary" style="width:100%;" onclick="closeModal('shortcutsModal')" id="btn-shortcuts-got-it">Got it!</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ─── App Logic ─────────────────────────────────────────── -->
+<script src="app.js"></script>
+
+</body>
+</html>

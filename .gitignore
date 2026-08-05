@@ -1,40 +1,36 @@
-# Python
+# ─── Python ──────────────────────────────────────────────────
 __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
 *.so
 
-# Virtual environments
+# ─── Virtual environments ─────────────────────────────────────
 venv/
 .venv/
 env/
+.env
 
-# Data (runtime-generated)
-data/tasks.json
-data/config.json
-data/categories.json
-data/*.bak
-data/*.tmp
+# ─── Runtime data (auto-generated, not for version control) ──
+data/*.json
+data/*.pid
+data/*.log
 
-# OS
+# ─── Export output ────────────────────────────────────────────
+exports/
+
+# ─── macOS system files ───────────────────────────────────────
 .DS_Store
-Thumbs.db
+.AppleDouble
+.LSOverride
 
-# IDE
+# ─── Editor / IDE ─────────────────────────────────────────────
 .vscode/
 .idea/
 *.swp
+*.swo
+*~
 
-# Build / distribution
-dist/
-build/
-*.spec
-*.egg-info/
-
-# Screenshots .gitkeep no longer needed
-screenshots/.gitkeep
-
-# Dev scripts
-seed_data.py
-take_screenshots.py
+# ─── Keep the data directory itself ──────────────────────────
+!data/.gitkeep
+!data/

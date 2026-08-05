@@ -1,4 +1,13 @@
-# Taskly — Advanced Task Manager
-# External dependencies (install with: pip install -r requirements.txt)
-customtkinter>=6.0.0
-Pillow>=10.0.0
+# Taskly — Python Backend Dependencies
+
+# Option 1 & 2: REST API + file server
+flask>=3.0.0
+flask-cors>=4.0.0
+
+# Option 3: Export (stdlib only — csv, json, argparse — no extra deps)
+
+# Option 4: Reminders (uses macOS osascript — no extra deps)
+
+# Legacy GUI (no longer used by run.sh — kept for reference)
+# customtkinter>=6.0.0
+# Pillow>=10.0.0

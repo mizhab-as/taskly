@@ -1,218 +1,163 @@
+# ⚡ Taskly — Get Organized Your Life
+
 <div align="center">
 
-# Taskly
+![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-3.0+-000000?style=for-the-badge&logo=flask&logoColor=white)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-Vanilla-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![License](https://img.shields.io/badge/License-MIT-teal?style=for-the-badge)
 
-### Advanced Task Manager — Python Desktop Application
+**Taskly** is a fast, full-featured task manager application featuring a **Signature Cream Pastel Design System** (`#FBF3E6`), custom organic blob graphics, live search, background notifications, and dual persistence (Flask REST API + `localStorage` fallback).
 
-[![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
-[![CustomTkinter](https://img.shields.io/badge/CustomTkinter-6.0-FF6B9D?style=flat-square)](https://customtkinter.tomschimansky.com/)
-[![License](https://img.shields.io/badge/License-MIT-06D6A0?style=flat-square)](LICENSE)
-[![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Windows%20%7C%20Linux-7C6FFF?style=flat-square)]()
-
-*A beautiful, dark-mode native desktop task manager built entirely in Python.*
+[Features](#-features) • [Quick Start](#-quick-start) • [Screenshots](#-screenshots) • [Architecture](#-architecture) • [API & CLI](#-api--cli-utilities)
 
 </div>
 
 ---
 
-## Screenshots
+## 🎨 Screenshots & Visual Tour
 
-<table>
-  <tr>
-    <td align="center">
-      <img src="screenshots/01_dashboard.png" width="380" alt="Dashboard View">
-      <br><sub><b>1. Dashboard Overview</b> — Smart lists & focus progress ring</sub>
-    </td>
-    <td align="center">
-      <img src="screenshots/02_list_detail.png" width="380" alt="List View">
-      <br><sub><b>2. List View</b> — Task cards, priority pills & list delete option</sub>
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <img src="screenshots/03_live_search.png" width="380" alt="Live Search">
-      <br><sub><b>3. Live Search</b> — Instant search filtering with term highlighting</sub>
-    </td>
-    <td align="center">
-      <img src="screenshots/04_add_task_modal.png" width="380" alt="Add Task Modal">
-      <br><sub><b>4. New Task Modal</b> — Priority selection pills & due date</sub>
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <img src="screenshots/05_create_list_modal.png" width="380" alt="Create List Modal">
-      <br><sub><b>5. Custom List Modal</b> — List creation with emoji icon picker</sub>
-    </td>
-    <td align="center">
-      <img src="screenshots/06_profile_popover.png" width="380" alt="Profile Popover">
-      <br><sub><b>6. Profile Popover</b> — Streak counter, focus score & account menu</sub>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" colspan="2">
-      <img src="screenshots/07_keyboard_shortcuts.png" width="480" alt="Keyboard Shortcuts">
-      <br><sub><b>7. Keyboard Shortcuts Cheat Sheet</b> — Productivity hotkeys (`N`, `/`, `Esc`)</sub>
-    </td>
-  </tr>
-</table>
+### 1. Main Dashboard & Completion Overview
+> Clean hero greeting, focus percentage ring chart, interactive category cards, and overview statistics.
+![Dashboard](screenshots/01_dashboard.png)
+
+### 2. Category List View & Task Management
+> Filter by active/completed tabs, set task priorities (High/Medium/Low), assign due dates, and add inline tasks.
+![List Detail](screenshots/02_list_detail.png)
+
+### 3. Add & Edit Task Dialog
+> Priority selectors with visual indicator pills and optional date picker.
+![Add Task Modal](screenshots/03_add_task_modal.png)
+
+### 4. Create Custom List Modal
+> Create custom task categories with an interactive 20-emoji picker grid.
+![Create List Modal](screenshots/04_create_list_modal.png)
+
+### 5. Interactive Profile Popover & Focus Score
+> Quick profile popover with 5-day streak counter, focus score meter, account settings, and keyboard shortcut guide.
+![Profile Popover](screenshots/05_profile_popover.png)
+
+### 6. Keyboard Shortcuts Reference
+> Power-user keyboard navigation for ultra-fast task management.
+![Keyboard Shortcuts](screenshots/06_keyboard_shortcuts.png)
+
+### 7. Instant Live Search
+> Instant full-text search across all lists with highlighted matching terms.
+![Live Search](screenshots/07_live_search.png)
 
 ---
 
-## Features
+## ✨ Features
 
-| Feature | Description |
-|---|---|
-| 🗂️ **Smart Lists** | Today, Planned, Personal, Work, Shopping — with custom list creation |
-| 🚩 **Priority System** | High / Medium / Low with colour-coded pills and side-strips |
-| 📅 **Due Dates** | Date entry with Today / Tomorrow quick presets, overdue highlighting in red |
-| 🔍 **Live Search** | Real-time search across all tasks as you type |
-| ✅ **Animated Checkboxes** | Smooth, native-feeling task completion toggle |
-| 📊 **Stats Overview** | Total / Completed / Pending with a live progress bar |
-| 🌙 **Dark Mode** | Premium deep-navy palette, HiDPI/Retina-sharp on all displays |
-| 🗃️ **Filter Tabs** | All / Active / Completed views per category |
-| 💾 **JSON Persistence** | Atomic write → tasks survive crash/quit with zero data loss |
-| 🛡️ **Crash Recovery** | Corrupted JSON auto-backed up; app starts fresh instead of crashing |
+- 🎨 **Signature Cream Pastel UI**: Built with custom HSL tokens, soft shadows, custom blob badges, and typography (`Baloo 2` & `Inter`).
+- ⚡ **Dual Persistence Layer**: Connects automatically to the **Python Flask REST API** on startup (`data/tasks.json`). If offline, seamlessly defaults to `localStorage`.
+- 📊 **Interactive Focus Metrics**: Dynamic percentage progress ring, total/done/pending stats, and automated streak calculation.
+- 📂 **Custom Categories**: Built-in lists (*Today*, *Planned*, *Personal*, *Work*, *Shopping*) plus custom list creator with an emoji picker.
+- 🏷️ **Priority Strips & Due Dates**: Red (High), Amber (Medium), Teal (Low) priority strips and overdue date tracking.
+- 🔍 **Live Search Engine**: Instant filtering across all tasks and categories with `<mark>` term highlighting.
+- ⏰ **Background Notification Daemon**: Python process (`reminders.py`) checks tasks periodically and triggers desktop notifications for overdue items.
+- 💾 **Data Export Suite**: CLI utility (`export.py`) and API endpoints for exporting tasks to JSON and CSV formats.
+- ⌨️ **Keyboard Navigation**: Global hotkeys (`N` for new task, `/` to search, `Esc` to exit/return).
 
 ---
 
-## Tech Stack
-
-| Layer | Technology |
-|---|---|
-| **GUI Framework** | [CustomTkinter 6.x](https://customtkinter.tomschimansky.com/) — modern, rounded, HiDPI-aware |
-| **Backend / Logic** | Python standard library — `json`, `dataclasses`, `uuid`, `datetime` |
-| **Data Model** | `@dataclass Task` with atomic JSON persistence |
-| **Persistence** | Write-to-temp → `os.replace()` — crash-safe atomic saves |
-| **Platform** | macOS · Windows · Linux (Python 3.9+) |
-
----
-
-## Project Structure
-
-```
-taskly/
-├── main.py                  # Entry point
-├── run.sh                   # macOS/Linux launcher (auto-installs deps)
-├── run.bat                  # Windows launcher
-├── requirements.txt         # customtkinter + Pillow
-│
-├── app/
-│   ├── __init__.py
-│   ├── gui.py               # CustomTkinter UI — all screens + modals
-│   ├── task_manager.py      # CRUD, persistence, search, validation
-│   └── models.py            # Task @dataclass + PRIORITIES constants
-│
-├── data/
-│   └── tasks.json           # Persistent storage (auto-created if missing)
-│
-├── screenshots/             # App screenshots for README / submission
-├── design_mockup.html       # Original HTML design reference
-└── index.html               # Web demo version (localStorage-based)
-```
-
----
-
-## Getting Started
+## 🚀 Quick Start
 
 ### Prerequisites
-- Python **3.9+** — [python.org/downloads](https://python.org/downloads)
+- **Python 3.9+** installed on your system.
 
-### Run (macOS / Linux)
+### Running Taskly
 
+#### macOS & Linux
 ```bash
-git clone https://github.com/mizhab-as/taskly.git
-cd taskly
-
-# Option A — auto-installer script (recommended)
+chmod +x run.sh
 ./run.sh
-
-# Option B — manual
-pip install -r requirements.txt
-python3 main.py
 ```
 
-### Run (Windows)
-
+#### Windows
 ```cmd
-git clone https://github.com/mizhab-as/taskly.git
-cd taskly
 run.bat
 ```
 
-> **Note**: `run.sh` / `run.bat` automatically run `pip install -r requirements.txt` before launching.
+`run.sh` / `run.bat` automatically:
+1. Installs Python dependencies (`flask`, `flask-cors`).
+2. Starts the **Flask API Server** (`localhost:5050`).
+3. Launches the **Background Reminder Daemon** (`reminders.py`).
+4. Opens **Taskly** in your default web browser.
+
+### Stopping Taskly
+To stop all background Python services:
+```bash
+./stop.sh       # macOS / Linux
+stop.bat        # Windows
+```
 
 ---
 
-## Architecture
+## 🛠️ Project Structure
 
-### Data Flow
-
+```text
+taskly/
+├── frontend/                 # Web Application Frontend
+│   ├── index.html            # Semantic HTML5 App Shell & Modals
+│   ├── style.css             # Cream Pastel Design Tokens & Layouts
+│   └── app.js                # State Management & API Sync Engine
+├── data/                     # Persistent JSON Storage & Logs
+│   ├── tasks.json            # Active Task Database
+│   └── .gitkeep
+├── screenshots/              # High-Res Documentation Gallery
+├── server.py                 # Flask REST API & Web File Server
+├── reminders.py              # Background Reminder Daemon (Desktop Alerts)
+├── export.py                 # CLI Export Utility (JSON & CSV)
+├── take_screenshots.py       # Automated Playwright Screenshot Generator
+├── run.sh / run.bat          # Cross-Platform Application Launchers
+├── stop.sh / stop.bat        # Process Management Scripts
+└── requirements.txt          # Python Dependencies
 ```
-User Action (GUI)
-      │
-      ▼
-TasklyApp (gui.py)          ← CustomTkinter CTk root window
-      │  calls
-      ▼
-TaskManager (task_manager.py)  ← Pure Python business logic
-      │  mutates
-      ▼
-Task @dataclass (models.py)
-      │  serializes to
-      ▼
-data/tasks.json             ← Atomic JSON persistence
-```
-
-### Key Design Decisions
-
-**Atomic Saves** — Every mutation writes to `tasks.json.tmp` first, then `os.replace()` swaps it in. A crash mid-write never corrupts your data.
-
-**Crash Recovery** — On startup, if `tasks.json` is malformed, it's backed up to `tasks.json.corrupt.bak` and the app starts fresh instead of raising an unhandled exception.
-
-**Modular Architecture** — `TaskManager` has no knowledge of the GUI. It could power a CLI, Flask API, or Telegram bot without changes.
-
-**CustomTkinter over plain Tkinter** — Delivers native-quality rounded corners, HiDPI rendering, and system dark-mode awareness that canvas-painting in Tkinter cannot replicate.
 
 ---
 
-## Original Requirements — Fulfilled
+## 🔌 API & CLI Utilities
 
-| Requirement | Status | Implementation |
+### Python REST API Endpoints
+
+| Endpoint | Method | Description |
 |---|---|---|
-| Add a new task | ✅ | `TaskManager.add_task()` + New Task modal |
-| Display all tasks | ✅ | Category detail view + search results |
-| Mark a task as completed | ✅ | `TaskManager.toggle_task()` + animated checkbox |
-| Delete a task | ✅ | `TaskManager.delete_task()` + confirm modal |
-| Save tasks permanently (JSON) | ✅ | `TaskManager.save_tasks()` atomic write |
-| Auto-load tasks on start | ✅ | `TaskManager.load_tasks()` in `__init__` |
-| Exit safely | ✅ | All saves are immediate — no queued writes |
+| `GET /api/health` | `GET` | Health check & mode indicator |
+| `GET /api/data` | `GET` | Retrieve full JSON dataset (tasks + lists) |
+| `POST /api/data` | `POST` | Atomically save updated dataset to disk |
+| `GET /api/export/json` | `GET` | Download timestamped JSON task backup |
+| `GET /api/export/csv` | `GET` | Download tasks formatted as CSV |
+| `GET /api/overdue` | `GET` | Get JSON list of overdue pending tasks |
 
-**Advanced additions beyond spec:**
-- 🖥️ Full premium GUI (CustomTkinter, dark mode, HiDPI)
-- 🗂️ 5 built-in lists + unlimited custom list creation
-- 🚩 3-tier priority system with visual indicators
-- 📅 Due dates with overdue highlighting
-- 🔍 Live full-text search
-- 📊 Stats overview card with progress bar
-- 🗃️ All / Active / Completed filter tabs
-- 🛡️ Full crash recovery + atomic persistence
+### CLI Utilities
 
----
+#### Export Tasks to CSV / JSON
+```bash
+python3 export.py              # Export both JSON and CSV to exports/
+python3 export.py --csv        # Export CSV only
+python3 export.py --summary    # Print task summary stats in terminal
+```
 
-## Development Roadmap
-
-- [ ] **Phase 3** — Date-picker widget, sub-tasks, repeating tasks, keyboard shortcuts
-- [ ] **Phase 4** — pytest suite, undo/redo, performance tests
-- [ ] **Phase 5** — PyInstaller `.app`/`.exe` bundle, GitHub releases, app icon
+#### Generate Documentation Screenshots
+```bash
+python3 take_screenshots.py    # Generates crisp retina screenshots in screenshots/
+```
 
 ---
 
-## License
+## ⌨️ Keyboard Shortcuts
 
-MIT — see [LICENSE](LICENSE)
+| Key | Action |
+|---|---|
+| <kbd>N</kbd> | Open **Add Task** modal (when viewing a list) |
+| <kbd>/</kbd> | Focus the **Search Bar** |
+| <kbd>Esc</kbd> | Return to **Dashboard** / Close active modal |
+| <kbd>Enter</kbd> | Submit active modal or inline form |
 
 ---
 
-<div align="center">
-Built with ❤️ and Python · <a href="https://github.com/mizhab-as/taskly">github.com/mizhab-as/taskly</a>
-</div>
+## 📄 License
+Distributed under the **MIT License**.

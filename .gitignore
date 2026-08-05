@@ -1,36 +1,23 @@
-# ─── Python ──────────────────────────────────────────────────
+# Python
 __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
 *.so
-
-# ─── Virtual environments ─────────────────────────────────────
-venv/
 .venv/
+venv/
 env/
-.env
 
-# ─── Runtime data (auto-generated, not for version control) ──
-data/*.json
-data/*.pid
+# Taskly Runtime Data & Logs
 data/*.log
-
-# ─── Export output ────────────────────────────────────────────
+data/*.pid
+data/*.tmp
+data/*.bak
 exports/
 
-# ─── macOS system files ───────────────────────────────────────
+# OS & Editor
 .DS_Store
-.AppleDouble
-.LSOverride
-
-# ─── Editor / IDE ─────────────────────────────────────────────
+Thumbs.db
 .vscode/
 .idea/
 *.swp
-*.swo
-*~
-
-# ─── Keep the data directory itself ──────────────────────────
-!data/.gitkeep
-!data/

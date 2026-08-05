@@ -1,16 +1,10 @@
 @echo off
-REM Taskly — Windows Stop Script
+REM Taskly — Windows stop script
 
-echo   Stopping Taskly...
+cd /d "%~dp0"
 
-REM Kill server on port 5050
-for /f "tokens=5" %%a in ('netstat -aon ^| findstr ":5050"') do (
-    taskkill /f /pid %%a >nul 2>&1
-)
+echo Stopping Taskly processes...
+taskkill /FI "WINDOWTITLE eq server.py*" /F 2>nul
+taskkill /FI "WINDOWTITLE eq reminders.py*" /F 2>nul
 
-REM Kill reminders daemon by name
-taskkill /f /im python.exe /fi "WINDOWTITLE eq reminders*" >nul 2>&1
-
-del /f /q data\server.pid data\reminders.pid 2>nul
-
-echo   Done.
+echo Done.

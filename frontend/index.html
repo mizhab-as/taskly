@@ -63,11 +63,10 @@
 
         <!-- Search bar -->
         <div class="search">
-          <span>🔍</span>
-          <input type="text" id="searchInput" placeholder="Search tasks…" aria-label="Search tasks">
+          <span class="search-icon" aria-hidden="true">🔍</span>
+          <input type="text" id="searchInput" placeholder="Search tasks…" aria-label="Search tasks" autocomplete="off">
+          <button id="searchClearBtn" class="search-clear-btn" title="Clear search" aria-label="Clear search" style="display:none;">✕</button>
         </div>
-
-        <div class="spacer"></div>
 
         <!-- Avatar / Profile trigger -->
         <div class="avatar" id="avatarBtn" title="Ender Profile" role="button" tabindex="0" aria-haspopup="true">

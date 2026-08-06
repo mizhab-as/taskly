@@ -170,7 +170,9 @@ function openNewListModal() {
     picker.appendChild(btn);
   });
   openModal("newListModal");
-  setTimeout(() => $("#newListName").focus(), 80);
+  const nameInput = $("#newListName");
+  nameInput.onkeydown = e => { if (e.key === "Enter") createList(); };
+  setTimeout(() => nameInput.focus(), 80);
 }
 
 function createList() {
@@ -212,13 +214,15 @@ function clearListTasks(id) {
 function openAddTaskModal() {
   $("#taskModalTitle").textContent = "Add New Task";
   $("#taskModalSub").textContent = "Fill in the details below.";
-  $("#modalTaskTitle").value = "";
+  const titleInp = $("#modalTaskTitle");
+  titleInp.value = "";
   $("#modalTaskDue").value = "";
   $("#editingTaskId").value = "";
   _selectedPrio = "Medium";
   document.querySelectorAll(".prio-pill").forEach(p => p.classList.toggle("selected", p.dataset.p === "Medium"));
+  titleInp.onkeydown = e => { if (e.key === "Enter") saveTaskFromModal(); };
   openModal("taskModal");
-  setTimeout(() => $("#modalTaskTitle").focus(), 80);
+  setTimeout(() => titleInp.focus(), 80);
 }
 
 function openEditModal(id) {
@@ -226,13 +230,15 @@ function openEditModal(id) {
   if (!t) return;
   $("#taskModalTitle").textContent = "Edit Task";
   $("#taskModalSub").textContent = "Update task details.";
-  $("#modalTaskTitle").value = t.title;
+  const titleInp = $("#modalTaskTitle");
+  titleInp.value = t.title;
   $("#modalTaskDue").value = t.due || "";
   $("#editingTaskId").value = id;
   _selectedPrio = t.priority;
   document.querySelectorAll(".prio-pill").forEach(p => p.classList.toggle("selected", p.dataset.p === t.priority));
+  titleInp.onkeydown = e => { if (e.key === "Enter") saveTaskFromModal(); };
   openModal("taskModal");
-  setTimeout(() => $("#modalTaskTitle").focus(), 80);
+  setTimeout(() => titleInp.focus(), 80);
 }
 
 function selectPrio(btn) {
@@ -250,7 +256,8 @@ function saveTaskFromModal() {
     const t = DATA.tasks.find(x => x.id == editId);
     if (t) { t.title = title; t.priority = _selectedPrio; t.due = due; }
   } else {
-    DATA.tasks.push({ id:DATA.nextId++, list:state.list, title, priority:_selectedPrio, done:false, due });
+    const targetList = (state.view === "list" && DATA.lists[state.list]) ? state.list : (DATA.lists[state.list] ? state.list : "personal");
+    DATA.tasks.push({ id:DATA.nextId++, list:targetList, title, priority:_selectedPrio, done:false, due });
   }
   save();
   closeModal("taskModal");
@@ -563,13 +570,33 @@ $("#overlay").onclick     = closeDrawer;
 
 /* ─── Search Bar ──────────────────────────────────────────── */
 const searchInput = $("#searchInput");
-searchInput.oninput = () => {
-  state.search = searchInput.value;
+const searchClearBtn = $("#searchClearBtn");
+
+function updateSearch() {
+  state.search = searchInput ? searchInput.value : "";
+  if (searchClearBtn) {
+    searchClearBtn.style.display = state.search ? "flex" : "none";
+  }
   render();
-};
-searchInput.onkeydown = e => {
-  if (e.key === "Escape") { state.search = ""; searchInput.value = ""; render(); }
-};
+}
+
+if (searchInput) {
+  searchInput.oninput = updateSearch;
+  searchInput.onkeydown = e => {
+    if (e.key === "Escape") {
+      if (searchInput) searchInput.value = "";
+      updateSearch();
+    }
+  };
+}
+
+if (searchClearBtn) {
+  searchClearBtn.onclick = () => {
+    if (searchInput) searchInput.value = "";
+    updateSearch();
+    if (searchInput) searchInput.focus();
+  };
+}
 
 /* ─── Floating Action Button ──────────────────────────────── */
 $("#fab").onclick = () => {
@@ -612,8 +639,12 @@ if (avatarBtn && profilePopover) {
 
 function openAccountModal() {
   profilePopover.classList.remove("open");
-  $("#accountNameInput").value  = DATA.user?.name  || "Ender";
-  $("#accountEmailInput").value = DATA.user?.email || "ender@taskly.app";
+  const nameInp = $("#accountNameInput");
+  const emailInp = $("#accountEmailInput");
+  nameInp.value  = DATA.user?.name  || "Ender";
+  emailInp.value = DATA.user?.email || "ender@taskly.app";
+  nameInp.onkeydown = e => { if (e.key === "Enter") saveAccountSettings(); };
+  emailInp.onkeydown = e => { if (e.key === "Enter") saveAccountSettings(); };
   openModal("accountModal");
 }
 

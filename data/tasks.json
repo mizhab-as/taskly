@@ -1,105 +1,105 @@
 {
   "lists": {
-    "today": {
-      "name": "Today",
-      "emoji": "☀️",
-      "bg": "var(--amber-tint)",
-      "custom": false
+    "personal": {
+      "bg": "var(--lilac-tint)",
+      "custom": false,
+      "emoji": "🙂",
+      "name": "Personal"
     },
     "planned": {
-      "name": "Planned",
-      "emoji": "📅",
       "bg": "var(--sky-tint)",
-      "custom": false
-    },
-    "personal": {
-      "name": "Personal",
-      "emoji": "🙂",
-      "bg": "var(--lilac-tint)",
-      "custom": false
-    },
-    "work": {
-      "name": "Work",
-      "emoji": "💼",
-      "bg": "var(--cream-deep)",
-      "custom": false
+      "custom": false,
+      "emoji": "📅",
+      "name": "Planned"
     },
     "shopping": {
-      "name": "Shopping",
-      "emoji": "🛍️",
       "bg": "var(--pink-tint)",
-      "custom": false
+      "custom": false,
+      "emoji": "🛍️",
+      "name": "Shopping"
+    },
+    "today": {
+      "bg": "var(--amber-tint)",
+      "custom": false,
+      "emoji": "☀️",
+      "name": "Today"
+    },
+    "work": {
+      "bg": "var(--cream-deep)",
+      "custom": false,
+      "emoji": "💼",
+      "name": "Work"
     }
   },
+  "nextId": 9,
   "tasks": [
     {
+      "done": false,
+      "due": "",
       "id": 1,
       "list": "personal",
-      "title": "Go to gym",
       "priority": "High",
-      "done": false,
-      "due": ""
+      "title": "Go to gym"
     },
     {
+      "done": false,
+      "due": "",
       "id": 2,
       "list": "personal",
-      "title": "Meet friends",
       "priority": "Medium",
-      "done": false,
-      "due": ""
+      "title": "Meet friends"
     },
     {
+      "done": false,
+      "due": "",
       "id": 3,
       "list": "personal",
-      "title": "Buy theatre ticket",
       "priority": "Medium",
-      "done": false,
-      "due": ""
+      "title": "Buy theatre ticket"
     },
     {
+      "done": true,
+      "due": "",
       "id": 4,
       "list": "personal",
-      "title": "Go to Market",
       "priority": "Low",
-      "done": true,
-      "due": ""
+      "title": "Go to Market"
     },
     {
+      "done": false,
+      "due": "",
       "id": 5,
       "list": "work",
-      "title": "Send project files",
       "priority": "High",
-      "done": false,
-      "due": ""
+      "title": "Send project files"
     },
     {
+      "done": false,
+      "due": "",
       "id": 6,
       "list": "work",
-      "title": "Pay bills",
       "priority": "Medium",
-      "done": false,
-      "due": ""
+      "title": "Pay bills"
     },
     {
+      "done": false,
+      "due": "",
       "id": 7,
       "list": "shopping",
-      "title": "Oat milk & eggs",
       "priority": "Low",
-      "done": false,
-      "due": ""
+      "title": "Oat milk & eggs"
     },
     {
+      "done": true,
+      "due": "",
       "id": 8,
       "list": "shopping",
-      "title": "New headphones",
       "priority": "Low",
-      "done": true,
-      "due": ""
+      "title": "New headphones"
     }
   ],
-  "nextId": 9,
   "user": {
-    "name": "Ender",
-    "email": "ender@taskly.app"
+    "email": "ender@taskly.app",
+    "name": "Ender"
   }
 }

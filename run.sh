@@ -1,15 +1,13 @@
 #!/usr/bin/env bash
 # ─────────────────────────────────────────────────────────────
-#  Taskly — macOS / Linux launcher
-#  Starts 4 Python-powered layers, then opens the web app.
-#
-#  Option 1 : Flask REST API    (localhost:5050/api/*)
-#  Option 2 : Python file server (Flask serves frontend/)
-#  Option 3 : export.py available — run: python3 export.py
-#  Option 4 : reminders.py runs in background
+#  Taskly — macOS / Linux Launcher
+#  Starts Flask REST API + File Server + Reminder Daemon
 # ─────────────────────────────────────────────────────────────
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
+
+# Ensure data directory exists
+mkdir -p data
 
 echo ""
 echo "  ┌─────────────────────────────────────────────┐"
@@ -17,38 +15,63 @@ echo "  │              Taskly Launcher                 │"
 echo "  └─────────────────────────────────────────────┘"
 echo ""
 
+# Find python binary
+if command -v python3 &>/dev/null; then
+  PYTHON_BIN="python3"
+elif command -v python &>/dev/null; then
+  PYTHON_BIN="python"
+else
+  echo "  ❌ Error: Python 3 is required but not installed."
+  exit 1
+fi
+
 # ── 1. Install Python dependencies ───────────────────────────
 echo "  → Installing Python dependencies..."
-pip3 install -r requirements.txt -q
+$PYTHON_BIN -m pip install -r requirements.txt -q
 
-# ── 2. Kill any stale Taskly server processes ────────────────
+# ── 2. Clean up stale Taskly processes ───────────────────────
 if lsof -ti:5050 &>/dev/null; then
-  echo "  → Killing stale server on port 5050..."
-  kill "$(lsof -ti:5050)" 2>/dev/null
+  echo "  → Freeing port 5050..."
+  lsof -ti:5050 | xargs kill 2>/dev/null || true
   sleep 0.5
+  if lsof -ti:5050 &>/dev/null; then
+    lsof -ti:5050 | xargs kill -9 2>/dev/null || true
+  fi
 fi
 
 if [ -f "data/reminders.pid" ]; then
   OLD_PID=$(cat data/reminders.pid)
-  kill "$OLD_PID" 2>/dev/null
+  kill "$OLD_PID" 2>/dev/null || true
   rm -f data/reminders.pid
 fi
 
-# ── 3. Start Flask API + file server (Option 1 & 2) ─────────
-echo "  → Starting Python API server (localhost:5050)..."
-python3 server.py > data/server.log 2>&1 &
+# ── 3. Start Flask API + file server ─────────────────────────
+echo "  → Starting Python API server (http://localhost:5050)..."
+$PYTHON_BIN server.py > data/server.log 2>&1 &
 SERVER_PID=$!
 echo "$SERVER_PID" > data/server.pid
 
-# Wait briefly for server to be ready
-sleep 1.2
+# Wait up to 5 seconds for health endpoint
+READY=0
+for i in {1..10}; do
+  if curl -s http://localhost:5050/api/health | grep -q '"status":"ok"' &>/dev/null; then
+    READY=1
+    break
+  fi
+  sleep 0.3
+done
 
-# ── 4. Start reminders daemon (Option 4) ─────────────────────
+if [ $READY -eq 1 ]; then
+  echo "  ✓ Server ready (PID $SERVER_PID)"
+else
+  echo "  ⚠️ Server started (PID $SERVER_PID)"
+fi
+
+# ── 4. Start reminders daemon ────────────────────────────────
 echo "  → Starting reminder daemon..."
-python3 reminders.py > data/reminders.log 2>&1 &
-# PID is written by reminders.py itself
+$PYTHON_BIN reminders.py > data/reminders.log 2>&1 &
 
-# ── 5. Open browser (served by Python — Option 2) ────────────
+# ── 5. Open web app ──────────────────────────────────────────
 echo "  → Opening Taskly at http://localhost:5050"
 sleep 0.3
 
@@ -59,10 +82,11 @@ elif command -v xdg-open &>/dev/null; then
 fi
 
 echo ""
-echo "  ✓ Taskly is running!"
-echo ""
-echo "  Web app  → http://localhost:5050"
+echo "  ✨ Taskly is running!"
+echo "  ─────────────────────────────────────────────"
+echo "  Web App  → http://localhost:5050"
 echo "  API      → http://localhost:5050/api/health"
-echo "  Export   → python3 export.py"
+echo "  Export   → $PYTHON_BIN export.py"
 echo "  Stop     → ./stop.sh"
+echo "  ─────────────────────────────────────────────"
 echo ""

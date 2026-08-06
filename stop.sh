@@ -8,16 +8,22 @@ echo "  → Stopping Taskly..."
 
 # Kill Flask server
 if [ -f "data/server.pid" ]; then
-  kill "$(cat data/server.pid)" 2>/dev/null && echo "  ✓ Server stopped"
+  SERVER_PID=$(cat data/server.pid)
+  kill "$SERVER_PID" 2>/dev/null && echo "  ✓ Server stopped (PID $SERVER_PID)"
   rm -f data/server.pid
 fi
-# Belt-and-suspenders: also kill by port
-lsof -ti:5050 | xargs kill -9 2>/dev/null
+
+# Belt-and-suspenders: kill any remaining process on port 5050
+if lsof -ti:5050 &>/dev/null; then
+  lsof -ti:5050 | xargs kill -9 2>/dev/null || true
+  echo "  ✓ Port 5050 freed"
+fi
 
 # Kill reminders daemon
 if [ -f "data/reminders.pid" ]; then
-  kill "$(cat data/reminders.pid)" 2>/dev/null && echo "  ✓ Reminders daemon stopped"
+  REM_PID=$(cat data/reminders.pid)
+  kill "$REM_PID" 2>/dev/null && echo "  ✓ Reminders daemon stopped (PID $REM_PID)"
   rm -f data/reminders.pid
 fi
 
-echo "  ✓ Done."
+echo "  ✓ Taskly stopped successfully."

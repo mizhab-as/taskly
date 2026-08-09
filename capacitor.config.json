@@ -1,0 +1,14 @@
+{
+  "appId": "app.taskly.mobile",
+  "appName": "Taskly",
+  "webDir": "frontend",
+  "bundledWebRuntime": false,
+  "backgroundColor": "#FBF3E6",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 1500,
+      "backgroundColor": "#FBF3E6",
+      "showSpinner": false
+    }
+  }
+}

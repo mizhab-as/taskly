@@ -10,6 +10,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
+  <!-- PWA & Mobile Standalone Tags -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#17B897">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Taskly">
+  <link rel="apple-touch-icon" href="icon-192.png">
+
   <!-- Styles -->
   <link rel="stylesheet" href="style.css">
 </head>
@@ -273,6 +281,10 @@
       <kbd>Esc</kbd>
     </div>
     <div class="shortcut-row">
+      <span class="s-lbl">Toggle Calendar View</span>
+      <kbd>C</kbd>
+    </div>
+    <div class="shortcut-row">
       <span class="s-lbl">Submit Modal / Form</span>
       <kbd>Enter</kbd>
     </div>
@@ -283,9 +295,37 @@
   </div>
 </div>
 
+<!-- ─── Day Detail View Modal ──────────────────────────────── -->
+<div class="modal-overlay" id="dayDetailModal" role="dialog" aria-modal="true" aria-labelledby="dayDetailTitle">
+  <div class="modal" style="max-width:540px;">
+    <button class="modal-close" onclick="closeModal('dayDetailModal')" aria-label="Close">✕</button>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
+      <span style="font-size:24px;">📅</span>
+      <h2 id="dayDetailTitle" style="margin:0;">Tasks for Date</h2>
+    </div>
+    <p class="sub" id="dayDetailSub">Manage tasks scheduled for this day.</p>
 
-<!-- ─── App Logic ─────────────────────────────────────────── -->
+    <div id="dayDetailTasksList" style="max-height:320px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;margin:16px 0;">
+      <!-- Tasks rendered here -->
+    </div>
+
+    <div class="modal-actions" style="justify-content:space-between;align-items:center;">
+      <button class="btn-ghost" onclick="closeModal('dayDetailModal')">Close</button>
+      <button class="btn-primary" id="dayDetailAddTaskBtn">+ Add Task for this Day</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ─── App Logic & PWA Service Worker ──────────────────────── -->
 <script src="app.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW registration error:', err));
+    });
+  }
+</script>
 
 </body>
 </html>

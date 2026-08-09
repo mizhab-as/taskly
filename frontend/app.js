@@ -25,19 +25,32 @@ let USE_API = false;  // set to true if Flask server is detected
 
 /* ─── Default seed data ───────────────────────────────────── */
 function defaultData() {
+  const today = new Date().toISOString().slice(0, 10);
+  const now = new Date();
+
+  function offsetDate(days) {
+    const d = new Date(now);
+    d.setDate(d.getDate() + days);
+    return d.toISOString().slice(0, 10);
+  }
+
   return {
     lists: { ...DEFAULT_LISTS },
     tasks: [
-      { id:1,  list:"personal", title:"Go to gym",           priority:"High",   done:false, due:"" },
-      { id:2,  list:"personal", title:"Meet friends",         priority:"Medium", done:false, due:"" },
-      { id:3,  list:"personal", title:"Buy theatre ticket",   priority:"Medium", done:false, due:"" },
-      { id:4,  list:"personal", title:"Go to Market",         priority:"Low",    done:true,  due:"" },
-      { id:5,  list:"work",     title:"Send project files",   priority:"High",   done:false, due:"" },
-      { id:6,  list:"work",     title:"Pay bills",            priority:"Medium", done:false, due:"" },
-      { id:7,  list:"shopping", title:"Oat milk & eggs",      priority:"Low",    done:false, due:"" },
-      { id:8,  list:"shopping", title:"New headphones",       priority:"Low",    done:true,  due:"" },
+      { id:1,  list:"personal", title:"Go to morning workout session",      priority:"High",   done:false, due:today },
+      { id:2,  list:"work",     title:"Review Q3 design system updates",    priority:"High",   done:false, due:today },
+      { id:3,  list:"shopping", title:"Buy organic oat milk & coffee beans",priority:"Low",    done:true,  due:today },
+      { id:4,  list:"work",     title:"Team sprint planning & demo",        priority:"High",   done:false, due:offsetDate(1) },
+      { id:5,  list:"personal", title:"Pay monthly utility & internet bills",priority:"Medium", done:false, due:offsetDate(3) },
+      { id:6,  list:"personal", title:"Plan weekend roadtrip itinerary",    priority:"Medium", done:false, due:offsetDate(6) },
+      { id:7,  list:"personal", title:"Doctor checkup appointment",         priority:"High",   done:false, due:offsetDate(9) },
+      { id:8,  list:"work",     title:"Submit quarterly client report",     priority:"High",   done:false, due:offsetDate(11) },
+      { id:9,  list:"shopping", title:"Order noise-canceling headphones",   priority:"Low",    done:false, due:offsetDate(13) },
+      { id:10, list:"personal", title:"Read 2 chapters of System Design",   priority:"Low",    done:false, due:offsetDate(16) },
+      { id:11, list:"personal", title:"Renew car insurance policy",         priority:"Medium", done:false, due:offsetDate(-4) },
+      { id:12, list:"work",     title:"Finalize Taskly mobile PWA build",   priority:"High",   done:true,  due:today },
     ],
-    nextId: 9,
+    nextId: 13,
   };
 }
 
@@ -78,7 +91,15 @@ function save() {
 
 /* ─── App state ───────────────────────────────────────────── */
 let DATA = loadFromLocalStorage();  // overwritten during init() if API is live
-let state = { view:"dashboard", list:"personal", tab:"All", search:"" };
+let _today = new Date();
+let state = {
+  view: "dashboard",
+  list: "personal",
+  tab: "All",
+  search: "",
+  calYear: _today.getFullYear(),
+  calMonth: _today.getMonth(),
+};
 let _selectedPrio = "Medium";
 let _selectedEmoji = "📝";
 
@@ -211,12 +232,12 @@ function clearListTasks(id) {
 }
 
 /* ─── Task CRUD ───────────────────────────────────────────── */
-function openAddTaskModal() {
+function openAddTaskModal(defaultDue = "") {
   $("#taskModalTitle").textContent = "Add New Task";
   $("#taskModalSub").textContent = "Fill in the details below.";
   const titleInp = $("#modalTaskTitle");
   titleInp.value = "";
-  $("#modalTaskDue").value = "";
+  $("#modalTaskDue").value = defaultDue || "";
   $("#editingTaskId").value = "";
   _selectedPrio = "Medium";
   document.querySelectorAll(".prio-pill").forEach(p => p.classList.toggle("selected", p.dataset.p === "Medium"));
@@ -288,7 +309,30 @@ function showConfirm(title, msg, onYes) {
 /* ─── Sidebar Nav Render ──────────────────────────────────── */
 function renderNav() {
   const nav = $("#navLists");
-  nav.innerHTML = '<div class="nav-label">My Lists</div>';
+  nav.innerHTML = "";
+
+  // Views section
+  const viewsLabel = el("div", "nav-label", "Views");
+  nav.appendChild(viewsLabel);
+
+  const isDashActive = state.view === "dashboard";
+  const dashBtn = el("button", "nav-item" + (isDashActive ? " active" : ""));
+  dashBtn.innerHTML = `<span class="ic" style="background:var(--amber-tint)">🏠</span> Dashboard`;
+  dashBtn.onclick = () => { state.view = "dashboard"; closeDrawer(); render(); };
+  nav.appendChild(dashBtn);
+
+  const isCalActive = state.view === "calendar";
+  const calBtn = el("button", "nav-item" + (isCalActive ? " active" : ""));
+  const scheduledCount = DATA.tasks.filter(t => t.due && t.due !== "").length;
+  calBtn.innerHTML = `<span class="ic" style="background:var(--teal-tint)">📅</span> Calendar ${scheduledCount ? `<span class="count">${scheduledCount}</span>` : ""}`;
+  calBtn.onclick = () => { state.view = "calendar"; closeDrawer(); render(); };
+  nav.appendChild(calBtn);
+
+  // Lists section
+  const listsLabel = el("div", "nav-label", "My Lists");
+  listsLabel.style.marginTop = "12px";
+  nav.appendChild(listsLabel);
+
   Object.keys(DATA.lists).forEach(id => {
     const meta    = DATA.lists[id];
     const count   = tasksFor(id).length;
@@ -546,6 +590,265 @@ function renderSearchView(container, query) {
   container.querySelectorAll(".edit-btn").forEach(b => b.onclick  = () => openEditModal(+b.dataset.id));
 }
 
+/* ─── Calendar View ───────────────────────────────────────── */
+const MONTH_NAMES = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+const DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+function renderCalendarView(container) {
+  const year = state.calYear;
+  const month = state.calMonth; // 0-indexed
+
+  // Header element
+  const header = el("div", "calendar-header");
+
+  // Title group: Month Name & Year Selectors
+  const titleGroup = el("div", "calendar-title-group");
+
+  const calIcon = el("span", "", "📅");
+  calIcon.style.fontSize = "26px";
+  titleGroup.appendChild(calIcon);
+
+  const monthSelect = document.createElement("select");
+  monthSelect.className = "cal-select month-select";
+  monthSelect.style.cssText = "font-family:'Baloo 2',sans-serif;font-size:22px;font-weight:700;border:none;background:var(--cream);color:var(--ink);padding:4px 12px;border-radius:12px;cursor:pointer;outline:none;";
+  MONTH_NAMES.forEach((mName, idx) => {
+    const opt = document.createElement("option");
+    opt.value = idx;
+    opt.textContent = mName;
+    if (idx === month) opt.selected = true;
+    monthSelect.appendChild(opt);
+  });
+  monthSelect.onchange = (e) => {
+    state.calMonth = parseInt(e.target.value, 10);
+    render();
+  };
+  titleGroup.appendChild(monthSelect);
+
+  const yearSelect = document.createElement("select");
+  yearSelect.className = "cal-select year-select";
+  yearSelect.style.cssText = "font-family:'Baloo 2',sans-serif;font-size:22px;font-weight:700;border:none;background:var(--cream);color:var(--ink);padding:4px 12px;border-radius:12px;cursor:pointer;outline:none;";
+  for (let y = 2000; y <= 2050; y++) {
+    const opt = document.createElement("option");
+    opt.value = y;
+    opt.textContent = y;
+    if (y === year) opt.selected = true;
+    yearSelect.appendChild(opt);
+  }
+  yearSelect.onchange = (e) => {
+    state.calYear = parseInt(e.target.value, 10);
+    render();
+  };
+  titleGroup.appendChild(yearSelect);
+
+  // Nav buttons: <, Today, >
+  const navBtns = el("div", "calendar-nav-btns");
+
+  const prevBtn = el("button", "btn-cal-nav", "◄");
+  prevBtn.title = "Previous Month";
+  prevBtn.onclick = () => {
+    if (state.calMonth === 0) {
+      state.calMonth = 11;
+      state.calYear--;
+    } else {
+      state.calMonth--;
+    }
+    render();
+  };
+
+  const todayBtn = el("button", "btn-cal-nav btn-cal-today", "Today");
+  todayBtn.onclick = () => {
+    const now = new Date();
+    state.calYear = now.getFullYear();
+    state.calMonth = now.getMonth();
+    render();
+  };
+
+  const nextBtn = el("button", "btn-cal-nav", "►");
+  nextBtn.title = "Next Month";
+  nextBtn.onclick = () => {
+    if (state.calMonth === 11) {
+      state.calMonth = 0;
+      state.calYear++;
+    } else {
+      state.calMonth++;
+    }
+    render();
+  };
+
+  navBtns.appendChild(prevBtn);
+  navBtns.appendChild(todayBtn);
+  navBtns.appendChild(nextBtn);
+  titleGroup.appendChild(navBtns);
+  header.appendChild(titleGroup);
+
+  // Calculate stats for this month
+  const monthPrefix = `${year}-${String(month + 1).padStart(2, "0")}`;
+  const monthTasks = DATA.tasks.filter(t => t.due && t.due.startsWith(monthPrefix));
+  const monthCompleted = monthTasks.filter(t => t.done).length;
+
+  const stats = el("div", "calendar-stats");
+  stats.innerHTML = `
+    <div class="cal-stat-pill">Scheduled: <strong>${monthTasks.length}</strong></div>
+    <div class="cal-stat-pill">Completed: <strong>${monthCompleted}</strong></div>
+  `;
+  header.appendChild(stats);
+
+  container.appendChild(header);
+
+  // Calendar Grid
+  const grid = el("div", "calendar-grid");
+
+  // Render Day Headers (Sun-Sat)
+  DAY_NAMES.forEach(dayName => {
+    grid.appendChild(el("div", "calendar-day-header", dayName));
+  });
+
+  // Calculate calendar grid days
+  const firstDayIndex = new Date(year, month, 1).getDay(); // 0 = Sun
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const daysInPrevMonth = new Date(year, month, 0).getDate();
+
+  const totalCells = Math.ceil((firstDayIndex + daysInMonth) / 7) * 7;
+  const todayStr = new Date().toISOString().slice(0, 10);
+
+  for (let i = 0; i < totalCells; i++) {
+    let dayNum, dateStr, isCurrentMonth = true;
+
+    if (i < firstDayIndex) {
+      // Previous month trailing days
+      isCurrentMonth = false;
+      dayNum = daysInPrevMonth - firstDayIndex + i + 1;
+      let prevM = month - 1, prevY = year;
+      if (prevM < 0) { prevM = 11; prevY--; }
+      dateStr = `${prevY}-${String(prevM + 1).padStart(2, "0")}-${String(dayNum).padStart(2, "0")}`;
+    } else if (i >= firstDayIndex + daysInMonth) {
+      // Next month leading days
+      isCurrentMonth = false;
+      dayNum = i - (firstDayIndex + daysInMonth) + 1;
+      let nextM = month + 1, nextY = year;
+      if (nextM > 11) { nextM = 0; nextY++; }
+      dateStr = `${nextY}-${String(nextM + 1).padStart(2, "0")}-${String(dayNum).padStart(2, "0")}`;
+    } else {
+      // Current month days
+      dayNum = i - firstDayIndex + 1;
+      dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(dayNum).padStart(2, "0")}`;
+    }
+
+    const isToday = (dateStr === todayStr);
+    const dayTasks = DATA.tasks.filter(t => t.due === dateStr);
+
+    const cell = el("div", `calendar-cell${isToday ? " today" : ""}${!isCurrentMonth ? " other-month" : ""}`);
+    cell.onclick = () => {
+      openDayDetailModal(dateStr);
+    };
+
+    // Cell Header: Day Number + Add Button
+    const cellHeader = el("div", "cell-header");
+    cellHeader.innerHTML = `
+      <span class="day-num">${dayNum}</span>
+      <button class="cell-add-btn" title="Add task for this date" onclick="event.stopPropagation();openAddTaskModal('${dateStr}')">+</button>
+    `;
+    cell.appendChild(cellHeader);
+
+    // Cell Tasks List
+    const cellTasks = el("div", "cell-tasks");
+
+    const maxVisible = 3;
+    const visibleTasks = dayTasks.slice(0, maxVisible);
+
+    visibleTasks.forEach(t => {
+      const chip = el("div", `day-task-chip priority-${t.priority}${t.done ? " done" : ""}`);
+      chip.title = `${t.title} (${t.priority})`;
+      chip.innerHTML = `
+        <span class="prio-dot ${t.priority}"></span>
+        <span class="chip-title">${esc(t.title)}</span>
+      `;
+      chip.onclick = (e) => {
+        e.stopPropagation();
+        openEditModal(t.id);
+      };
+      cellTasks.appendChild(chip);
+    });
+
+    if (dayTasks.length > maxVisible) {
+      const moreCount = dayTasks.length - maxVisible;
+      const morePill = el("div", "day-task-more", `+${moreCount} more`);
+      cellTasks.appendChild(morePill);
+    }
+
+    cell.appendChild(cellTasks);
+    grid.appendChild(cell);
+  }
+
+  container.appendChild(grid);
+}
+
+/* ─── Day Detail View Modal ──────────────────────────────── */
+function openDayDetailModal(dateStr) {
+  const [y, m, d] = dateStr.split("-").map(Number);
+  const dateObj = new Date(y, m - 1, d);
+  const options = { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' };
+  const formattedDate = dateObj.toLocaleDateString('en-US', options);
+
+  $("#dayDetailTitle").textContent = formattedDate;
+  const dayTasks = DATA.tasks.filter(t => t.due === dateStr);
+  $("#dayDetailSub").textContent = `${dayTasks.length} task${dayTasks.length !== 1 ? "s" : ""} scheduled for this day.`;
+
+  const listContainer = $("#dayDetailTasksList");
+  listContainer.innerHTML = "";
+
+  if (dayTasks.length === 0) {
+    listContainer.appendChild(el("div", "empty-state", `<p style="text-align:center;color:var(--ink-soft);padding:16px 0;">No tasks scheduled for ${formattedDate}.</p>`));
+  } else {
+    dayTasks.forEach(t => {
+      const meta = DATA.lists[t.list];
+      const row = el("div", `day-detail-row priority-${t.priority}${t.done ? " done" : ""}`);
+      row.innerHTML = `
+        <button class="checkbox ${t.done ? "checked" : ""}" data-id="${t.id}">${t.done ? "✓" : ""}</button>
+        <div class="task-body" style="flex:1;">
+          <p class="task-title" style="margin:0;font-weight:600;font-size:14px;color:var(--ink);">${esc(t.title)}</p>
+          <span class="pill ${t.priority}" style="margin-top:2px;">${t.priority}</span>
+          ${meta ? `<span style="font-size:11px;color:var(--ink-faint);margin-left:6px;">${meta.emoji} ${esc(meta.name)}</span>` : ""}
+        </div>
+        <div class="task-actions" style="display:flex;gap:6px;">
+          <button class="icon-btn edit-btn" data-id="${t.id}" title="Edit">✏</button>
+          <button class="icon-btn del-btn" data-id="${t.id}" title="Delete">✕</button>
+        </div>
+      `;
+      listContainer.appendChild(row);
+    });
+
+    listContainer.querySelectorAll(".checkbox").forEach(cb => {
+      cb.onclick = () => {
+        toggleTask(+cb.dataset.id);
+        openDayDetailModal(dateStr);
+      };
+    });
+    listContainer.querySelectorAll(".edit-btn").forEach(btn => {
+      btn.onclick = () => {
+        closeModal("dayDetailModal");
+        openEditModal(+btn.dataset.id);
+      };
+    });
+    listContainer.querySelectorAll(".del-btn").forEach(btn => {
+      btn.onclick = () => {
+        deleteTask(+btn.dataset.id);
+        closeModal("dayDetailModal");
+      };
+    });
+  }
+
+  $("#dayDetailAddTaskBtn").onclick = () => {
+    closeModal("dayDetailModal");
+    openAddTaskModal(dateStr);
+  };
+
+  openModal("dayDetailModal");
+}
+
 /* ─── Root Render ─────────────────────────────────────────── */
 function render() {
   renderNav();
@@ -556,6 +859,8 @@ function render() {
     renderSearchView(content, q);
   } else if (state.view === "dashboard") {
     renderDashboard(content);
+  } else if (state.view === "calendar") {
+    renderCalendarView(content);
   } else {
     renderListView(content);
   }
@@ -611,12 +916,15 @@ $("#addListBtn").onclick = openNewListModal;
 document.addEventListener("keydown", e => {
   if (document.querySelector(".modal-overlay.open")) return;
   if (e.key === "n" && !["INPUT","SELECT","TEXTAREA"].includes(document.activeElement.tagName)) {
-    if (state.view === "list") openAddTaskModal();
+    if (state.view === "list" || state.view === "calendar") openAddTaskModal();
+  }
+  if ((e.key === "c" || e.key === "C") && !["INPUT","SELECT","TEXTAREA"].includes(document.activeElement.tagName)) {
+    state.view = "calendar"; render();
   }
   if (e.key === "/" && !["INPUT","SELECT","TEXTAREA"].includes(document.activeElement.tagName)) {
     e.preventDefault(); searchInput.focus();
   }
-  if (e.key === "Escape" && state.view === "list") { state.view = "dashboard"; render(); }
+  if (e.key === "Escape" && (state.view === "list" || state.view === "calendar")) { state.view = "dashboard"; render(); }
 });
 
 /* ─── Profile Popover & Account Handlers ──────────────────── */
@@ -666,10 +974,29 @@ function openShortcutsModal() {
   openModal("shortcutsModal");
 }
 
+function applyTheme(t) {
+  state.theme = t || "light";
+  if (state.theme === "dark") {
+    document.documentElement.setAttribute("data-theme", "dark");
+  } else {
+    document.documentElement.removeAttribute("data-theme");
+  }
+  const tag = document.querySelector("#btn-theme-preset .p-tag");
+  if (tag) {
+    tag.textContent = state.theme === "dark" ? "Molded Dark" : "Cream Pastel";
+  }
+  localStorage.setItem("taskly_theme", state.theme);
+}
+
 function toggleThemeNotice() {
   profilePopover.classList.remove("open");
-  alert("✨ You are currently using the signature Cream Pastel theme!");
+  const newTheme = state.theme === "dark" ? "light" : "dark";
+  applyTheme(newTheme);
 }
+
+// Auto-apply saved theme on boot
+const savedTheme = localStorage.getItem("taskly_theme") || "light";
+applyTheme(savedTheme);
 
 function confirmSignOut() {
   profilePopover.classList.remove("open");

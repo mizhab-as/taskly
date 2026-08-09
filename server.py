@@ -17,7 +17,7 @@ from flask import Flask, jsonify, request, send_from_directory, Response
 from flask_cors import CORS
 
 # ── Config ────────────────────────────────────────────────────────────────────
-PORT      = 5050
+PORT      = int(os.environ.get("PORT", 5050))
 DATA_FILE = os.path.join(os.path.dirname(__file__), "data", "tasks.json")
 FRONTEND  = os.path.join(os.path.dirname(__file__), "frontend")
 
@@ -161,4 +161,4 @@ if __name__ == "__main__":
     print(f"  │  http://localhost:{PORT}                    │")
     print(f"  │  Press Ctrl+C to stop                    │")
     print(f"  ╰─────────────────────────────────────────╯")
-    app.run(host="127.0.0.1", port=PORT, debug=False)
+    app.run(host="0.0.0.0", port=PORT, debug=False)

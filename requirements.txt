@@ -3,6 +3,7 @@
 # Option 1 & 2: REST API + file server
 flask>=3.0.0
 flask-cors>=4.0.0
+gunicorn>=21.2.0
 
 # Option 3: Export (stdlib only — csv, json, argparse — no extra deps)
 

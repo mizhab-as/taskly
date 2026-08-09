@@ -689,13 +689,17 @@ input, select { font-family: inherit; }
 }
 
 [data-theme="dark"] .topbar {
-  background: transparent;
+  background: #000000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-[data-theme="dark"] .search input {
+[data-theme="dark"] .search {
   background: #141420;
-  color: #FFFFFF;
   border: 1px solid rgba(255, 255, 255, 0.12);
+}
+[data-theme="dark"] .search input {
+  background: transparent;
+  color: #FFFFFF;
 }
 [data-theme="dark"] .search input::placeholder {
   color: #756D88;

@@ -51,15 +51,44 @@
 
 ## ✨ Features
 
-- 🎨 **Signature Cream Pastel UI**: Built with custom HSL tokens, soft shadows, custom blob badges, and typography (`Baloo 2` & `Inter`).
+- 🎨 **Signature Cream Pastel & Sleek Dark Mode**: Toggle seamlessly between signature **Cream Pastel** (`#FBF3E6`) and **Sleek Molded Dark Mode** (`#12101D`).
+- 📱 **Mobile PWA & Native Packaging**: Install Taskly as a native-like app on **iOS (iPhone/iPad)** and **Android** with offline support (`manifest.json` & `sw.js`).
+- 📅 **Interactive Calendar View & Selectors**: Monthly grid calendar with priority dots, day detail modal, and direct **Month** (Jan–Dec) & **Year** (2020–2035) dropdown selectors.
 - ⚡ **Dual Persistence Layer**: Connects automatically to the **Python Flask REST API** on startup (`data/tasks.json`). If offline, seamlessly defaults to `localStorage`.
+- ☁️ **1-Click Live Cloud Hosting (Render / Heroku)**: Built-in `render.yaml` Blueprint and `Procfile` for instant deployment on Render.com with `gunicorn`.
 - 📊 **Interactive Focus Metrics**: Dynamic percentage progress ring, total/done/pending stats, and automated streak calculation.
 - 📂 **Custom Categories**: Built-in lists (*Today*, *Planned*, *Personal*, *Work*, *Shopping*) plus custom list creator with an emoji picker.
 - 🏷️ **Priority Strips & Due Dates**: Red (High), Amber (Medium), Teal (Low) priority strips and overdue date tracking.
 - 🔍 **Live Search Engine**: Instant filtering across all tasks and categories with `<mark>` term highlighting.
 - ⏰ **Background Notification Daemon**: Python process (`reminders.py`) checks tasks periodically and triggers desktop notifications for overdue items.
 - 💾 **Data Export Suite**: CLI utility (`export.py`) and API endpoints for exporting tasks to JSON and CSV formats.
-- ⌨️ **Keyboard Navigation**: Global hotkeys (`N` for new task, `/` to search, `Esc` to exit/return).
+- ⌨️ **Keyboard Navigation**: Global hotkeys (`N` for new task, `C` for calendar, `/` to search, `Esc` to exit/return).
+
+---
+
+## 📱 Mobile App Installation (iOS & Android PWA)
+
+Taskly is packaged as a **Progressive Web App (PWA)** for mobile installation:
+
+###  iPhone / iPad (iOS Safari)
+1. Open Taskly in Safari.
+2. Tap the **Share** button at the bottom of the screen.
+3. Scroll down and tap **"Add to Home Screen"**.
+4. Taskly will launch in full-screen standalone mode with its custom icon!
+
+### 🤖 Android (Chrome)
+1. Open Taskly in Chrome.
+2. Tap the **"Install Taskly"** prompt or open the Chrome menu (⋮) and select **"Install App"**.
+
+---
+
+## ☁️ Deploy Live on Render (1-Click Hosting)
+
+Deploy Taskly to **Render.com** for free:
+
+1. Push this repository to GitHub.
+2. Log into [Render.com](https://render.com) and click **New + ➔ Blueprint**.
+3. Connect your repository — Render will automatically detect `render.yaml` and configure the Python web service with `gunicorn server:app`!
 
 ---
 

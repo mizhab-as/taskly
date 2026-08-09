@@ -1,105 +1,25 @@
 {
   "lists": {
-    "personal": {
-      "bg": "var(--lilac-tint)",
-      "custom": false,
-      "emoji": "🙂",
-      "name": "Personal"
-    },
-    "planned": {
-      "bg": "var(--sky-tint)",
-      "custom": false,
-      "emoji": "📅",
-      "name": "Planned"
-    },
-    "shopping": {
-      "bg": "var(--pink-tint)",
-      "custom": false,
-      "emoji": "🛍️",
-      "name": "Shopping"
-    },
-    "today": {
-      "bg": "var(--amber-tint)",
-      "custom": false,
-      "emoji": "☀️",
-      "name": "Today"
-    },
-    "work": {
-      "bg": "var(--cream-deep)",
-      "custom": false,
-      "emoji": "💼",
-      "name": "Work"
-    }
+    "today": { "name": "Today", "emoji": "☀️", "bg": "var(--amber-tint)", "custom": false },
+    "planned": { "name": "Planned", "emoji": "📅", "bg": "var(--sky-tint)", "custom": false },
+    "personal": { "name": "Personal", "emoji": "🙂", "bg": "var(--lilac-tint)", "custom": false },
+    "work": { "name": "Work", "emoji": "💼", "bg": "var(--cream-deep)", "custom": false },
+    "shopping": { "name": "Shopping", "emoji": "🛍️", "bg": "var(--pink-tint)", "custom": false }
   },
-  "nextId": 9,
   "tasks": [
-    {
-      "done": false,
-      "due": "",
-      "id": 1,
-      "list": "personal",
-      "priority": "High",
-      "title": "Go to gym"
-    },
-    {
-      "done": false,
-      "due": "",
-      "id": 2,
-      "list": "personal",
-      "priority": "Medium",
-      "title": "Meet friends"
-    },
-    {
-      "done": false,
-      "due": "",
-      "id": 3,
-      "list": "personal",
-      "priority": "Medium",
-      "title": "Buy theatre ticket"
-    },
-    {
-      "done": true,
-      "due": "",
-      "id": 4,
-      "list": "personal",
-      "priority": "Low",
-      "title": "Go to Market"
-    },
-    {
-      "done": false,
-      "due": "",
-      "id": 5,
-      "list": "work",
-      "priority": "High",
-      "title": "Send project files"
-    },
-    {
-      "done": false,
-      "due": "",
-      "id": 6,
-      "list": "work",
-      "priority": "Medium",
-      "title": "Pay bills"
-    },
-    {
-      "done": false,
-      "due": "",
-      "id": 7,
-      "list": "shopping",
-      "priority": "Low",
-      "title": "Oat milk & eggs"
-    },
-    {
-      "done": true,
-      "due": "",
-      "id": 8,
-      "list": "shopping",
-      "priority": "Low",
-      "title": "New headphones"
-    }
+    { "id": 1, "list": "personal", "title": "Go to morning workout session", "priority": "High", "done": false, "due": "2026-08-09" },
+    { "id": 2, "list": "work", "title": "Review Q3 design system updates", "priority": "High", "done": false, "due": "2026-08-09" },
+    { "id": 3, "list": "shopping", "title": "Buy organic oat milk & coffee beans", "priority": "Low", "done": true, "due": "2026-08-09" },
+    { "id": 4, "list": "work", "title": "Team sprint planning & demo", "priority": "High", "done": false, "due": "2026-08-10" },
+    { "id": 5, "list": "personal", "title": "Pay monthly utility & internet bills", "priority": "Medium", "done": false, "due": "2026-08-12" },
+    { "id": 6, "list": "personal", "title": "Plan weekend roadtrip itinerary", "priority": "Medium", "done": false, "due": "2026-08-15" },
+    { "id": 7, "list": "personal", "title": "Doctor checkup appointment", "priority": "High", "done": false, "due": "2026-08-18" },
+    { "id": 8, "list": "work", "title": "Submit quarterly client report", "priority": "High", "done": false, "due": "2026-08-20" },
+    { "id": 9, "list": "shopping", "title": "Order noise-canceling headphones", "priority": "Low", "done": false, "due": "2026-08-22" },
+    { "id": 10, "list": "personal", "title": "Read 2 chapters of System Design", "priority": "Low", "done": false, "due": "2026-08-25" },
+    { "id": 11, "list": "personal", "title": "Renew car insurance policy", "priority": "Medium", "done": false, "due": "2026-08-05" },
+    { "id": 12, "list": "work", "title": "Finalize Taskly mobile PWA build", "priority": "High", "done": true, "due": "2026-08-09" }
   ],
-  "user": {
-    "email": "ender@taskly.app",
-    "name": "Ender"
-  }
+  "nextId": 13,
+  "user": { "name": "Ender", "email": "ender@taskly.app" }
 }

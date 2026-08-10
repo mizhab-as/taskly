@@ -648,28 +648,28 @@ input, select { font-family: inherit; }
 }
 
 /* ═══════════════════════════════════════════════════════════
-   DARK MODE — Ultra Reflective Pure Pitch-Black AMOLED Theme
+   DARK MODE — High-Contrast Ultra Reflective Pure AMOLED Theme
 ═══════════════════════════════════════════════════════════ */
 [data-theme="dark"] {
   --cream: #000000;
   --cream-deep: #0A0A0A;
   --white: #0E0E0E;
-  --ink: #FFFFFF;
-  --ink-soft: #A3A3A3;
-  --ink-faint: #525252;
+  --ink: #FFFFFF;              /* Crisp Pure White */
+  --ink-soft: #CBD5E1;         /* Bright Cool Silver / Slate 300 */
+  --ink-faint: #94A3B8;        /* Vivid Muted Silver / Slate 400 */
   --teal: #00F5D4;
-  --teal-deep: #00CBAA;
-  --teal-tint: rgba(0, 245, 212, 0.15);
-  --coral: #FF3366;
-  --coral-tint: rgba(255, 51, 102, 0.18);
-  --amber: #FFD166;
-  --amber-tint: rgba(255, 209, 102, 0.15);
-  --lilac: #B877FF;
-  --lilac-tint: rgba(184, 119, 255, 0.18);
-  --sky: #00E5FF;
-  --sky-tint: rgba(0, 229, 255, 0.15);
-  --pink: #FF2E93;
-  --pink-tint: rgba(255, 46, 147, 0.15);
+  --teal-deep: #00F5D4;
+  --teal-tint: rgba(0, 245, 212, 0.16);
+  --coral: #FF4D6D;
+  --coral-tint: rgba(255, 77, 109, 0.2);
+  --amber: #FFC048;
+  --amber-tint: rgba(255, 192, 72, 0.18);
+  --lilac: #C084FC;
+  --lilac-tint: rgba(192, 132, 252, 0.2);
+  --sky: #38BDF8;
+  --sky-tint: rgba(56, 189, 248, 0.2);
+  --pink: #F472B6;
+  --pink-tint: rgba(244, 114, 182, 0.2);
   --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.95);
   --shadow-pop: 0 20px 50px rgba(0, 0, 0, 0.98);
 }
@@ -681,17 +681,17 @@ input, select { font-family: inherit; }
 
 /* Ambient reflective glowing rim lights */
 [data-theme="dark"] .bg-decor span.b1 {
-  background: radial-gradient(circle at 35% 30%, rgba(255, 46, 147, 0.22), rgba(184, 119, 255, 0.2) 70%);
+  background: radial-gradient(circle at 35% 30%, rgba(244, 114, 182, 0.22), rgba(192, 132, 252, 0.2) 70%);
   opacity: .35;
   filter: blur(40px);
 }
 [data-theme="dark"] .bg-decor span.b2 {
-  background: radial-gradient(circle at 40% 35%, rgba(0, 245, 212, 0.2), rgba(0, 229, 255, 0.2) 75%);
+  background: radial-gradient(circle at 40% 35%, rgba(0, 245, 212, 0.2), rgba(56, 189, 248, 0.2) 75%);
   opacity: .35;
   filter: blur(40px);
 }
 [data-theme="dark"] .bg-decor span.b3 {
-  background: radial-gradient(circle at 40% 35%, rgba(255, 209, 102, 0.18), rgba(0, 0, 0, 0) 75%);
+  background: radial-gradient(circle at 40% 35%, rgba(255, 192, 72, 0.18), rgba(0, 0, 0, 0) 75%);
   opacity: .3;
   filter: blur(40px);
 }
@@ -709,6 +709,61 @@ input, select { font-family: inherit; }
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+/* High-Contrast Section Titles & Navigation Labels */
+[data-theme="dark"] .section-title,
+[data-theme="dark"] .nav-label,
+[data-theme="dark"] .field-label,
+[data-theme="dark"] .calendar-day-header {
+  color: #94A3B8 !important;
+  font-weight: 800 !important;
+  letter-spacing: .08em;
+}
+
+[data-theme="dark"] .brand span {
+  color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .nav-item {
+  color: #CBD5E1;
+}
+[data-theme="dark"] .nav-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF;
+}
+[data-theme="dark"] .nav-item.active {
+  background: rgba(0, 245, 212, 0.16);
+  color: #00F5D4;
+}
+[data-theme="dark"] .nav-item .count {
+  background: #1E293B;
+  color: #F8FAFC;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+[data-theme="dark"] .nav-item.active .count {
+  background: #00F5D4;
+  color: #000000;
+  font-weight: 800;
+}
+
+/* Sidebar Footer & Pro Badges */
+[data-theme="dark"] .sidebar-footer {
+  background: linear-gradient(180deg, #1C1917 0%, #0C0A09 100%);
+  border: 1px solid rgba(255, 192, 72, 0.25);
+}
+[data-theme="dark"] .sidebar-footer p {
+  color: #FFD880 !important;
+}
+[data-theme="dark"] .sidebar-footer button {
+  background: #FFC048;
+  color: #000000 !important;
+  font-weight: 800;
+}
+[data-theme="dark"] .pro-badge {
+  background: rgba(255, 192, 72, 0.25);
+  color: #FFD880 !important;
+  border: 1px solid rgba(255, 192, 72, 0.35);
+}
+
 [data-theme="dark"] .search {
   background: linear-gradient(180deg, #121212 0%, #060606 100%);
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -720,10 +775,10 @@ input, select { font-family: inherit; }
 }
 [data-theme="dark"] .search input {
   background: transparent;
-  color: #FFFFFF;
+  color: #FFFFFF !important;
 }
 [data-theme="dark"] .search input::placeholder {
-  color: #525252;
+  color: #64748B;
 }
 
 [data-theme="dark"] .profile-popover,
@@ -754,6 +809,60 @@ input, select { font-family: inherit; }
   box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.3), 0 12px 36px rgba(0, 0, 0, 0.98);
 }
 
+/* High-Contrast Card Titles & Subtitles */
+[data-theme="dark"] .list-card h3,
+[data-theme="dark"] .hero-text h1,
+[data-theme="dark"] .modal h2,
+[data-theme="dark"] .list-header h2,
+[data-theme="dark"] .task-title,
+[data-theme="dark"] .profile-info h4,
+[data-theme="dark"] .calendar-title-group h2 {
+  color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .list-card .meta span,
+[data-theme="dark"] .hero-text p,
+[data-theme="dark"] .hero-text strong,
+[data-theme="dark"] .stat .lbl,
+[data-theme="dark"] .sub,
+[data-theme="dark"] .profile-info p,
+[data-theme="dark"] .p-stat-lbl,
+[data-theme="dark"] .profile-item,
+[data-theme="dark"] .task-due,
+[data-theme="dark"] .new-list-card,
+[data-theme="dark"] .day-num {
+  color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .stat .num,
+[data-theme="dark"] .p-stat-val {
+  color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .list-card .badge {
+  background: rgba(255, 77, 109, 0.25);
+  color: #FF6688 !important;
+  border: 1px solid rgba(255, 77, 109, 0.4);
+  box-shadow: 0 0 10px rgba(255, 77, 109, 0.2);
+}
+
+/* High Contrast Priority Pills */
+[data-theme="dark"] .pill.High,
+[data-theme="dark"] .prio-pill[data-p="High"] {
+  background: rgba(255, 77, 109, 0.25) !important;
+  color: #FF6688 !important;
+}
+[data-theme="dark"] .pill.Medium,
+[data-theme="dark"] .prio-pill[data-p="Medium"] {
+  background: rgba(255, 192, 72, 0.25) !important;
+  color: #FFD880 !important;
+}
+[data-theme="dark"] .pill.Low,
+[data-theme="dark"] .prio-pill[data-p="Low"] {
+  background: rgba(0, 245, 212, 0.25) !important;
+  color: #5CFFE4 !important;
+}
+
 [data-theme="dark"] .calendar-cell {
   background: linear-gradient(180deg, #0F0F0F 0%, #050505 100%);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -763,9 +872,9 @@ input, select { font-family: inherit; }
   opacity: .35;
 }
 [data-theme="dark"] .day-task-chip {
-  background: #161616;
-  color: #FFFFFF;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #181818;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 [data-theme="dark"] .field-input,
@@ -791,7 +900,7 @@ input, select { font-family: inherit; }
 }
 
 [data-theme="dark"] .nav-item:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.08);
   color: #FFFFFF;
 }
 
@@ -799,7 +908,7 @@ input, select { font-family: inherit; }
 [data-theme="dark"] .btn-cal-nav,
 [data-theme="dark"] .btn-ghost {
   background: linear-gradient(180deg, #161616 0%, #0A0A0A 100%);
-  color: #FFFFFF;
+  color: #FFFFFF !important;
   border: 1px solid rgba(255, 255, 255, 0.12);
 }
 [data-theme="dark"] .btn-clear-list:hover,
@@ -813,6 +922,9 @@ input, select { font-family: inherit; }
 [data-theme="dark"] .shortcut-row {
   background: #080808;
   border: 1px solid rgba(255, 255, 255, 0.08);
+}
+[data-theme="dark"] .shortcut-row .s-lbl {
+  color: #FFFFFF !important;
 }
 [data-theme="dark"] .shortcut-row kbd {
   background: #141414;
@@ -828,7 +940,17 @@ input, select { font-family: inherit; }
 [data-theme="dark"] .new-list-card:hover {
   border-color: var(--teal);
   background: var(--teal-tint);
+  color: var(--teal) !important;
 }
+
+/* SVG Fill Overrides in Dark Mode */
+[data-theme="dark"] .hero-emoji svg ellipse { fill: #1E293B; }
+[data-theme="dark"] .hero-emoji svg path[fill="#4A3B63"] { fill: #00F5D4; }
+[data-theme="dark"] .hero-emoji svg circle[fill="#4A3B63"] { fill: #00F5D4; }
+[data-theme="dark"] .avatar svg path[fill="#4A3B63"] { fill: #00F5D4; }
+[data-theme="dark"] .avatar svg circle[fill="#4A3B63"] { fill: #00F5D4; }
+[data-theme="dark"] .avatar-lg svg path[fill="#4A3B63"] { fill: #00F5D4; }
+[data-theme="dark"] .avatar-lg svg circle[fill="#4A3B63"] { fill: #00F5D4; }
 
 /* ═══════════════════════════════════════════════════════════
    CALENDAR VIEW — Cream Pastel Theme

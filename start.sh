@@ -57,6 +57,5 @@ echo "  ────────────────────────
 echo "  Web App  → http://localhost:5050"
 echo "  API      → http://localhost:5050/api/health"
 echo "  Export   → python3 python/export.py"
-echo "  Stop     → ./stop.sh"
 echo "  ─────────────────────────────────────────────"
 echo ""

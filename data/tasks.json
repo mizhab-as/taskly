@@ -1,25 +1,137 @@
 {
   "lists": {
-    "today": { "name": "Today", "emoji": "☀️", "bg": "var(--amber-tint)", "custom": false },
-    "planned": { "name": "Planned", "emoji": "📅", "bg": "var(--sky-tint)", "custom": false },
-    "personal": { "name": "Personal", "emoji": "🙂", "bg": "var(--lilac-tint)", "custom": false },
-    "work": { "name": "Work", "emoji": "💼", "bg": "var(--cream-deep)", "custom": false },
-    "shopping": { "name": "Shopping", "emoji": "🛍️", "bg": "var(--pink-tint)", "custom": false }
+    "personal": {
+      "bg": "var(--lilac-tint)",
+      "custom": false,
+      "emoji": "🙂",
+      "name": "Personal"
+    },
+    "planned": {
+      "bg": "var(--sky-tint)",
+      "custom": false,
+      "emoji": "📅",
+      "name": "Planned"
+    },
+    "shopping": {
+      "bg": "var(--pink-tint)",
+      "custom": false,
+      "emoji": "🛍️",
+      "name": "Shopping"
+    },
+    "today": {
+      "bg": "var(--amber-tint)",
+      "custom": false,
+      "emoji": "☀️",
+      "name": "Today"
+    },
+    "work": {
+      "bg": "var(--cream-deep)",
+      "custom": false,
+      "emoji": "💼",
+      "name": "Work"
+    }
   },
-  "tasks": [
-    { "id": 1, "list": "personal", "title": "Go to morning workout session", "priority": "High", "done": false, "due": "2026-08-09" },
-    { "id": 2, "list": "work", "title": "Review Q3 design system updates", "priority": "High", "done": false, "due": "2026-08-09" },
-    { "id": 3, "list": "shopping", "title": "Buy organic oat milk & coffee beans", "priority": "Low", "done": true, "due": "2026-08-09" },
-    { "id": 4, "list": "work", "title": "Team sprint planning & demo", "priority": "High", "done": false, "due": "2026-08-10" },
-    { "id": 5, "list": "personal", "title": "Pay monthly utility & internet bills", "priority": "Medium", "done": false, "due": "2026-08-12" },
-    { "id": 6, "list": "personal", "title": "Plan weekend roadtrip itinerary", "priority": "Medium", "done": false, "due": "2026-08-15" },
-    { "id": 7, "list": "personal", "title": "Doctor checkup appointment", "priority": "High", "done": false, "due": "2026-08-18" },
-    { "id": 8, "list": "work", "title": "Submit quarterly client report", "priority": "High", "done": false, "due": "2026-08-20" },
-    { "id": 9, "list": "shopping", "title": "Order noise-canceling headphones", "priority": "Low", "done": false, "due": "2026-08-22" },
-    { "id": 10, "list": "personal", "title": "Read 2 chapters of System Design", "priority": "Low", "done": false, "due": "2026-08-25" },
-    { "id": 11, "list": "personal", "title": "Renew car insurance policy", "priority": "Medium", "done": false, "due": "2026-08-05" },
-    { "id": 12, "list": "work", "title": "Finalize Taskly mobile PWA build", "priority": "High", "done": true, "due": "2026-08-09" }
-  ],
   "nextId": 13,
-  "user": { "name": "Ender", "email": "ender@taskly.app" }
+  "tasks": [
+    {
+      "done": false,
+      "due": "2026-08-09",
+      "id": 1,
+      "list": "personal",
+      "priority": "High",
+      "title": "Go to morning workout session"
+    },
+    {
+      "done": true,
+      "due": "2026-08-09",
+      "id": 2,
+      "list": "work",
+      "priority": "High",
+      "title": "Review Q3 design system updates"
+    },
+    {
+      "done": true,
+      "due": "2026-08-09",
+      "id": 3,
+      "list": "shopping",
+      "priority": "Low",
+      "title": "Buy organic oat milk & coffee beans"
+    },
+    {
+      "done": false,
+      "due": "2026-08-10",
+      "id": 4,
+      "list": "work",
+      "priority": "High",
+      "title": "Team sprint planning & demo"
+    },
+    {
+      "done": false,
+      "due": "2026-08-12",
+      "id": 5,
+      "list": "personal",
+      "priority": "Medium",
+      "title": "Pay monthly utility & internet bills"
+    },
+    {
+      "done": false,
+      "due": "2026-08-15",
+      "id": 6,
+      "list": "personal",
+      "priority": "Medium",
+      "title": "Plan weekend roadtrip itinerary"
+    },
+    {
+      "done": false,
+      "due": "2026-08-18",
+      "id": 7,
+      "list": "personal",
+      "priority": "High",
+      "title": "Doctor checkup appointment"
+    },
+    {
+      "done": false,
+      "due": "2026-08-20",
+      "id": 8,
+      "list": "work",
+      "priority": "High",
+      "title": "Submit quarterly client report"
+    },
+    {
+      "done": false,
+      "due": "2026-08-22",
+      "id": 9,
+      "list": "shopping",
+      "priority": "Low",
+      "title": "Order noise-canceling headphones"
+    },
+    {
+      "done": false,
+      "due": "2026-08-25",
+      "id": 10,
+      "list": "personal",
+      "priority": "Low",
+      "title": "Read 2 chapters of System Design"
+    },
+    {
+      "done": false,
+      "due": "2026-08-05",
+      "id": 11,
+      "list": "personal",
+      "priority": "Medium",
+      "title": "Renew car insurance policy"
+    },
+    {
+      "done": true,
+      "due": "2026-08-09",
+      "id": 12,
+      "list": "work",
+      "priority": "High",
+      "title": "Finalize Taskly mobile PWA build"
+    }
+  ],
+  "user": {
+    "email": "ender@taskly.app",
+    "name": "Ender"
+  }
 }

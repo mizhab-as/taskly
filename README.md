@@ -7,70 +7,76 @@
 [![Vercel Deployment](https://img.shields.io/badge/Deploy-Vercel-000000.svg)](https://vercel.com)
 [![Android APK](https://img.shields.io/badge/Android-PWA%2FCapacitor-3DDC84.svg)](https://developer.android.com/)
 
-**Taskly** is a fast, visually stunning, dual-mode productivity application designed for managing tasks, lists, and schedules effortlessly. Built with a responsive **Vanilla CSS** design system, **Ultra-Reflective AMOLED Black Dark Mode**, interactive **Calendar View**, REST API backend, and **Offline PWA & Capacitor Android** support.
+**Taskly** is a high-performance, visually stunning, dual-mode productivity application built for managing tasks, lists, and schedules effortlessly across web, desktop, and mobile devices. Built with a responsive **Vanilla CSS** design system, **Eye-Comfort Obsidian Dark Theme**, uniform **Interactive Calendar View**, REST API backend, and **Android PWA & Native Capacitor APK** support.
 
 ---
 
-## 📸 Screenshots Showcase
+## 📸 Dual-Theme Visual Showcase
 
-### 1. Main Dashboard & Analytics
-![Dashboard](screenshots/01_dashboard.png)
-*Hero greeting, progress ring chart, quick list access, and productivity statistics.*
-
----
-
-### 2. List Detail & Priority Task Management
-![List Detail](screenshots/02_list_detail.png)
-*Filter tasks by status (All, Active, Completed), sort by priority (High, Medium, Low), and set due dates.*
+| Light Theme ☀️ | Dark Theme 🌙 |
+|---|---|
+| ![Dashboard Light](screenshots/01_dashboard_light.png) | ![Dashboard Dark](screenshots/01_dashboard_dark.png) |
+| *Hero greeting, progress ring chart, quick list access, and productivity statistics in Light Theme.* | *Obsidian Charcoal (#121318) Eye-Comfort Dark Theme for zero eye strain.* |
 
 ---
 
-### 3. Add & Edit Task Modal
-![Add Task Modal](screenshots/03_add_task_modal.png)
-*Interactive task creation with custom priority pills and due date pickers.*
+### 📅 1. Interactive Calendar View & Unlimited Year Stepper
+
+| Calendar View (Light) | Calendar View (Dark) |
+|---|---|
+| ![Calendar Light](screenshots/02_calendar_light.png) | ![Calendar Dark](screenshots/02_calendar_dark.png) |
+
+*Features strictly uniform 100% proportional day tiles, fixed-width navigation controls, and an infinite Month & Year picker modal.*
 
 ---
 
-### 4. Custom List Creation & Emoji Picker
-![Create List Modal](screenshots/04_create_list_modal.png)
-*Create custom list categories with tailored color palettes and emoji badges.*
+### 📋 2. Task List Management & Priority Sorting
+
+| List Detail (Light) | List Detail (Dark) |
+|---|---|
+| ![List Detail Light](screenshots/03_list_detail_light.png) | ![List Detail Dark](screenshots/03_list_detail_dark.png) |
+
+*Filter tasks by status (`All`, `Active`, `Completed`), sort by priority (`High`, `Medium`, `Low`), and track due dates with glowing status badges.*
 
 ---
 
-### 5. Profile Popover & Ultra AMOLED Dark Theme
-![Profile Popover](screenshots/05_profile_popover.png)
-*Profile stats, streak tracking, account settings, and instant toggle for **Ultra Reflective AMOLED Black Theme**.*
+### ➕ 3. Task Creation & Custom List Modals
+
+| Add Task Modal | Create List Modal |
+|---|---|
+| ![Add Task Modal](screenshots/04_add_task_modal_dark.png) | ![Create List Modal](screenshots/05_create_list_modal_dark.png) |
+
+*Interactive modals for quick task insertion with priority pills and custom category list creation with color palettes and emoji icons.*
 
 ---
 
-### 6. Keyboard Shortcuts Modal
-![Keyboard Shortcuts](screenshots/06_keyboard_shortcuts.png)
-*Boost speed with built-in hotkeys (`N` for new task, `C` for calendar, `/` for search, `Esc` to navigate).*
+### 👤 4. Profile Popover & Hotkey Shortcuts
 
----
+| Profile Popover | Keyboard Shortcuts |
+|---|---|
+| ![Profile Popover](screenshots/06_profile_popover_dark.png) | ![Keyboard Shortcuts](screenshots/07_keyboard_shortcuts_dark.png) |
 
-### 7. Instant Live Search
-![Live Search](screenshots/07_live_search.png)
-*Real-time task search with keyword highlighting across all lists and categories.*
+*Track streak progress, toggle themes instantly, and access built-in hotkeys (`N` for new task, `C` for calendar, `/` for search).*
 
 ---
 
 ## ✨ Key Features
 
-- 📱 **Dual Engine Architecture**: Automatically connects to the Python Flask REST API backend when available, and seamlessly falls back to `localStorage` for complete offline operation.
-- 🎨 **Ultra Reflective AMOLED Black Theme**: Features true `#000000` pitch black backgrounds for OLED display energy efficiency, glossy metallic cards, glassmorphism specular borders, and neon pops.
-- 📅 **Interactive Calendar View**: View tasks by scheduled date, switch months/years, and manage daily schedules visually.
-- 🔍 **Instant Live Search**: Perform instant real-time searches across all tasks with highlighted keyword matches.
-- 📦 **Data Exporting**: Standalone CLI & API endpoints to download your full task history in structured **JSON** or **CSV** format.
+- 📱 **Dual Engine Architecture**: Automatically syncs with the Python Flask REST API backend when online, and seamlessly operates offline using `localStorage`.
+- 🌓 **Dual Eye-Comfort Themes**: Toggle instantly between **Light Theme** (Warm Pastel Cream) and **Dark Theme** (Eye-Comfort Obsidian Charcoal `#121318`).
+- 📅 **Uniform Calendar Grid**: Every day cell maintains strictly identical dimensions on desktop (`120px`) and mobile (`68px`) without row distortion.
+- 📆 **Custom Month/Year Stepper Modal**: Infinite year navigation stepper (`◄ 2026 ►`) and a clean 3×4 month tile picker.
+- 🔍 **Instant Live Search**: Perform real-time searches across all task titles and lists with highlighted matching terms.
+- 📦 **Data Exporting**: Standalone CLI & API endpoints to download full task history in **JSON** or **CSV** formats.
 - ⏰ **Background Reminders Daemon**: Background process that monitors overdue tasks and delivers desktop notifications.
-- 📲 **Android App & PWA Ready**: Install natively on Android devices via PWA or build a native APK using Capacitor.
+- 📲 **Android App & PWA Ready**: Install natively on Android phones via PWA or build a native APK using Capacitor.
 - ☁️ **Vercel Cloud Deployment**: Pre-configured `vercel.json` for 1-click cloud deployment.
 
 ---
 
 ## 🚀 Quick Start (Local Development)
 
-### 1. Run via Start Script (Recommended)
+### Run via Startup Script
 
 Simply execute the launcher script:
 
@@ -84,21 +90,6 @@ This script automatically:
 3. Launches the Flask REST API server (`python/server.py`).
 4. Starts the background reminder daemon (`python/reminders.py`).
 5. Opens `http://localhost:5050` in your default browser.
-
-### 2. Manual Launch
-
-```bash
-# Install dependencies
-pip install -r requirements.txt
-
-# Start the Flask API & static web server
-python3 python/server.py
-```
-
-To stop all background processes:
-```bash
-./stop.sh
-```
 
 ---
 
@@ -167,7 +158,7 @@ vercel
 
 ### CLI Data Export
 
-You can also export data directly from the terminal:
+Export data directly from the terminal:
 
 ```bash
 python3 python/export.py          # Exports JSON & CSV to exports/
@@ -195,7 +186,7 @@ python3 python/export.py --csv    # CSV only
 taskly/
 ├── frontend/                 # Web App Frontend (HTML5, Vanilla CSS, JS)
 │   ├── index.html            # App Markup & Modals
-│   ├── style.css             # Design System & Eye-Comfort Dark Theme
+│   ├── style.css             # Design System & Dual-Theme Styles
 │   ├── app.js                # App Logic, State, Calendar & API Bridge
 │   ├── manifest.json         # PWA Manifest Config
 │   └── sw.js                 # PWA Service Worker
@@ -203,11 +194,11 @@ taskly/
 │   ├── server.py             # Python Flask REST API & Static File Server
 │   ├── export.py             # CLI Data Export Utility
 │   ├── reminders.py          # Background Desktop Reminder Daemon
-│   └── take_screenshots.py   # Automated Playwright Screenshot Generator
-├── screenshots/              # High-resolution documentation screenshots
+│   └── take_screenshots.py   # Dual-Theme Automated Screenshot Generator
+├── screenshots/              # 16 High-resolution dual-theme screenshots
+├── releases/                 # Release packages & GitHub release notes
 ├── data/                     # Data persistence directory (tasks.json)
 ├── start.sh                  # Main executable launcher script
-├── stop.sh                   # Shutdown script
 ├── vercel.json               # Vercel deployment configuration
 ├── capacitor.config.json     # Capacitor Android configuration
 └── requirements.txt          # Python dependencies

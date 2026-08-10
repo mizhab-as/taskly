@@ -1,178 +1,180 @@
-# ⚡ Taskly — Get Organized Your Life
+# ⚡ Taskly — Modern Task & Productivity Platform
 
-<div align="center">
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Python 3.9+](https://img.shields.io/badge/Python-3.9%2B-teal.svg)](https://www.python.org/)
+[![Flask](https://img.shields.io/badge/Backend-Flask-black.svg)](https://flask.palletsprojects.org/)
+[![PWA Ready](https://img.shields.io/badge/PWA-Ready-17B897.svg)](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps)
+[![Vercel Deployment](https://img.shields.io/badge/Deploy-Vercel-000000.svg)](https://vercel.com)
+[![Android APK](https://img.shields.io/badge/Android-PWA%2FCapacitor-3DDC84.svg)](https://developer.android.com/)
 
-![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Flask](https://img.shields.io/badge/Flask-3.0+-000000?style=for-the-badge&logo=flask&logoColor=white)
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-Vanilla-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![License](https://img.shields.io/badge/License-MIT-teal?style=for-the-badge)
-
-**Taskly** is a fast, full-featured task manager application featuring a **Signature Cream Pastel Design System** (`#FBF3E6`), custom organic blob graphics, live search, background notifications, and dual persistence (Flask REST API + `localStorage` fallback).
-
-[Features](#-features) • [Quick Start](#-quick-start) • [Screenshots](#-screenshots) • [Architecture](#-architecture) • [API & CLI](#-api--cli-utilities)
-
-</div>
+**Taskly** is a fast, visually stunning, dual-mode productivity application designed for managing tasks, lists, and schedules effortlessly. Built with a responsive **Vanilla CSS** design system, **Ultra-Reflective AMOLED Black Dark Mode**, interactive **Calendar View**, REST API backend, and **Offline PWA & Capacitor Android** support.
 
 ---
 
-## 🎨 Screenshots & Visual Tour
+## 📸 Screenshots Showcase
 
-### 1. Main Dashboard & Completion Overview
-> Clean hero greeting, focus percentage ring chart, interactive category cards, and overview statistics.
+### 1. Main Dashboard & Analytics
 ![Dashboard](screenshots/01_dashboard.png)
+*Hero greeting, progress ring chart, quick list access, and productivity statistics.*
 
-### 2. Category List View & Task Management
-> Filter by active/completed tabs, set task priorities (High/Medium/Low), assign due dates, and add inline tasks.
+---
+
+### 2. List Detail & Priority Task Management
 ![List Detail](screenshots/02_list_detail.png)
+*Filter tasks by status (All, Active, Completed), sort by priority (High, Medium, Low), and set due dates.*
 
-### 3. Add & Edit Task Dialog
-> Priority selectors with visual indicator pills and optional date picker.
+---
+
+### 3. Add & Edit Task Modal
 ![Add Task Modal](screenshots/03_add_task_modal.png)
+*Interactive task creation with custom priority pills and due date pickers.*
 
-### 4. Create Custom List Modal
-> Create custom task categories with an interactive 20-emoji picker grid.
+---
+
+### 4. Custom List Creation & Emoji Picker
 ![Create List Modal](screenshots/04_create_list_modal.png)
+*Create custom list categories with tailored color palettes and emoji badges.*
 
-### 5. Interactive Profile Popover & Focus Score
-> Quick profile popover with 5-day streak counter, focus score meter, account settings, and keyboard shortcut guide.
+---
+
+### 5. Profile Popover & Ultra AMOLED Dark Theme
 ![Profile Popover](screenshots/05_profile_popover.png)
+*Profile stats, streak tracking, account settings, and instant toggle for **Ultra Reflective AMOLED Black Theme**.*
 
-### 6. Keyboard Shortcuts Reference
-> Power-user keyboard navigation for ultra-fast task management.
+---
+
+### 6. Keyboard Shortcuts Modal
 ![Keyboard Shortcuts](screenshots/06_keyboard_shortcuts.png)
+*Boost speed with built-in hotkeys (`N` for new task, `C` for calendar, `/` for search, `Esc` to navigate).*
+
+---
 
 ### 7. Instant Live Search
-> Instant full-text search across all lists with highlighted matching terms.
 ![Live Search](screenshots/07_live_search.png)
+*Real-time task search with keyword highlighting across all lists and categories.*
 
 ---
 
-## ✨ Features
+## ✨ Key Features
 
-- 🎨 **Signature Cream Pastel & Sleek Dark Mode**: Toggle seamlessly between signature **Cream Pastel** (`#FBF3E6`) and **Sleek Molded Dark Mode** (`#12101D`).
-- 📱 **Mobile PWA & Native Packaging**: Install Taskly as a native-like app on **iOS (iPhone/iPad)** and **Android** with offline support (`manifest.json` & `sw.js`).
-- 📅 **Interactive Calendar View & Selectors**: Monthly grid calendar with priority dots, day detail modal, and direct **Month** (Jan–Dec) & **Year** (2020–2035) dropdown selectors.
-- ⚡ **Dual Persistence Layer**: Connects automatically to the **Python Flask REST API** on startup (`data/tasks.json`). If offline, seamlessly defaults to `localStorage`.
-- ☁️ **1-Click Live Cloud Hosting (Render / Heroku)**: Built-in `render.yaml` Blueprint and `Procfile` for instant deployment on Render.com with `gunicorn`.
-- 📊 **Interactive Focus Metrics**: Dynamic percentage progress ring, total/done/pending stats, and automated streak calculation.
-- 📂 **Custom Categories**: Built-in lists (*Today*, *Planned*, *Personal*, *Work*, *Shopping*) plus custom list creator with an emoji picker.
-- 🏷️ **Priority Strips & Due Dates**: Red (High), Amber (Medium), Teal (Low) priority strips and overdue date tracking.
-- 🔍 **Live Search Engine**: Instant filtering across all tasks and categories with `<mark>` term highlighting.
-- ⏰ **Background Notification Daemon**: Python process (`reminders.py`) checks tasks periodically and triggers desktop notifications for overdue items.
-- 💾 **Data Export Suite**: CLI utility (`export.py`) and API endpoints for exporting tasks to JSON and CSV formats.
-- ⌨️ **Keyboard Navigation**: Global hotkeys (`N` for new task, `C` for calendar, `/` to search, `Esc` to exit/return).
+- 📱 **Dual Engine Architecture**: Automatically connects to the Python Flask REST API backend when available, and seamlessly falls back to `localStorage` for complete offline operation.
+- 🎨 **Ultra Reflective AMOLED Black Theme**: Features true `#000000` pitch black backgrounds for OLED display energy efficiency, glossy metallic cards, glassmorphism specular borders, and neon pops.
+- 📅 **Interactive Calendar View**: View tasks by scheduled date, switch months/years, and manage daily schedules visually.
+- 🔍 **Instant Live Search**: Perform instant real-time searches across all tasks with highlighted keyword matches.
+- 📦 **Data Exporting**: Standalone CLI & API endpoints to download your full task history in structured **JSON** or **CSV** format.
+- ⏰ **Background Reminders Daemon**: Background process that monitors overdue tasks and delivers desktop notifications.
+- 📲 **Android App & PWA Ready**: Install natively on Android devices via PWA or build a native APK using Capacitor.
+- ☁️ **Vercel Cloud Deployment**: Pre-configured `vercel.json` for 1-click cloud deployment.
 
 ---
 
-## 📱 Mobile App Installation (iOS & Android PWA)
+## 🚀 Quick Start (Local Development)
 
-Taskly is packaged as a **Progressive Web App (PWA)** for mobile installation:
+### 1. Run via Start Script (Recommended)
 
-###  iPhone / iPad (iOS Safari)
-1. Open Taskly in Safari.
-2. Tap the **Share** button at the bottom of the screen.
-3. Scroll down and tap **"Add to Home Screen"**.
-4. Taskly will launch in full-screen standalone mode with its custom icon!
+Simply execute the launcher script:
 
-### 🤖 Android (Chrome)
-1. Open Taskly in Chrome.
-2. Tap the **"Install Taskly"** prompt or open the Chrome menu (⋮) and select **"Install App"**.
+```bash
+./start.sh
+```
+
+*(On Windows, run `run.bat`)*
+
+This script automatically:
+1. Installs Python dependencies (`Flask`, `flask-cors`, `gunicorn`).
+2. Frees port `5050` if previously occupied.
+3. Launches the Flask REST API server (`server.py`).
+4. Starts the background reminder daemon (`reminders.py`).
+5. Opens `http://localhost:5050` in your default browser.
+
+### 2. Manual Launch
+
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Start the Flask API & static web server
+python3 server.py
+```
+
+To stop all background processes:
+```bash
+./stop.sh
+```
 
 ---
 
-## ☁️ Deploy Live on Render (1-Click Hosting)
+## 📱 Android Phone Installation (PWA & APK)
 
-Deploy Taskly to **Render.com** for free:
+Taskly supports **two simple methods** for running natively on Android devices:
+
+### Method 1: Web PWA Installation (Instant — No Build Required)
+
+1. Host or open Taskly in **Google Chrome** or **Microsoft Edge** on your Android device.
+2. Tap the menu icon (`⋮`) in the top-right corner.
+3. Select **"Install app"** or **"Add to Home screen"**.
+4. Taskly will install as a standalone Android app with full app launcher icon, native splash screen, and offline support!
+
+### Method 2: Native Android APK Build (Capacitor)
+
+Taskly comes pre-configured with `capacitor.config.json`. To build an Android APK:
+
+```bash
+# 1. Install Capacitor CLI & Android package
+npm install @capacitor/core @capacitor/cli @capacitor/android
+
+# 2. Add Android platform
+npx cap add android
+
+# 3. Open project in Android Studio to build APK
+npx cap open android
+```
+
+From Android Studio, click **Build > Build Bundle(s) / APK(s) > Build APK** to generate your `.apk` file for Android phones.
+
+---
+
+## ☁️ Vercel Deployment Guide
+
+Taskly is pre-configured for 1-click deployment on **Vercel** via `vercel.json` using `@vercel/python`.
+
+### Option A: Vercel CLI
+
+```bash
+# Install Vercel CLI
+npm install -g vercel
+
+# Deploy to Vercel
+vercel
+```
+
+### Option B: GitHub Integration
 
 1. Push this repository to GitHub.
-2. Log into [Render.com](https://render.com) and click **New + ➔ Blueprint**.
-3. Connect your repository — Render will automatically detect `render.yaml` and configure the Python web service with `gunicorn server:app`!
+2. Go to [Vercel Dashboard](https://vercel.com/new).
+3. Import the repository — Vercel will automatically detect `vercel.json` and deploy your app instantly!
 
 ---
 
-## 🚀 Quick Start
-
-### Prerequisites
-- **Python 3.9+** installed on your system.
-
-### Running Taskly
-
-#### macOS & Linux
-```bash
-chmod +x run.sh
-./run.sh
-```
-
-#### Windows
-```cmd
-run.bat
-```
-
-`run.sh` / `run.bat` automatically:
-1. Installs Python dependencies (`flask`, `flask-cors`).
-2. Starts the **Flask API Server** (`localhost:5050`).
-3. Launches the **Background Reminder Daemon** (`reminders.py`).
-4. Opens **Taskly** in your default web browser.
-
-### Stopping Taskly
-To stop all background Python services:
-```bash
-./stop.sh       # macOS / Linux
-stop.bat        # Windows
-```
-
----
-
-## 🛠️ Project Structure
-
-```text
-taskly/
-├── frontend/                 # Web Application Frontend
-│   ├── index.html            # Semantic HTML5 App Shell & Modals
-│   ├── style.css             # Cream Pastel Design Tokens & Layouts
-│   └── app.js                # State Management & API Sync Engine
-├── data/                     # Persistent JSON Storage & Logs
-│   ├── tasks.json            # Active Task Database
-│   └── .gitkeep
-├── screenshots/              # High-Res Documentation Gallery
-├── server.py                 # Flask REST API & Web File Server
-├── reminders.py              # Background Reminder Daemon (Desktop Alerts)
-├── export.py                 # CLI Export Utility (JSON & CSV)
-├── take_screenshots.py       # Automated Playwright Screenshot Generator
-├── run.sh / run.bat          # Cross-Platform Application Launchers
-├── stop.sh / stop.bat        # Process Management Scripts
-└── requirements.txt          # Python Dependencies
-```
-
----
-
-## 🔌 API & CLI Utilities
-
-### Python REST API Endpoints
+## 🛠️ REST API Reference
 
 | Endpoint | Method | Description |
 |---|---|---|
-| `GET /api/health` | `GET` | Health check & mode indicator |
-| `GET /api/data` | `GET` | Retrieve full JSON dataset (tasks + lists) |
-| `POST /api/data` | `POST` | Atomically save updated dataset to disk |
-| `GET /api/export/json` | `GET` | Download timestamped JSON task backup |
-| `GET /api/export/csv` | `GET` | Download tasks formatted as CSV |
-| `GET /api/overdue` | `GET` | Get JSON list of overdue pending tasks |
+| `/api/health` | `GET` | Health check & server status |
+| `/api/data` | `GET` | Fetch all task and list data |
+| `/api/data` | `POST` | Save/update task and list database |
+| `/api/export/json` | `GET` | Download timestamped JSON backup |
+| `/api/export/csv` | `GET` | Download tasks formatted as CSV |
+| `/api/overdue` | `GET` | Fetch uncompleted overdue tasks |
 
-### CLI Utilities
+### CLI Data Export
 
-#### Export Tasks to CSV / JSON
+You can also export data directly from the terminal:
+
 ```bash
-python3 export.py              # Export both JSON and CSV to exports/
-python3 export.py --csv        # Export CSV only
-python3 export.py --summary    # Print task summary stats in terminal
-```
-
-#### Generate Documentation Screenshots
-```bash
-python3 take_screenshots.py    # Generates crisp retina screenshots in screenshots/
+python3 export.py          # Exports JSON & CSV to exports/
+python3 export.py --json   # JSON only
+python3 export.py --csv    # CSV only
 ```
 
 ---
@@ -181,12 +183,40 @@ python3 take_screenshots.py    # Generates crisp retina screenshots in screensho
 
 | Key | Action |
 |---|---|
-| <kbd>N</kbd> | Open **Add Task** modal (when viewing a list) |
-| <kbd>/</kbd> | Focus the **Search Bar** |
-| <kbd>Esc</kbd> | Return to **Dashboard** / Close active modal |
-| <kbd>Enter</kbd> | Submit active modal or inline form |
+| <kbd>N</kbd> | Open Add Task Modal |
+| <kbd>C</kbd> | Toggle Calendar View |
+| <kbd>/</kbd> | Focus Live Search Bar |
+| <kbd>Esc</kbd> | Return to Dashboard / Clear Search |
+| <kbd>Enter</kbd> | Submit Form / Modal |
+
+---
+
+## 📁 Repository Structure
+
+```
+taskly/
+├── frontend/             # Web App Frontend (HTML5, Vanilla CSS, JS)
+│   ├── index.html        # App Markup & Modals
+│   ├── style.css         # Design System, Layouts & AMOLED Theme
+│   ├── app.js            # App Logic, State, Calendar & API Bridge
+│   ├── manifest.json     # PWA Manifest Config
+│   └── sw.js             # PWA Service Worker
+├── screenshots/          # High-resolution documentation screenshots
+├── data/                 # Data persistence directory (tasks.json)
+├── server.py             # Python Flask REST API & File Server
+├── reminders.py          # Background Reminder Daemon
+├── export.py             # CLI Data Export Tool
+├── take_screenshots.py   # Automated Playwright Screenshot Generator
+├── start.sh              # Executable launcher alias
+├── run.sh                # Main Linux/macOS start script
+├── stop.sh               # Shutdown script
+├── vercel.json           # Vercel deployment configuration
+├── capacitor.config.json # Capacitor Android configuration
+└── requirements.txt      # Python dependencies
+```
 
 ---
 
 ## 📄 License
-Distributed under the **MIT License**.
+
+This project is licensed under the **MIT License**. Feel free to modify and adapt for personal or commercial productivity projects!

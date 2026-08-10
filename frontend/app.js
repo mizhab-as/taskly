@@ -983,7 +983,7 @@ function applyTheme(t) {
   }
   const tag = document.querySelector("#btn-theme-preset .p-tag");
   if (tag) {
-    tag.textContent = state.theme === "dark" ? "Molded Dark" : "Cream Pastel";
+    tag.textContent = state.theme === "dark" ? "AMOLED Black" : "Cream Pastel";
   }
   localStorage.setItem("taskly_theme", state.theme);
 }

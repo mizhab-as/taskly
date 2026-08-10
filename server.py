@@ -18,29 +18,36 @@ from flask_cors import CORS
 
 # ── Config ────────────────────────────────────────────────────────────────────
 PORT      = int(os.environ.get("PORT", 5050))
-DATA_FILE = os.path.join(os.path.dirname(__file__), "data", "tasks.json")
+DATA_DIR  = "/tmp" if os.environ.get("VERCEL") else os.path.join(os.path.dirname(__file__), "data")
+DATA_FILE = os.path.join(DATA_DIR, "tasks.json")
 FRONTEND  = os.path.join(os.path.dirname(__file__), "frontend")
 
 app = Flask(__name__, static_folder=FRONTEND, static_url_path="")
-CORS(app)  # allow requests from file:// and any localhost port
+CORS(app)  # allow requests from file:// and any domain/port
 
 
 # ── Data helpers ──────────────────────────────────────────────────────────────
 def load_data():
     """Load persisted data from disk. Returns None if no file exists yet."""
     if os.path.exists(DATA_FILE):
-        with open(DATA_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
+        try:
+            with open(DATA_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            return None
     return None
 
 
 def save_data(data: dict):
     """Atomically write data to disk."""
-    os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
-    tmp = DATA_FILE + ".tmp"
-    with open(tmp, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-    os.replace(tmp, DATA_FILE)
+    try:
+        os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
+        tmp = DATA_FILE + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+        os.replace(tmp, DATA_FILE)
+    except Exception as e:
+        print(f"[server] Save error: {e}")
 
 
 # ── Static: serve the frontend ────────────────────────────────────────────────

@@ -608,7 +608,7 @@ function renderCalendarView(container) {
   const titleGroup = el("div", "calendar-title-group");
 
   const monthYearBtn = el("button", "month-year-btn");
-  monthYearBtn.innerHTML = `<span>📅 ${MONTH_NAMES[month]} ${year}</span><span class="chevron">▾</span>`;
+  monthYearBtn.innerHTML = `<span class="month-year-text">📅 ${MONTH_NAMES[month]} ${year}</span><span class="chevron">▾</span>`;
   monthYearBtn.title = "Click to change month or year";
   monthYearBtn.onclick = () => openMonthYearPickerModal();
   titleGroup.appendChild(monthYearBtn);

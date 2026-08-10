@@ -1191,29 +1191,40 @@ input, select { font-family: inherit; }
   color: var(--ink-faint);
 }
 
-/* Month & Year Picker Button */
+/* Month & Year Picker Button — Fixed Width to Prevent Shifting */
 .month-year-btn {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
+  width: 240px;
+  flex-shrink: 0;
+  box-sizing: border-box;
   font-family: 'Baloo 2', sans-serif;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
   color: var(--ink);
   background: var(--cream);
   padding: 6px 16px;
   border-radius: 14px;
   cursor: pointer;
-  transition: all .15s ease;
+  transition: background .15s ease, transform .15s ease, border-color .15s ease;
   border: 1px solid transparent;
 }
 .month-year-btn:hover {
   background: var(--cream-deep);
   transform: translateY(-1px);
 }
+.month-year-text {
+  flex: 1;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .month-year-btn .chevron {
   font-size: 13px;
   color: var(--ink-soft);
+  margin-left: 4px;
 }
 
 /* Year Stepper in Modal */
@@ -1324,6 +1335,7 @@ input, select { font-family: inherit; }
     gap: 12px;
   }
   .month-year-btn {
+    width: 180px;
     font-size: 18px;
     padding: 5px 12px;
   }

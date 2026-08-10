@@ -4,10 +4,10 @@ Taskly — Data Export Utility  (Option 3)
 Standalone CLI export tool for tasks data.
 
 Usage:
-  python3 export.py           # exports JSON + CSV to exports/
-  python3 export.py --json    # JSON only
-  python3 export.py --csv     # CSV only
-  python3 export.py --out /some/path
+  python3 python/export.py           # exports JSON + CSV to exports/
+  python3 python/export.py --json    # JSON only
+  python3 python/export.py --csv     # CSV only
+  python3 python/export.py --out /some/path
 """
 
 import json
@@ -17,8 +17,9 @@ import sys
 import datetime
 import argparse
 
-DATA_FILE   = os.path.join(os.path.dirname(__file__), "data", "tasks.json")
-EXPORT_DIR  = os.path.join(os.path.dirname(__file__), "exports")
+BASE_DIR    = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_FILE   = os.path.join(BASE_DIR, "data", "tasks.json")
+EXPORT_DIR  = os.path.join(BASE_DIR, "exports")
 
 
 def load_data() -> dict | None:

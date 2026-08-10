@@ -4,7 +4,7 @@ Taskly — Reminder Daemon  (Option 4)
 Background process that watches for overdue tasks and fires
 macOS desktop notifications every 5 minutes.
 
-Run with:  python3 reminders.py
+Run with:  python3 python/reminders.py
 Kill with: kill $(cat data/reminders.pid)
 """
 
@@ -15,8 +15,9 @@ import datetime
 import subprocess
 import sys
 
-DATA_FILE   = os.path.join(os.path.dirname(__file__), "data", "tasks.json")
-PID_FILE    = os.path.join(os.path.dirname(__file__), "data", "reminders.pid")
+BASE_DIR    = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_FILE   = os.path.join(BASE_DIR, "data", "tasks.json")
+PID_FILE    = os.path.join(BASE_DIR, "data", "reminders.pid")
 CHECK_EVERY = 300   # seconds between checks (5 minutes)
 
 # IDs of tasks we already notified about (avoid repeat spam per session)

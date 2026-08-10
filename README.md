@@ -78,13 +78,11 @@ Simply execute the launcher script:
 ./start.sh
 ```
 
-*(On Windows, run `run.bat`)*
-
 This script automatically:
 1. Installs Python dependencies (`Flask`, `flask-cors`, `gunicorn`).
 2. Frees port `5050` if previously occupied.
-3. Launches the Flask REST API server (`server.py`).
-4. Starts the background reminder daemon (`reminders.py`).
+3. Launches the Flask REST API server (`python/server.py`).
+4. Starts the background reminder daemon (`python/reminders.py`).
 5. Opens `http://localhost:5050` in your default browser.
 
 ### 2. Manual Launch
@@ -94,7 +92,7 @@ This script automatically:
 pip install -r requirements.txt
 
 # Start the Flask API & static web server
-python3 server.py
+python3 python/server.py
 ```
 
 To stop all background processes:
@@ -172,9 +170,9 @@ vercel
 You can also export data directly from the terminal:
 
 ```bash
-python3 export.py          # Exports JSON & CSV to exports/
-python3 export.py --json   # JSON only
-python3 export.py --csv    # CSV only
+python3 python/export.py          # Exports JSON & CSV to exports/
+python3 python/export.py --json   # JSON only
+python3 python/export.py --csv    # CSV only
 ```
 
 ---
@@ -195,24 +193,24 @@ python3 export.py --csv    # CSV only
 
 ```
 taskly/
-├── frontend/             # Web App Frontend (HTML5, Vanilla CSS, JS)
-│   ├── index.html        # App Markup & Modals
-│   ├── style.css         # Design System, Layouts & AMOLED Theme
-│   ├── app.js            # App Logic, State, Calendar & API Bridge
-│   ├── manifest.json     # PWA Manifest Config
-│   └── sw.js             # PWA Service Worker
-├── screenshots/          # High-resolution documentation screenshots
-├── data/                 # Data persistence directory (tasks.json)
-├── server.py             # Python Flask REST API & File Server
-├── reminders.py          # Background Reminder Daemon
-├── export.py             # CLI Data Export Tool
-├── take_screenshots.py   # Automated Playwright Screenshot Generator
-├── start.sh              # Executable launcher alias
-├── run.sh                # Main Linux/macOS start script
-├── stop.sh               # Shutdown script
-├── vercel.json           # Vercel deployment configuration
-├── capacitor.config.json # Capacitor Android configuration
-└── requirements.txt      # Python dependencies
+├── frontend/                 # Web App Frontend (HTML5, Vanilla CSS, JS)
+│   ├── index.html            # App Markup & Modals
+│   ├── style.css             # Design System & Eye-Comfort Dark Theme
+│   ├── app.js                # App Logic, State, Calendar & API Bridge
+│   ├── manifest.json         # PWA Manifest Config
+│   └── sw.js                 # PWA Service Worker
+├── python/                   # Backend Python Scripts & Utilities
+│   ├── server.py             # Python Flask REST API & Static File Server
+│   ├── export.py             # CLI Data Export Utility
+│   ├── reminders.py          # Background Desktop Reminder Daemon
+│   └── take_screenshots.py   # Automated Playwright Screenshot Generator
+├── screenshots/              # High-resolution documentation screenshots
+├── data/                     # Data persistence directory (tasks.json)
+├── start.sh                  # Main executable launcher script
+├── stop.sh                   # Shutdown script
+├── vercel.json               # Vercel deployment configuration
+├── capacitor.config.json     # Capacitor Android configuration
+└── requirements.txt          # Python dependencies
 ```
 
 ---

@@ -5,7 +5,7 @@ Option 1 : REST API   — CRUD for tasks & lists stored in data/tasks.json
 Option 2 : File server — serves frontend/ as a static web app at localhost:5050
 Option 3 : Export     — /api/export/json and /api/export/csv endpoints
 
-Run with:  python3 server.py
+Run with:  python3 python/server.py
 """
 
 import json
@@ -18,9 +18,10 @@ from flask_cors import CORS
 
 # ── Config ────────────────────────────────────────────────────────────────────
 PORT      = int(os.environ.get("PORT", 5050))
-DATA_DIR  = "/tmp" if os.environ.get("VERCEL") else os.path.join(os.path.dirname(__file__), "data")
+BASE_DIR  = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_DIR  = "/tmp" if os.environ.get("VERCEL") else os.path.join(BASE_DIR, "data")
 DATA_FILE = os.path.join(DATA_DIR, "tasks.json")
-FRONTEND  = os.path.join(os.path.dirname(__file__), "frontend")
+FRONTEND  = os.path.join(BASE_DIR, "frontend")
 
 app = Flask(__name__, static_folder=FRONTEND, static_url_path="")
 CORS(app)  # allow requests from file:// and any domain/port

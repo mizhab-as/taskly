@@ -5,7 +5,7 @@ Uses Playwright with system Chrome to capture high-resolution
 UI screenshots of Taskly for README and documentation.
 
 Usage:
-  python3 take_screenshots.py
+  python3 python/take_screenshots.py
 """
 
 import os
@@ -13,7 +13,8 @@ import time
 from playwright.sync_api import sync_playwright
 
 CHROME_PATH = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-OUTPUT_DIR  = os.path.join(os.path.dirname(__file__), "screenshots")
+BASE_DIR    = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+OUTPUT_DIR  = os.path.join(BASE_DIR, "screenshots")
 URL         = "http://localhost:5050"
 
 

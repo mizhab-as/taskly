@@ -317,6 +317,30 @@
 </div>
 
 
+<!-- ─── Month & Year Picker Modal ──────────────────────────── -->
+<div class="modal-overlay" id="monthYearModal" role="dialog" aria-modal="true" aria-labelledby="monthYearTitle">
+  <div class="modal" style="max-width:380px;text-align:center;">
+    <button class="modal-close" onclick="closeModal('monthYearModal')" aria-label="Close">✕</button>
+    
+    <!-- Year Stepper Header -->
+    <div class="year-stepper">
+      <button class="btn-year-nav" id="btnPrevYear" title="Previous Year">◄</button>
+      <span class="year-display" id="pickerYearDisplay">2026</span>
+      <button class="btn-year-nav" id="btnNextYear" title="Next Year">►</button>
+    </div>
+
+    <!-- 12 Month Grid -->
+    <div class="month-grid" id="monthGrid">
+      <!-- Injected by app.js -->
+    </div>
+
+    <div class="modal-actions" style="justify-content:center;margin-top:18px;">
+      <button class="btn-ghost" style="width:100%;" onclick="closeModal('monthYearModal')">Done</button>
+    </div>
+  </div>
+</div>
+
+
 <!-- ─── App Logic & PWA Service Worker ──────────────────────── -->
 <script src="app.js"></script>
 <script>

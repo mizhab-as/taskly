@@ -604,44 +604,14 @@ function renderCalendarView(container) {
   // Header element
   const header = el("div", "calendar-header");
 
-  // Title group: Month Name & Year Selectors
+  // Title group: Month & Year Picker Button
   const titleGroup = el("div", "calendar-title-group");
 
-  const calIcon = el("span", "", "📅");
-  calIcon.style.fontSize = "26px";
-  titleGroup.appendChild(calIcon);
-
-  const monthSelect = document.createElement("select");
-  monthSelect.className = "cal-select month-select";
-  monthSelect.style.cssText = "font-family:'Baloo 2',sans-serif;font-size:22px;font-weight:700;border:none;background:var(--cream);color:var(--ink);padding:4px 12px;border-radius:12px;cursor:pointer;outline:none;";
-  MONTH_NAMES.forEach((mName, idx) => {
-    const opt = document.createElement("option");
-    opt.value = idx;
-    opt.textContent = mName;
-    if (idx === month) opt.selected = true;
-    monthSelect.appendChild(opt);
-  });
-  monthSelect.onchange = (e) => {
-    state.calMonth = parseInt(e.target.value, 10);
-    render();
-  };
-  titleGroup.appendChild(monthSelect);
-
-  const yearSelect = document.createElement("select");
-  yearSelect.className = "cal-select year-select";
-  yearSelect.style.cssText = "font-family:'Baloo 2',sans-serif;font-size:22px;font-weight:700;border:none;background:var(--cream);color:var(--ink);padding:4px 12px;border-radius:12px;cursor:pointer;outline:none;";
-  for (let y = 2000; y <= 2050; y++) {
-    const opt = document.createElement("option");
-    opt.value = y;
-    opt.textContent = y;
-    if (y === year) opt.selected = true;
-    yearSelect.appendChild(opt);
-  }
-  yearSelect.onchange = (e) => {
-    state.calYear = parseInt(e.target.value, 10);
-    render();
-  };
-  titleGroup.appendChild(yearSelect);
+  const monthYearBtn = el("button", "month-year-btn");
+  monthYearBtn.innerHTML = `<span>📅 ${MONTH_NAMES[month]} ${year}</span><span class="chevron">▾</span>`;
+  monthYearBtn.title = "Click to change month or year";
+  monthYearBtn.onclick = () => openMonthYearPickerModal();
+  titleGroup.appendChild(monthYearBtn);
 
   // Nav buttons: <, Today, >
   const navBtns = el("div", "calendar-nav-btns");
@@ -753,10 +723,10 @@ function renderCalendarView(container) {
     `;
     cell.appendChild(cellHeader);
 
-    // Cell Tasks List
+    // Cell Tasks List — max 2 chips visible to strictly enforce 120px height
     const cellTasks = el("div", "cell-tasks");
 
-    const maxVisible = 3;
+    const maxVisible = 2;
     const visibleTasks = dayTasks.slice(0, maxVisible);
 
     visibleTasks.forEach(t => {
@@ -780,10 +750,58 @@ function renderCalendarView(container) {
     }
 
     cell.appendChild(cellTasks);
+
+    // Mobile task dots (rendered on phone view)
+    if (dayTasks.length > 0) {
+      const dots = el("div", "mobile-task-dots");
+      dayTasks.slice(0, 3).forEach(t => {
+        dots.appendChild(el("span", `prio-dot ${t.priority}`));
+      });
+      cell.appendChild(dots);
+    }
+
     grid.appendChild(cell);
   }
 
   container.appendChild(grid);
+}
+
+/* ─── Month & Year Picker Modal ──────────────────────────── */
+let _pickerYear = state.calYear;
+
+function openMonthYearPickerModal() {
+  _pickerYear = state.calYear;
+  $("#pickerYearDisplay").textContent = _pickerYear;
+
+  $("#btnPrevYear").onclick = () => {
+    _pickerYear--;
+    $("#pickerYearDisplay").textContent = _pickerYear;
+    renderPickerMonths();
+  };
+  $("#btnNextYear").onclick = () => {
+    _pickerYear++;
+    $("#pickerYearDisplay").textContent = _pickerYear;
+    renderPickerMonths();
+  };
+
+  renderPickerMonths();
+  openModal("monthYearModal");
+}
+
+function renderPickerMonths() {
+  const grid = $("#monthGrid");
+  grid.innerHTML = "";
+  MONTH_NAMES.forEach((mName, idx) => {
+    const isActive = (idx === state.calMonth && _pickerYear === state.calYear);
+    const tile = el("button", `month-tile${isActive ? " active" : ""}`, mName);
+    tile.onclick = () => {
+      state.calMonth = idx;
+      state.calYear = _pickerYear;
+      closeModal("monthYearModal");
+      render();
+    };
+    grid.appendChild(tile);
+  });
 }
 
 /* ─── Day Detail View Modal ──────────────────────────────── */

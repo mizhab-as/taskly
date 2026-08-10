@@ -926,11 +926,11 @@ input, select { font-family: inherit; }
   white-space: nowrap;
 }
 
-/* Calendar Cell */
+/* Calendar Cell — STRICT EQUAL DIMENSIONS ACROSS ALL TILES */
 .calendar-cell {
   background: var(--white);
   border-radius: var(--radius-sm);
-  min-height: 110px;
+  height: 120px;
   min-width: 0;
   padding: 8px;
   box-shadow: var(--shadow-soft);
@@ -1069,13 +1069,125 @@ input, select { font-family: inherit; }
   color: var(--ink-faint);
 }
 
+/* Month & Year Picker Button */
+.month-year-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+  background: var(--cream);
+  padding: 6px 16px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all .15s ease;
+  border: 1px solid transparent;
+}
+.month-year-btn:hover {
+  background: var(--cream-deep);
+  transform: translateY(-1px);
+}
+.month-year-btn .chevron {
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+/* Year Stepper in Modal */
+.year-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.year-display {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--ink);
+}
+.btn-year-nav {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--cream);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .15s ease;
+}
+.btn-year-nav:hover {
+  background: var(--teal);
+  color: white;
+}
+
+/* 12 Month Grid in Modal */
+.month-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.month-tile {
+  padding: 14px 8px;
+  border-radius: 14px;
+  background: var(--cream);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+  transition: all .15s ease;
+  border: 2px solid transparent;
+}
+.month-tile:hover {
+  background: var(--cream-deep);
+  transform: scale(1.03);
+}
+.month-tile.active {
+  background: var(--teal);
+  color: white;
+}
+
+[data-theme="dark"] .month-year-btn {
+  background: linear-gradient(180deg, #161616 0%, #0A0A0A 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #FFFFFF;
+}
+[data-theme="dark"] .month-year-btn:hover {
+  background: linear-gradient(180deg, #222222 0%, #121212 100%);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+[data-theme="dark"] .month-tile {
+  background: #141414;
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+[data-theme="dark"] .month-tile:hover {
+  background: #222222;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+[data-theme="dark"] .month-tile.active {
+  background: var(--teal);
+  color: #000000;
+}
+[data-theme="dark"] .btn-year-nav {
+  background: #141414;
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
 @media (max-width: 900px) {
   .calendar-grid {
     grid-template-columns: repeat(7, 1fr);
     gap: 6px;
   }
   .calendar-cell {
-    min-height: 90px;
+    height: 96px;
     padding: 6px;
   }
   .day-task-chip {
@@ -1087,13 +1199,18 @@ input, select { font-family: inherit; }
   .calendar-header {
     flex-direction: column;
     align-items: flex-start;
+    gap: 12px;
+  }
+  .month-year-btn {
+    font-size: 18px;
+    padding: 5px 12px;
   }
   .calendar-cell {
-    min-height: 70px;
+    height: 68px;
     padding: 4px;
   }
   .cell-tasks {
-    display: none; /* Hide detailed chips on ultra small mobile view, show dot counts */
+    display: none;
   }
   .mobile-task-dots {
     display: flex;
